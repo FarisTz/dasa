@@ -29,14 +29,14 @@
               <div class="card-header">
                 <h4>
                     @if(Route::is('login'))
-             Login
+             Sign In
               @elseif(Route::is('register'))
-              Register
+              Sign Up
               @elseif(Route::is('password.request'))
               Forgot Password
               @endif
 
-                  
+
 
                 </h4>
               </div>

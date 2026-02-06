@@ -1,30 +1,85 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="en">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+<!-- auth-login.html  21 Nov 2019 03:49:32 GMT -->
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Otika - Admin Dashboard Template</title>
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="{{asset( 'assets/css/app.min.css') }}">
+  <link rel="stylesheet" href="{{asset('assets/bundles/bootstrap-social/bootstrap-social.css')}}">
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/css/components.css')}}">
+  <!-- Custom style CSS -->
+  <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+  <link rel='shortcut icon' type='image/x-icon' href="{{'assets/img/favicon.ico'}}" />
+</head>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
-            </div>
+<body>
+  <div class="loader"></div>
+  <div id="app">
+    <section class="section">
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h4>
+                    @if(Route::is('login'))
+             Login
+              @elseif(Route::is('register'))
+              Register
+              @elseif(Route::is('password.request'))
+              Forgot Password
+              @endif
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+                  
+
+                </h4>
+              </div>
+              <div class="card-body">
                 {{ $slot }}
+                <div class="text-center mt-4 mb-3">
+
+                </div>
+                <div class="row sm-gutters">
+
+
+                </div>
+              </div>
             </div>
+            <div class="mt-5 text-muted text-center">
+
+                @if(Route::is('login'))
+              Don't have an account? <a href="{{route('register')}}">Sign Up</a>
+              @elseif(Route::is('register'))
+              Already have an account? <a href="{{route('login')}}">Login</a>
+              @elseif(Route::is('password.request'))
+              Remember it? <a href="{{route('login')}}"> Login</a>
+              @endif
+
+            </div>
+          </div>
         </div>
-    </body>
+      </div>
+    </section>
+  </div>
+  <!-- General JS Scripts -->
+  <script src="{{ asset('assets/js/app.min.js') }}"></script>
+  <!-- JS Libraies -->
+  <!-- Page Specific JS File -->
+  <!-- Template JS File -->
+  <script src="{{ asset('assets/js/scripts.js') }}"></script>
+  <!-- Custom JS File -->
+  <script src="{{ asset('assets/js/custom.js') }}"></script>
+</body>
+
+
+<!-- auth-login.html  21 Nov 2019 03:49:32 GMT -->
 </html>
+
+
+

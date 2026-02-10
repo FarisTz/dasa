@@ -34,6 +34,8 @@
               Sign Up
               @elseif(Route::is('password.request'))
               Forgot Password
+              @else
+              Reset Password
               @endif
 
 
@@ -59,6 +61,8 @@
               Already have an account? <a href="{{route('login')}}">Login</a>
               @elseif(Route::is('password.request'))
               Remember it? <a href="{{route('login')}}"> Login</a>
+              @else
+                Change you mind? <a href="{{route('login')}}"> Login</a>
               @endif
 
             </div>

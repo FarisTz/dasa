@@ -112,6 +112,7 @@
      @include('admin.partials.footer')
     </div>
   </div>
+<!--End of Tawk.to Script-->
   <!-- General JS Scripts -->
   <script src="{{asset('assets/js/app.min.js')}}"></script>
   <!-- JS Libraies -->

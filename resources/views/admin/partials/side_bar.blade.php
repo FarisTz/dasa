@@ -12,7 +12,11 @@
             </li>
             <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i
+<<<<<<< HEAD
                   data-feather="briefcase"></i><span>User</span></a>
+=======
+                  data-feather="briefcase"></i><span>Users</span></a>
+>>>>>>> d6279ba2c47c1c0cbe8fd12868a7779624d6bb74
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="widget-chart.html">Manage user</a></li>
                 <li><a class="nav-link" href="widget-data.html">Add User</a></li>

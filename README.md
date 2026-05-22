@@ -1,60 +1,133 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎓 KAFAAT Scholarship Application System with AI-Powered Assistance
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📌 1. Introduction
+The KAFAAT Scholarship Application process was previously carried out manually using Excel forms submitted via email. This approach created several challenges for both applicants and administrators. Applicants were required to download, fill, and email forms, which was time-consuming and prone to errors such as incomplete data, incorrect entries, and missing documents.
 
-## About Laravel
+Administrators also faced difficulties in managing applications due to lack of a centralized system. Sorting emails, verifying applicant data, and evaluating submissions became inefficient and reduced transparency in the selection process.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+To solve these challenges, this project introduces the **KAFAAT Scholarship Application System with AI-Powered Assistance** — a modern web-based platform that digitizes the entire application process.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## ❗ 2. Problem Statement
+The manual scholarship application system:
+- Is inefficient and time-consuming  
+- Leads to incomplete or incorrect submissions  
+- Lacks centralized data management  
+- Makes tracking and evaluation difficult  
+- Provides no real-time guidance to applicants  
 
-## Learning Laravel
+Therefore, there is a need for an **automated, intelligent system** that improves accuracy, usability, and management.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🎯 3. Project Objectives
+- Digitize the scholarship application process  
+- Provide a structured and user-friendly online application form  
+- Reduce errors through guided data entry  
+- Enable efficient application management for administrators  
+- Integrate AI assistance for user support and validation  
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 💡 4. Key Features
 
-### Premium Partners
+### 👤 Applicant Module
+- Personal Information Management  
+- Next of Kin Information  
+- O-Level & A-Level Education Details  
+- Document Upload (Certificates, IDs, etc.)  
+- Motivation Message Submission  
+- Orphan Status Handling (with conditional fields)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 🤖 AI-Powered Assistant
+- Guides applicants during form filling  
+- Reduces errors and incomplete submissions  
+- Provides real-time help and suggestions  
 
-## Contributing
+### 🗂️ Admin Module
+- View and manage all applications  
+- Filter and evaluate applicants  
+- Verify submitted documents  
+- Improve transparency and decision-making  
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 🧩 5. System Structure
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Main Sections:
+1. Personal Information  
+2. Contact Information  
+3. Identification Details  
+4. Additional Information & Documents  
+5. Next of Kin  
+6. Education (O-Level & A-Level)  
+7. Motivation & Special Considerations  
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🗄️ 6. Database Design (Overview)
 
-## License
+The system uses a **relational database structure**:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-"# dasa" 
+- `applicants` (main table)  
+- `next_of_kin` (linked via applicant_id)  
+- `education` (stores O-Level & A-Level)  
+- `additional_info` (orphan status, motivation, etc.)  
+
+### Relationship:
+
+---
+
+## 🛠️ 7. Technologies Used
+- **Backend:** Laravel (PHP Framework)  
+- **Frontend:** HTML, CSS, Bootstrap, JavaScript  
+- **Database:** MySQL  
+- **AI Integration:** (Planned / Optional)  
+
+---
+
+## 🚀 8. Benefits of the System
+- Faster and more efficient application process  
+- Reduced human errors  
+- Centralized data management  
+- Improved user experience  
+- Scalable for future enhancements  
+
+---
+
+## 🔮 9. Future Improvements
+- Full AI validation of applicant data  
+- Automated scoring and ranking system  
+- SMS/Email notifications  
+- Mobile-friendly optimization  
+- Integration with national databases  
+
+---
+
+## 📷 10. System Screenshots
+*(Add screenshots here later)*
+
+---
+
+## ⚙️ 11. Installation Guide
+
+```bash
+# Clone the repository
+git clone https://github.com/FarisTz/dasa.git
+
+# Navigate to project
+cd your-repo-name
+
+# Install dependencies
+composer install
+
+# Setup environment
+cp .env.example .env
+php artisan key:generate
+
+# Run migrations
+php artisan migrate
+
+# Start server
+php artisan serve

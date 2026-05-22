@@ -1,6 +1,6 @@
-# 🎓 KAFAAT Scholarship Application System with AI-Powered Assistance
+#  KAFAAT Scholarship Application System with AI-Powered Assistance
 
-## 📌 1. Introduction
+## 1. Introduction
 The KAFAAT Scholarship Application process was previously carried out manually using Excel forms submitted via email. This approach created several challenges for both applicants and administrators. Applicants were required to download, fill, and email forms, which was time-consuming and prone to errors such as incomplete data, incorrect entries, and missing documents.
 
 Administrators also faced difficulties in managing applications due to lack of a centralized system. Sorting emails, verifying applicant data, and evaluating submissions became inefficient and reduced transparency in the selection process.
@@ -9,7 +9,7 @@ To solve these challenges, this project introduces the **KAFAAT Scholarship Appl
 
 ---
 
-## ❗ 2. Problem Statement
+##  2. Problem Statement
 The manual scholarship application system:
 - Is inefficient and time-consuming  
 - Leads to incomplete or incorrect submissions  
@@ -21,7 +21,7 @@ Therefore, there is a need for an **automated, intelligent system** that improve
 
 ---
 
-## 🎯 3. Project Objectives
+##  3. Project Objectives
 - Digitize the scholarship application process  
 - Provide a structured and user-friendly online application form  
 - Reduce errors through guided data entry  
@@ -30,9 +30,9 @@ Therefore, there is a need for an **automated, intelligent system** that improve
 
 ---
 
-## 💡 4. Key Features
+##  4. Key Features
 
-### 👤 Applicant Module
+###  Applicant Module
 - Personal Information Management  
 - Next of Kin Information  
 - O-Level & A-Level Education Details  
@@ -40,12 +40,12 @@ Therefore, there is a need for an **automated, intelligent system** that improve
 - Motivation Message Submission  
 - Orphan Status Handling (with conditional fields)
 
-### 🤖 AI-Powered Assistant
+### AI-Powered Assistant
 - Guides applicants during form filling  
 - Reduces errors and incomplete submissions  
 - Provides real-time help and suggestions  
 
-### 🗂️ Admin Module
+### Admin Module
 - View and manage all applications  
 - Filter and evaluate applicants  
 - Verify submitted documents  
@@ -53,7 +53,7 @@ Therefore, there is a need for an **automated, intelligent system** that improve
 
 ---
 
-## 🧩 5. System Structure
+##  5. System Structure
 
 ### Main Sections:
 1. Personal Information  
@@ -79,7 +79,7 @@ The system uses a **relational database structure**:
 
 ---
 
-## 🛠️ 7. Technologies Used
+##  7. Technologies Used
 - **Backend:** Laravel (PHP Framework)  
 - **Frontend:** HTML, CSS, Bootstrap, JavaScript  
 - **Database:** MySQL  
@@ -87,7 +87,7 @@ The system uses a **relational database structure**:
 
 ---
 
-## 🚀 8. Benefits of the System
+## 8. Benefits of the System
 - Faster and more efficient application process  
 - Reduced human errors  
 - Centralized data management  
@@ -96,7 +96,7 @@ The system uses a **relational database structure**:
 
 ---
 
-## 🔮 9. Future Improvements
+## 9. Future Improvements
 - Full AI validation of applicant data  
 - Automated scoring and ranking system  
 - SMS/Email notifications  
@@ -105,7 +105,7 @@ The system uses a **relational database structure**:
 
 ---
 
-## 📷 10. System Screenshots
+## 10. System Screenshots
 *(Add screenshots here later)*
 
 ---

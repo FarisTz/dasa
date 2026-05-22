@@ -1,7 +1,7 @@
  <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="{{ route('dashboard') }}"> <img alt="image" src="assets/img/logo.png" class="header-logo" /> <span
+            <a href="{{ route('dashboard') }}"> <img alt="image" src="{{ asset('assets/img/logo.png') }}" class="header-logo" /> <span
                 class="logo-name">DASA</span>
             </a>
           </div>
@@ -14,9 +14,9 @@
               <a href="#" class="menu-toggle nav-link has-dropdown"><i
                   data-feather="briefcase"></i><span>Apply for scholarship</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="widget-chart.html">Personal Information</a></li>
-                <li><a class="nav-link" href="widget-data.html">O-Level Education</a></li>
-                <li><a class="nav-link" href="widget-data.html">A-Level Education</a></li>
+                <li><a class="nav-link" href="{{ route('applicant.personal_information') }}">Personal Information</a></li>
+                <li><a class="nav-link" href="{{ route('applicant.o_level') }}">O-Level Education</a></li>
+                <li><a class="nav-link" href="{{ route('applicant.a_level') }}">A-Level Education</a></li>
                 <li><a class="nav-link" href="widget-data.html">Motivation Letter</a></li>
                 <li><a class="nav-link" href="widget-data.html">Review & Submit</a></li>
 

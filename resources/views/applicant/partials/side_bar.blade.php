@@ -14,11 +14,11 @@
               <a href="#" class="menu-toggle nav-link has-dropdown"><i
                   data-feather="briefcase"></i><span>Apply for scholarship</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="{{ route('applicant.personal_information') }}">Personal Information</a></li>
-                <li><a class="nav-link" href="{{ route('applicant.o_level') }}">O-Level Education</a></li>
-                <li><a class="nav-link" href="{{ route('applicant.a_level') }}">A-Level Education</a></li>
-                <li><a class="nav-link" href="widget-data.html">Motivation Letter</a></li>
-                <li><a class="nav-link" href="widget-data.html">Review & Submit</a></li>
+                <li><a class="nav-link" href="#">Personal Information</a></li>
+                <li><a class="nav-link" href="#">O-Level Education</a></li>
+                <li><a class="nav-link" href="#">A-Level Education</a></li>
+                <li><a class="nav-link" href="#">Motivation Letter</a></li>
+                <li><a class="nav-link" href="#">Review & Submit</a></li>
 
               </ul>
             </li>

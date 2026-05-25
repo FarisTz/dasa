@@ -18,8 +18,10 @@ class AuthRedirectController extends Controller
 
         if ($user->role === 'admin') {
             return view('admin.index');
-        } elseif ($user->role === 'reviewer') {
-            return view('reviewer.index');
+        } elseif ($user->role === 'beneficiary') {
+            return view('beneficiary.index');
+        } elseif ($user->role === 'coordinator') {
+            return view('coordinator.index');
         } else {
             return view('applicant.index');
         }

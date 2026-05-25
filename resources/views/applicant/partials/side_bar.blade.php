@@ -1,7 +1,7 @@
  <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="{{ route('dashboard') }}"> <img alt="image" src="{{ asset('assets/img/dasa.png') }}" class="header-logo" /> <span
+            <a href="{{ route('dashboard') }}"> <img alt="image" style="width: 100px;" src="{{ asset('assets/img/dasa.png') }}" class="header-logo" /> <span
                 class="logo-name">KAFAAT</span>
             </a>
           </div>
@@ -24,14 +24,9 @@
             </li>
 
 
-            <li><a class="nav-link" href="blank.html"><i data-feather="file"></i><span>My Applications</span></a></li>
-            <li><a class="nav-link" href="blank.html"><i data-feather="file"></i><span>Profile</span></a></li>
-            <li><a class="nav-link" href="blank.html"><i data-feather="file"></i><span>Logout</span></a></li>
-
-
-
-
-
+            <li><a class="nav-link" href="#"><i data-feather="file"></i><span>My Applications</span></a></li>
+            <li><a class="nav-link" href="#"><i data-feather="file"></i><span>Profile</span></a></li>
+            <li><a class="nav-link" href="#"><i data-feather="file"></i><span>Logout</span></a></li>
           </ul>
         </aside>
       </div>

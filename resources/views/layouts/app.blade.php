@@ -17,9 +17,27 @@
   <!-- Custom style CSS -->
   <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
   <link rel='shortcut icon' type='image/x-icon' href='{{asset('assets/img/dasa.png')}}' />
+  <style>
+          .milestone-card {
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .milestone-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .milestone-icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+  </style>
 </head>
 
+
 <body>
+  
 
     @php
          $user = Auth::user();

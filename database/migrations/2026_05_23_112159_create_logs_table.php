@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
+             $table->string('action', 100);
+            $table->foreignId('performed_by')
+                  ->constrained('users')
+                  ->onDelete('restrict')
+                  ->onUpdate('cascade');
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->json('old_values')->nullable();
+            $table->json('new_values')->nullable();
             $table->timestamps();
         });
     }

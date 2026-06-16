@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('beneficiary_id')
+                  ->constrained('beneficiaries')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
+            $table->string('installment_name', 100);
+            $table->decimal('amount', 10, 2);
+            $table->date('due_date');
+            $table->enum('status', ['pending', 'paid', 'overdue'])->default('pending');
             $table->timestamps();
         });
     }

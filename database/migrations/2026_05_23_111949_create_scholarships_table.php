@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('scholarships', function (Blueprint $table) {
             $table->id();
+             $table->foreignId('created_by')
+                  ->constrained('users')
+                  ->onDelete('restrict')
+                  ->onUpdate('cascade');
+            $table->string('title', 255);
+            $table->text('description');
+            $table->text('eligibility_criteria');
+            $table->date('deadline');
+            $table->string('academic_year', 20);
+            $table->enum('status', ['draft', 'open', 'closed'])->default('draft');
             $table->timestamps();
         });
     }

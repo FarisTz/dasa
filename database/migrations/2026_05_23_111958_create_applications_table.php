@@ -13,6 +13,19 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
+             $table->foreignId('user_id')
+                  ->constrained('users')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
+            $table->foreignId('scholarship_id')
+                  ->constrained('scholarships')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
+            $table->text('motivation_message');
+            $table->enum('status', ['pending', 'under_review', 'approved_full', 'approved_partial', 'rejected'])
+                  ->default('pending');
+            $table->text('admin_notes')->nullable();
+            $table->timestamp('submitted_at');
             $table->timestamps();
         });
     }

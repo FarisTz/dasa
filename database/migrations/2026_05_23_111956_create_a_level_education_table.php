@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('a_level_education', function (Blueprint $table) {
             $table->id();
+             $table->foreignId('user_id')
+                  ->constrained('users')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
+            $table->string('school_name', 255);
+            $table->string('form_six_index_number', 100);
+            $table->string('division', 10)->nullable();
+            $table->integer('points')->nullable();
+            $table->year('end_of_study_year')->nullable();
+            $table->string('preferred_university', 255)->nullable();
+            $table->string('form_six_certificate_path', 500)->nullable();
             $table->timestamps();
         });
     }

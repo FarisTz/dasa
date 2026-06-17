@@ -188,18 +188,19 @@
                         <div class="col-12">
                             <hr>
                             <div class="form-group text-center">
+                                <a  href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4" style="background-color: #07dc72; color: #fff;">
+                                    <i class="fas fa-arrow-left"></i> Back to O-Level Education
+                                </a>
                                 <button type="submit" class="btn btn-primary btn-lg px-5">
                                     <i class="fas fa-save"></i>
                                     {{ isset($aLevelEducation) ? 'Update' : 'Save' }} A-Level Education
                                 </button>
 
-                                <a href="#" class="btn btn-success btn-lg px-5">
+                                <a href="#" class="btn btn-secondary btn-lg px-4" style="background-color: #07dc72; color: #fff;">
                                     <i class="fas fa-arrow-right"></i> Proceed to Motivation Letter
                                 </a>
 
-                                <a href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4">
-                                    <i class="fas fa-arrow-left"></i> Back
-                                </a>
+                                
                             </div>
                         </div>
                     </div>

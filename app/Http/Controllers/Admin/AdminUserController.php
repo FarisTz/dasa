@@ -88,29 +88,25 @@ class AdminUserController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'phone_number' => 'nullable|string|max:20',
             'password' => 'required|string|min:8|confirmed',
             'role' => 'required|in:admin,applicant,reviewer',
             'status' => 'required|in:active,inactive,suspended',
+             'email_verified' => 'nullable|boolean',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
+
 
         try {
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'phone_number' => $request->phone_number,
                 'password' => Hash::make($request->password),
                 'role' => $request->role,
                 'status' => $request->status,
+                 'email_verified_at' => $request->email_verified ? now() : null,
             ]);
 
             return redirect()->route('admin.users.index')

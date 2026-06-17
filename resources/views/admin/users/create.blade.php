@@ -135,15 +135,7 @@
                                 @error('role')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                                <div class="mt-2">
-                                    <span class="badge badge-info">Admin</span> - Full system access
-                                    <br>
-                                    <span class="badge badge-primary">Applicant</span> - Can apply for scholarships
-                                    <br>
-                                    <span class="badge badge-warning">Coordinator</span> - Can manage applications
-                                    <br>
-                                    <span class="badge badge-success">Beneficiary</span> - Scholarship recipient
-                                </div>
+
                             </div>
 
                             <!-- Email Verified At -->
@@ -183,69 +175,12 @@
                                 @error('status')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                                <div class="mt-2">
-                                    <span class="badge badge-success">Active</span> - User can access the system
-                                    <br>
-                                    <span class="badge badge-warning">Inactive</span> - User cannot access the system
-                                    <br>
-                                    <span class="badge badge-danger">Suspended</span> - User access is temporarily blocked
-                                </div>
+
                             </div>
                         </div>
                     </div>
 
-                    <!-- Additional Information Section -->
-                    <div class="row">
-                        <div class="col-12">
-                            <hr>
-                            <h5>Additional Information</h5>
-                            <hr>
-                        </div>
-
-                        <!-- Phone Number -->
-                        <div class="col-lg-6 col-md-12">
-                            <div class="form-group">
-                                <label>Phone Number</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-phone"></i>
-                                        </div>
-                                    </div>
-                                    <input type="text"
-                                           class="form-control @error('phone_number') is-invalid @enderror"
-                                           name="phone_number"
-                                           placeholder="Enter phone number"
-                                           value="{{ old('phone_number') }}">
-                                </div>
-                                @error('phone_number')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <!-- Profile Photo (Optional) -->
-                        <div class="col-lg-6 col-md-12">
-                            <div class="form-group">
-                                <label>Profile Photo</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-image"></i>
-                                        </div>
-                                    </div>
-                                    <input type="file"
-                                           class="form-control @error('profile_photo') is-invalid @enderror"
-                                           name="profile_photo"
-                                           accept="image/*">
-                                </div>
-                                @error('profile_photo')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                                <small class="text-muted">Upload a profile photo (JPG, PNG, GIF - Max 2MB)</small>
-                            </div>
-                        </div>
-                    </div>
+                 
 
                     <!-- Action Buttons -->
                     <div class="row">

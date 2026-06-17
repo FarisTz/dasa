@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role', ['admin', 'applicant', 'coordinator','beneficiary'])->default('applicant');
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->enum('status', ['active', 'inactive', 'suspended'])->default('active');
+            $table->string('phone_number')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

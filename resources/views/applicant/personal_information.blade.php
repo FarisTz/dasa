@@ -202,9 +202,7 @@
                                     <option value="">Select ID Type</option>
                                     <option value="National" {{ old('id_type', $personalInfo->id_type ?? '') == 'National' ? 'selected' : '' }}>National ID</option>
                                     <option value="zanID" {{ old('id_type', $personalInfo->id_type ?? '') == 'zanID' ? 'selected' : '' }}>ZanID</option>
-                                    <option value="Passport" {{ old('id_type', $personalInfo->id_type ?? '') == 'Passport' ? 'selected' : '' }}>Passport</option>
-                                    <option value="Voter" {{ old('id_type', $personalInfo->id_type ?? '') == 'Voter' ? 'selected' : '' }}>Voter ID</option>
-                                    <option value="Driving" {{ old('id_type', $personalInfo->id_type ?? '') == 'Driving' ? 'selected' : '' }}>Driving License</option>
+                                    <option value="passport" {{ old('id_type', $personalInfo->id_type ?? '') == 'passport' ? 'selected' : '' }}>Passport</option>
                                 </select>
                                 @error('id_type')
                                     <span class="text-danger">{{ $message }}</span>
@@ -226,10 +224,7 @@
                                 <select class="form-control @error('disability') is-invalid @enderror" name="disability">
                                     <option value="">Select Disability Status</option>
                                     <option value="none" {{ old('disability', $personalInfo->disability ?? '') == 'none' ? 'selected' : '' }}>None</option>
-                                    <option value="physical" {{ old('disability', $personalInfo->disability ?? '') == 'physical' ? 'selected' : '' }}>Physical Disability</option>
-                                    <option value="visual" {{ old('disability', $personalInfo->disability ?? '') == 'visual' ? 'selected' : '' }}>Visual Impairment</option>
-                                    <option value="hearing" {{ old('disability', $personalInfo->disability ?? '') == 'hearing' ? 'selected' : '' }}>Hearing Impairment</option>
-                                    <option value="other" {{ old('disability', $personalInfo->disability ?? '') == 'other' ? 'selected' : '' }}>Other</option>
+                                    <option value="physical" {{ old('disability', $personalInfo->disability ?? '') == 'yes' ? 'selected' : '' }}>Yes</option>
                                 </select>
                                 @error('disability')
                                     <span class="text-danger">{{ $message }}</span>
@@ -294,9 +289,7 @@
                                     <option value="mother" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'mother' ? 'selected' : '' }}>Mother</option>
                                     <option value="uncle" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'uncle' ? 'selected' : '' }}>Uncle</option>
                                     <option value="guardian" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'guardian' ? 'selected' : '' }}>Guardian</option>
-                                    <option value="spouse" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'spouse' ? 'selected' : '' }}>Spouse</option>
-                                    <option value="sibling" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'sibling' ? 'selected' : '' }}>Sibling</option>
-                                    <option value="other" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'other' ? 'selected' : '' }}>Other</option>
+                                    
                                 </select>
                                 @error('kin_relationship')
                                     <span class="text-danger">{{ $message }}</span>

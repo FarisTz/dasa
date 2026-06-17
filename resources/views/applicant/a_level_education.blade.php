@@ -124,11 +124,11 @@
                                 <label>Division <span class="text-danger">*</span></label>
                                 <select class="form-control @error('division') is-invalid @enderror" name="division" required>
                                     <option value="">Select Division</option>
-                                    <option value="I" {{ old('division', $aLevelEducation->division ?? '') == 'I' ? 'selected' : '' }}>Division I (Excellent)</option>
-                                    <option value="II" {{ old('division', $aLevelEducation->division ?? '') == 'II' ? 'selected' : '' }}>Division II (Very Good)</option>
-                                    <option value="III" {{ old('division', $aLevelEducation->division ?? '') == 'III' ? 'selected' : '' }}>Division III (Good)</option>
-                                    <option value="IV" {{ old('division', $aLevelEducation->division ?? '') == 'IV' ? 'selected' : '' }}>Division IV (Satisfactory)</option>
-                                    <option value="0" {{ old('division', $aLevelEducation->division ?? '') == '0' ? 'selected' : '' }}>Division 0 (Failed)</option>
+                                    <option value="I" {{ old('division', $aLevelEducation->division ?? '') == 'I' ? 'selected' : '' }}>Division I </option>
+                                    <option value="II" {{ old('division', $aLevelEducation->division ?? '') == 'II' ? 'selected' : '' }}>Division II </option>
+                                    <option value="III" {{ old('division', $aLevelEducation->division ?? '') == 'III' ? 'selected' : '' }}>Division III </option>
+                                    <option value="IV" {{ old('division', $aLevelEducation->division ?? '') == 'IV' ? 'selected' : '' }}>Division IV</option>
+                                    <option value="0" {{ old('division', $aLevelEducation->division ?? '') == '0' ? 'selected' : '' }}>Division 0</option>
                                 </select>
                                 @error('division')
                                     <span class="text-danger">{{ $message }}</span>
@@ -141,14 +141,14 @@
                                 <input type="number"
                                        class="form-control @error('points') is-invalid @enderror"
                                        name="points"
-                                       placeholder="Enter total points (e.g., 7-33)"
-                                       min="7"
+                                       placeholder="Enter total points (e.g., 3-33)"
+                                       min="3"
                                        max="33"
                                        value="{{ old('points', $aLevelEducation->points ?? '') }}">
                                 @error('points')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                                <small class="text-muted">Range: 7 (best) to 33 (worst)</small>
+                                <small class="text-muted">Range: 3 (best) to 33 (worst)</small>
                             </div>
 
                             <!-- Form Six Certificate -->

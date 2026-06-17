@@ -33,6 +33,7 @@
             margin-bottom: 10px;
         }
   </style>
+  @stack('styles')
 </head>
 
 
@@ -154,6 +155,7 @@
   <script src="{{asset('assets/js/scripts.js')}}"></script>
   <!-- Custom JS File -->
   <script src="{{asset('assets/js/custom.js')}}"></script>
+   @stack('scripts')
 </body>
 
 

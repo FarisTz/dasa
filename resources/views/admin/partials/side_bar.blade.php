@@ -15,8 +15,8 @@
                   data-feather="briefcase"></i><span>User</span></a>
 
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="widget-chart.html">Manage user</a></li>
-                <li><a class="nav-link" href="widget-data.html">Add User</a></li>
+                <li><a class="nav-link" href="{{ route('admin.users.index') }}">Manage user</a></li>
+                <li><a class="nav-link" href="{{ route('admin.users.create') }}">Add User</a></li>
               </ul>
             </li>
             <li class="dropdown">
@@ -51,7 +51,7 @@
             </li>
             <li><a class="nav-link" href="blank.html"><i data-feather="file"></i><span>Profile</span></a></li>
             <li><a class="nav-link" href="blank.html"><i data-feather="file"></i><span>Log Out</span></a></li>
-            
+
 
 
 

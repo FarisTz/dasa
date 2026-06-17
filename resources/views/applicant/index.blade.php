@@ -9,7 +9,8 @@
         <div class="card mb-4">
             <div class="card-body">
                 <h3 class="font-weight-bold mb-2">
-                    Welcome to KAFAAT Scholarship Application Portal 👋
+                    Hello {{ Auth::user()->name }},
+                    Welcome to KAFAAT Scholarship Application Portal
                 </h3>
                 <p class="mb-0 text-muted">
                     Complete all required sections of your scholarship application.

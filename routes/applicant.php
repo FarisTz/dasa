@@ -15,16 +15,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/personal-information/{id}', [ApplicantController::class, 'update'])->name('applicant.personal-information.update');
 
     // O-Level Education Routes
-    Route::get('/o-level', [OLevelEducationController::class, 'index'])->name('applicant.o_level');
-    Route::get('/o-level/create', [OLevelEducationController::class, 'create'])->name('applicant.o-level.create');
-    Route::post('/o-level', [OLevelEducationController::class, 'store'])->name('applicant.o-level.store');
-    Route::get('/o-level/edit', [OLevelEducationController::class, 'edit'])->name('applicant.o-level.edit');
-    Route::put('/o-level/{id}', [OLevelEducationController::class, 'update'])->name('applicant.o-level.update');
-
+    Route::get('/applicant/o-level-education', [OLevelEducationController::class, 'index'])->name('applicant.o-level-education');
+    Route::post('/applicant/o-level-education', [OLevelEducationController::class, 'store'])->name('applicant.o-level-education.store');
     // A-Level Education Routes
-    Route::get('/a-level', [ALevelEducationController::class, 'index'])->name('applicant.a_level');
-    Route::get('/a-level/create', [ALevelEducationController::class, 'create'])->name('applicant.a-level.create');
-    Route::post('/a-level', [ALevelEducationController::class, 'store'])->name('applicant.a-level.store');
-    Route::get('/a-level/edit', [ALevelEducationController::class, 'edit'])->name('applicant.a-level.edit');
-    Route::put('/a-level/{id}', [ALevelEducationController::class, 'update'])->name('applicant.a-level.update');
+    Route::get('/applicant/a-level-education', [ALevelEducationController::class, 'index'])->name('applicant.a-level-education');
+    Route::post('/applicant/a-level-education', [ALevelEducationController::class, 'store'])->name('applicant.a-level-education.store');
 });

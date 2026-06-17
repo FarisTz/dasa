@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('place_of_birth')->nullable();
             $table->string('nationality', 100)->nullable();
             $table->enum('marital_status', ['single', 'married', 'divorced', 'widowed'])->nullable();
-            $table->enum('religion', ['muslim', 'christian'])->nullable();
+            $table->string('religion', 100)->nullable();
             $table->text('address')->nullable();
             $table->string('region', 100)->nullable();
             $table->string('district', 100)->nullable();
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('disability')->nullable();
             $table->string('birth_certificate_path', 500)->nullable();
             $table->string('kin_full_name')->nullable();
-            $table->enum('kin_relationship', ['father', 'mother', 'uncle', 'guardian'])->nullable();
+            $table->enum('kin_relationship', ['father', 'mother', 'uncle', 'guardian','spouse','sibling','other'])->nullable();
             $table->string('kin_phone_number', 20)->nullable();
             $table->text('kin_address')->nullable();
             $table->string('kin_district', 100)->nullable();

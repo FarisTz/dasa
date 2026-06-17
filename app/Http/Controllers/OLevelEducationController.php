@@ -15,8 +15,8 @@ class OLevelEducationController extends Controller
     public function index()
     {
         // Check if user already has O-Level education record
-        $oLevelEducation = OLevelEducation::where('applicant_id', Auth::id())->first();
-        
+        $oLevelEducation = OLevelEducation::where('user_id', Auth::id())->first();
+
         // If record exists, pass it to the view for editing
         return view('applicant.o_level_education', compact('oLevelEducation'));
     }
@@ -27,7 +27,7 @@ class OLevelEducationController extends Controller
     public function store(Request $request)
     {
         // Check if user already has a record
-        $oLevelEducation = OLevelEducation::where('applicant_id', Auth::id())->first();
+        $oLevelEducation = OLevelEducation::where('user_id', Auth::id())->first();
 
         // Validation rules
         $rules = [
@@ -49,7 +49,7 @@ class OLevelEducationController extends Controller
         $request->validate($rules);
 
         $data = $request->all();
-        $data['applicant_id'] = Auth::id();
+        $data['user_id'] = Auth::id();
 
         // Handle file upload
         if ($request->hasFile('form_four_certificate_path')) {
@@ -57,7 +57,7 @@ class OLevelEducationController extends Controller
             if ($oLevelEducation && $oLevelEducation->form_four_certificate_path) {
                 Storage::disk('public')->delete($oLevelEducation->form_four_certificate_path);
             }
-            
+
             $path = $request->file('form_four_certificate_path')->store('o_level_certificates', 'public');
             $data['form_four_certificate_path'] = $path;
         }

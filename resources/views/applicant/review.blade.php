@@ -202,7 +202,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <a href="{{ route('applicant.personal-information.edit') }}" class="btn btn-warning">
+                                    <a href="{{ route('applicant.personal_information') }}" class="btn btn-warning">
                                         <i class="fas fa-edit"></i> Edit Personal Info
                                     </a>
                                 </div>
@@ -348,7 +348,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <a href="{{ route('applicant.a-level.edit') }}" class="btn btn-warning">
+                                    <a href="{{ route('applicant.a-level-education') }}" class="btn btn-warning">
                                         <i class="fas fa-edit"></i> Edit A-Level Info
                                     </a>
                                 </div>
@@ -433,7 +433,7 @@
                                 <div class="alert alert-warning text-center">
                                     <i class="fas fa-exclamation-triangle"></i>
                                     <p>Motivation not yet submitted. Please complete your motivation letter.</p>
-                                    <a href="{{ route('applicant.motivations.create') }}" class="btn btn-primary">
+                                    <a href="{{ route('applicant.motivations.index') }}" class="btn btn-primary">
                                         <i class="fas fa-plus"></i> Add Motivation
                                     </a>
                                 </div>

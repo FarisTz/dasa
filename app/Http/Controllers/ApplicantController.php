@@ -6,6 +6,7 @@ use App\Models\Application;
 use App\Models\Motivation;
 use App\Models\OLevelEducation;
 use App\Models\PersonalInfo;
+use App\Models\Scholarship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -102,7 +103,7 @@ class ApplicantController extends Controller
      */
     public function review()
     {
-        $user = Auth::user();
+       $user = Auth::user();
 
         // Fetch all application data
         $personalInfo = PersonalInfo::where('user_id', $user->id)->first();
@@ -110,7 +111,32 @@ class ApplicantController extends Controller
         $aLevel = ALevelEducation::where('user_id', $user->id)->first();
         $motivation = Motivation::where('user_id', $user->id)->first();
 
-        return view('applicant.review', compact('personalInfo', 'oLevel', 'aLevel', 'motivation'));
+        // Get open scholarships
+        $openScholarships = Scholarship::where('status', 'open')
+            ->where('deadline', '>=', now())
+            ->orderBy('deadline', 'asc')
+            ->get();
+
+        // Get selected scholarship from session or database
+        $selectedScholarship = null;
+        $application = Application::where('user_id', $user->id)
+            ->where('status', 'pending')
+            ->first();
+
+        if ($application) {
+            $selectedScholarship = $application->scholarship;
+        } elseif (session('selected_scholarship_id')) {
+            $selectedScholarship = Scholarship::find(session('selected_scholarship_id'));
+        }
+
+        return view('applicant.review', compact(
+            'personalInfo',
+            'oLevel',
+            'aLevel',
+            'motivation',
+            'openScholarships',
+            'selectedScholarship'
+        ));
     }
 
     /**
@@ -162,6 +188,24 @@ class ApplicantController extends Controller
         return view('applicant.dashboard', compact('user'));
     }
 
+
+
+
+    /**
+     * Display the user's application.
+     */
+    public function myApplication()
+    {
+        $user = Auth::user();
+
+        // Get the latest application for the user
+        $application = Application::with(['scholarship'])
+            ->where('user_id', $user->id)
+            ->latest()
+            ->first();
+
+        return view('applicant.my-application', compact('application'));
+    }
 
 
 

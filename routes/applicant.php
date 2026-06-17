@@ -24,8 +24,12 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    Route::get('/review', [ApplicantController::class, 'review'])->name('applicant.application.review');
-    Route::post('/submit', [ApplicantController::class, 'submit'])->name('applicant.application.submit');
+    Route::get('applicant/review', [ApplicantController::class, 'review'])->name('applicant.application.review');
+    Route::post('applicant/submit', [ApplicantController::class, 'submit'])->name('applicant.application.submit');
+
+
+
+     Route::get('applicant/my-application', [ApplicantController::class, 'myApplication'])->name('applicant.my-application');
 
 
 

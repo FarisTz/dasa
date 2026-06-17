@@ -8,13 +8,7 @@
                 <h4>{{ isset($aLevelEducation) ? 'Edit' : 'Add' }} A-Level Education Information</h4>
                 @if(isset($aLevelEducation))
                     <div class="card-header-action">
-                        <form action="{{ route('applicant.a-level-education.destroy') }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this A-Level education record?')" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">
-                                <i class="fas fa-trash"></i> Delete Record
-                            </button>
-                        </form>
+                        
                     </div>
                 @endif
             </div>
@@ -38,9 +32,9 @@
                     </div>
                 @endif
 
-                <form id="aLevelEducationForm" 
-                      method="POST" 
-                      action="{{ route('applicant.a-level-education.store') }}" 
+                <form id="aLevelEducationForm"
+                      method="POST"
+                      action="{{ route('applicant.a-level-education.store') }}"
                       enctype="multipart/form-data">
                     @csrf
 
@@ -50,11 +44,11 @@
                             <!-- School Name -->
                             <div class="form-group">
                                 <label>School Name <span class="text-danger">*</span></label>
-                                <input type="text" 
-                                       class="form-control @error('school_name') is-invalid @enderror" 
-                                       name="school_name" 
-                                       placeholder="Enter school name" 
-                                       value="{{ old('school_name', $aLevelEducation->school_name ?? '') }}" 
+                                <input type="text"
+                                       class="form-control @error('school_name') is-invalid @enderror"
+                                       name="school_name"
+                                       placeholder="Enter school name"
+                                       value="{{ old('school_name', $aLevelEducation->school_name ?? '') }}"
                                        required>
                                 @error('school_name')
                                     <span class="text-danger">{{ $message }}</span>
@@ -70,11 +64,11 @@
                                             <i class="fas fa-hashtag"></i>
                                         </div>
                                     </div>
-                                    <input type="text" 
-                                           class="form-control @error('form_six_index_number') is-invalid @enderror" 
-                                           name="form_six_index_number" 
-                                           placeholder="e.g., S1234/0001/2020" 
-                                           value="{{ old('form_six_index_number', $aLevelEducation->form_six_index_number ?? '') }}" 
+                                    <input type="text"
+                                           class="form-control @error('form_six_index_number') is-invalid @enderror"
+                                           name="form_six_index_number"
+                                           placeholder="e.g., S1234/0001/2020"
+                                           value="{{ old('form_six_index_number', $aLevelEducation->form_six_index_number ?? '') }}"
                                            required>
                                 </div>
                                 @error('form_six_index_number')
@@ -102,10 +96,10 @@
                             <!-- Preferred University -->
                             <div class="form-group">
                                 <label>Preferred University</label>
-                                <input type="text" 
-                                       class="form-control @error('preferred_university') is-invalid @enderror" 
-                                       name="preferred_university" 
-                                       placeholder="Enter preferred university" 
+                                <input type="text"
+                                       class="form-control @error('preferred_university') is-invalid @enderror"
+                                       name="preferred_university"
+                                       placeholder="Enter preferred university"
                                        value="{{ old('preferred_university', $aLevelEducation->preferred_university ?? '') }}">
                                 @error('preferred_university')
                                     <span class="text-danger">{{ $message }}</span>
@@ -135,11 +129,11 @@
                             <!-- Points -->
                             <div class="form-group">
                                 <label>Total Points</label>
-                                <input type="number" 
-                                       class="form-control @error('points') is-invalid @enderror" 
-                                       name="points" 
-                                       placeholder="Enter total points (e.g., 7-33)" 
-                                       min="7" 
+                                <input type="number"
+                                       class="form-control @error('points') is-invalid @enderror"
+                                       name="points"
+                                       placeholder="Enter total points (e.g., 7-33)"
+                                       min="7"
                                        max="33"
                                        value="{{ old('points', $aLevelEducation->points ?? '') }}">
                                 @error('points')
@@ -157,20 +151,20 @@
                                             <i class="fas fa-file-pdf"></i>
                                         </div>
                                     </div>
-                                    <input type="file" 
-                                           class="form-control @error('form_six_certificate_path') is-invalid @enderror" 
-                                           name="form_six_certificate_path" 
+                                    <input type="file"
+                                           class="form-control @error('form_six_certificate_path') is-invalid @enderror"
+                                           name="form_six_certificate_path"
                                            accept=".pdf,.jpg,.jpeg,.png">
                                 </div>
-                                
+
                                 @if(isset($aLevelEducation) && $aLevelEducation->form_six_certificate_path)
                                     <div class="mt-2">
                                         <div class="alert alert-info">
-                                            <i class="fas fa-info-circle"></i> 
+                                            <i class="fas fa-info-circle"></i>
                                             <strong>Current Certificate:</strong> {{ basename($aLevelEducation->form_six_certificate_path) }}
                                             <br>
-                                            <a href="{{ $aLevelEducation->certificate_url }}" 
-                                               target="_blank" 
+                                            <a href="{{ $aLevelEducation->certificate_url }}"
+                                               target="_blank"
                                                class="btn btn-sm btn-primary mt-2">
                                                 <i class="fas fa-eye"></i> View Certificate
                                             </a>
@@ -180,7 +174,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                
+
                                 @error('form_six_certificate_path')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -195,14 +189,14 @@
                             <hr>
                             <div class="form-group text-center">
                                 <button type="submit" class="btn btn-primary btn-lg px-5">
-                                    <i class="fas fa-save"></i> 
+                                    <i class="fas fa-save"></i>
                                     {{ isset($aLevelEducation) ? 'Update' : 'Save' }} A-Level Education
                                 </button>
-                                
+
                                 <a href="#" class="btn btn-success btn-lg px-5">
                                     <i class="fas fa-arrow-right"></i> Proceed to Motivation Letter
                                 </a>
-                                
+
                                 <a href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4">
                                     <i class="fas fa-arrow-left"></i> Back
                                 </a>

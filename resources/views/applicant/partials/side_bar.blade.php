@@ -1,4 +1,4 @@
- <div class="main-sidebar sidebar-style-2">
+<div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
             <a href="{{ route('dashboard') }}"> <img alt="image" style="width: 100px;" src="{{ asset('assets/img/dasa.png') }}" class="header-logo" /> <span
@@ -25,8 +25,8 @@
 
 
             <li><a class="nav-link" href="{{ route('applicant.my-application') }}"><i data-feather="file"></i><span>My Applications</span></a></li>
-            <li><a class="nav-link" href="#"><i data-feather="file"></i><span>Profile</span></a></li>
-            <li><a class="nav-link" href="#"><i data-feather="file"></i><span>Logout</span></a></li>
+            <li><a class="nav-link" href="{{ route('profile.edit') }}"><i data-feather="file"></i><span>Profile</span></a></li>
+            <li><a class="nav-link" href="{{ route('logout') }}"><i data-feather="file"></i><span>Logout</span></a></li>
           </ul>
         </aside>
       </div>

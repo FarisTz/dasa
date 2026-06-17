@@ -10,6 +10,72 @@
     </div>
 
     <div class="section-body">
+
+        <!-- Statistics Cards -->
+        <div class="row mt-4">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-primary">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Total Users</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ $totalUsers ?? $users->total() }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-success">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Active Users</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ $activeUsers ?? 0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-warning">
+                        <i class="fas fa-user-clock"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Pending Applications</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ $pendingApplications ?? 0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-danger">
+                        <i class="fas fa-user-slash"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Inactive Users</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ $inactiveUsers ?? 0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <i class="fas fa-check-circle"></i> {{ session('success') }}
@@ -197,6 +263,7 @@
                                             <span class="badge badge-secondary">Not Applied</span>
                                         @endif
                                     </td>
+                                    <td>{{ $user->created_at->format('d M Y') }}</td>
                                     <td>
                                         <span class="badge badge-{{ $user->status == 'active' ? 'success' : ($user->status == 'inactive' ? 'warning' : 'danger') }}">
                                             {{ ucfirst($user->status ?? 'active') }}
@@ -319,69 +386,6 @@
             </div>
         </div>
 
-        <!-- Statistics Cards -->
-        <div class="row mt-4">
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-primary">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Total Users</h4>
-                        </div>
-                        <div class="card-body">
-                            {{ $totalUsers ?? $users->total() }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-success">
-                        <i class="fas fa-user-check"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Active Users</h4>
-                        </div>
-                        <div class="card-body">
-                            {{ $activeUsers ?? 0 }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-warning">
-                        <i class="fas fa-user-clock"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Pending Applications</h4>
-                        </div>
-                        <div class="card-body">
-                            {{ $pendingApplications ?? 0 }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-danger">
-                        <i class="fas fa-user-slash"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Inactive Users</h4>
-                        </div>
-                        <div class="card-body">
-                            {{ $inactiveUsers ?? 0 }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
 @endsection

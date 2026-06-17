@@ -1,14 +1,14 @@
  <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="index.html"> <img alt="image" width="100px" height="100px"  src="{{ asset('assets/img/dasa.png') }}" class="header-logo" /> <span
+            <a href="{{ route('dashboard') }}"> <img alt="image" width="100px" height="100px"  src="{{ asset('assets/img/dasa.png') }}" class="header-logo" /> <span
                 class="logo-name">KAAFAT</span>
             </a>
           </div>
           <ul class="sidebar-menu">
             <li class="menu-header">Main</li>
             <li class="dropdown active">
-              <a href="index.html" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <a href="{{ route('dashboard') }}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
             <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i
@@ -19,12 +19,24 @@
                 <li><a class="nav-link" href="{{ route('admin.users.create') }}">Add User</a></li>
               </ul>
             </li>
+
+
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Scholarships</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{{ route('admin.scholarships.index') }}">All Scholarships</a></li>
+                <li><a class="nav-link" href="{{ route('admin.scholarships.create') }}">Add Scholarship</a></li>
+
+              </ul>
+            </li>
+
+
             <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>Applcation</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="chat.html">All Applications</a></li>
-                <li><a class="nav-link" href="portfolio.html">Approved</a></li>
-                <li><a class="nav-link" href="blog.html">Rejected</a></li>
+                <li><a class="nav-link" href="{{ route('admin.applications.index') }}">All Applications</a></li>
+                <li><a class="nav-link" href="{{ route('admin.applications.index') }}?status=approved">Approved</a></li>
+                <li><a class="nav-link" href="{{ route('admin.applications.index') }}?status=rejected">Rejected</a></li>
 
               </ul>
             </li>

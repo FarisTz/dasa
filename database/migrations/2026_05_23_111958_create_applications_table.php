@@ -21,7 +21,7 @@ return new class extends Migration
                   ->constrained('scholarships')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
-            $table->enum('status', ['pending', 'under_review', 'approved_full', 'approved_partial', 'rejected'])
+            $table->enum('status', ['submitted','pending', 'under_review', 'approved_full', 'approved_partial', 'rejected'])
                   ->default('pending');
             $table->text('admin_notes')->nullable();
             $table->timestamp('submitted_at');

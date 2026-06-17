@@ -24,4 +24,9 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+    Route::get('/review', [ApplicantController::class, 'review'])->name('applicant.application.review');
+    Route::post('/submit', [ApplicantController::class, 'submit'])->name('applicant.application.submit');
+
+
+
 });

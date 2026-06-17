@@ -18,13 +18,13 @@ return new class extends Migration
             $table->date('birthdate')->nullable();
             $table->string('place_of_birth')->nullable();
             $table->string('nationality', 100)->nullable();
-            $table->enum('marital_status', ['single', 'married'])->nullable();
+            $table->enum('marital_status', ['single', 'married', 'divorced', 'widowed'])->nullable();
             $table->enum('religion', ['muslim', 'christian'])->nullable();
             $table->text('address')->nullable();
             $table->string('region', 100)->nullable();
             $table->string('district', 100)->nullable();
             $table->string('phone_number', 20)->nullable();
-            $table->enum('id_type', ['National', 'zanID', 'Passport'])->nullable();
+            $table->enum('id_type', ['National', 'zanID', 'Passport','Voter','Driving','Other'])->nullable();
             $table->string('id_number', 100)->nullable();
             $table->string('disability')->nullable();
             $table->string('birth_certificate_path', 500)->nullable();

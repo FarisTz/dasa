@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\ALevelEducation;
+use App\Models\Application;
+use App\Models\Motivation;
+use App\Models\OLevelEducation;
 use App\Models\PersonalInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -78,14 +82,7 @@ class ApplicantController extends Controller
                     ->with('success', 'Personal information updated successfully!');
             }
 
-            // Check if data was saved successfully
-            if ($personalInfo) {
 
-            } else {
-                return redirect()->back()
-                    ->with('error', 'Failed to save personal information.')
-                    ->withInput();
-            }
 
         } catch (\Exception $e) {
             // Handle any exceptions
@@ -95,5 +92,79 @@ class ApplicantController extends Controller
         }
 
 }
+
+
+
+
+
+/**
+     * Display the review and submit page.
+     */
+    public function review()
+    {
+        $user = Auth::user();
+
+        // Fetch all application data
+        $personalInfo = PersonalInfo::where('user_id', $user->id)->first();
+        $oLevel = OLevelEducation::where('user_id', $user->id)->first();
+        $aLevel = ALevelEducation::where('user_id', $user->id)->first();
+        $motivation = Motivation::where('user_id', $user->id)->first();
+
+        return view('applicant.review', compact('personalInfo', 'oLevel', 'aLevel', 'motivation'));
+    }
+
+    /**
+     * Submit the complete application.
+     */
+    public function submit(Request $request)
+    {
+        $user = Auth::user();
+
+        // Check if all sections are completed
+        $personalInfo = PersonalInfo::where('user_id', $user->id)->first();
+        $oLevel = OLevelEducation::where('user_id', $user->id)->first();
+        $aLevel = ALevelEducation::where('user_id', $user->id)->first();
+        $motivation = Motivation::where('user_id', $user->id)->first();
+
+        if (!$personalInfo || !$oLevel || !$aLevel || !$motivation) {
+            return redirect()->back()->with('error', 'Please complete all sections before submitting your application.');
+        }
+
+        try {
+            // Update user status to submitted
+           $application = Application::create([
+                'user_id' => $user->id,
+                'application_status' => 'submitted',
+                'submitted_at' => now()
+            ]);
+
+            // You can also store submission status in a separate table if needed
+            // Application::create([
+            //     'user_id' => $user->id,
+            //     'submitted_at' => now(),
+            //     'status' => 'pending'
+            // ]);
+
+            return redirect()->route('applicant.dashboard')
+                ->with('success', 'Your application has been submitted successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Failed to submit application: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Dashboard after submission.
+     */
+    public function dashboard()
+    {
+        $user = Auth::user();
+        return view('applicant.dashboard', compact('user'));
+    }
+
+
+
+
+
 
 }

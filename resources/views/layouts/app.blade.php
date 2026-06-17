@@ -37,7 +37,7 @@
 
 
 <body>
-  
+
 
     @php
          $user = Auth::user();
@@ -121,6 +121,8 @@
                 @include('applicant.partials.side_bar')
             @elseif($user->role === 'beneficiary')
                 @include('beneficiary.partials.side_bar')
+                @else
+                @include('applicant.partials.side_bar')
             @endif
 
       <!-- Main Content -->

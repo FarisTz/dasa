@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Applicant;
 use App\Models\PersonalInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +10,7 @@ class ApplicantController extends Controller
 {
 
 
-    public function create()
+    public function index()
     {
         // Check if the authenticated user already has personal information
         $personalInfo = PersonalInfo::where('user_id', Auth::id())->first();
@@ -45,7 +43,7 @@ class ApplicantController extends Controller
             'kin_district' => 'nullable|string|max:100',
         ]);
 
- $personalInfo = PersonalInfo::where('user_id', Auth::id())->first();
+        $personalInfo = PersonalInfo::where('user_id', Auth::id())->first();
 
         try {
             // Handle file upload for birth certificate

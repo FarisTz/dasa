@@ -17,7 +17,7 @@
                 <li><a class="nav-link" href="{{ route('applicant.personal_information') }}">Personal Information</a></li>
                 <li><a class="nav-link" href="{{ route('applicant.o-level-education') }}">O-Level Education</a></li>
                 <li><a class="nav-link" href="{{ route('applicant.a-level-education') }}">A-Level Education</a></li>
-                <li><a class="nav-link" href="#">Motivation Letter</a></li>
+                <li><a class="nav-link" href="{{ route('applicant.motivations.index') }}">Motivation Letter</a></li>
                 <li><a class="nav-link" href="#">Review & Submit</a></li>
 
               </ul>

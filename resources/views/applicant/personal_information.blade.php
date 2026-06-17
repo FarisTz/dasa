@@ -9,8 +9,7 @@
                 <h4>{{ isset($personalInfo) ? 'Edit' : 'Add' }} Personal Information</h4>
             </div>
             <div class="card-body">
-
-                      <!-- Display Success/Error Messages -->
+                <!-- Display Success/Error Messages -->
                 @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <i class="fas fa-check-circle"></i> {{ session('success') }}
@@ -31,7 +30,7 @@
 
                 <form id="personalInfoForm" method="POST" action="{{ route('applicant.personal-information.store') }}" enctype="multipart/form-data">
                     @csrf
-                    
+
 
                     <!-- Display General Error Messages -->
                     @if ($errors->any())
@@ -340,9 +339,12 @@
                                 <button type="submit" class="btn btn-primary btn-lg px-5">
                                     <i class="fas fa-save"></i> {{ isset($personalInfo) ? 'Update' : 'Save' }} Personal Information
                                 </button>
-                                <button type="reset" class="btn btn-secondary btn-lg px-4">
-                                    <i class="fas fa-undo"></i> Reset
-                                </button>
+
+
+                                <a href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4" style="background-color: #07dc72; color: #fff;">
+                                    <i class="fas fa-arrow-right"></i> Proceed to O-Level Education
+                                </a>
+
                             </div>
                         </div>
                     </div>

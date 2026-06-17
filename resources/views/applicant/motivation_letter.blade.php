@@ -108,11 +108,15 @@
                         <div class="col-12">
                             <hr>
                             <div class="form-group text-center">
+
+                                <a href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4">
+                                    <i class="fas fa-arrow-left"></i>Go Back to O-Level Education
+                                </a>
                                 <button type="submit" class="btn btn-primary btn-lg px-5">
                                     <i class="fas fa-save"></i> {{ isset($motivation) ? 'Update' : 'Save' }} Motivation
                                 </button>
-                                <a href="{{ route('dashboard') }}" class="btn btn-secondary btn-lg px-4">
-                                    <i class="fas fa-times"></i> Cancel
+                                <a href="{{ route('applicant.application.review') }}" class="btn btn-secondary btn-lg px-4">
+                                    <i class="fas fa-arrow-right"></i>Proceed to Review
                                 </a>
 
                             </div>

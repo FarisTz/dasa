@@ -27,9 +27,9 @@
                     </div>
                 @endif
 
-                <form id="oLevelEducationForm" 
-                      method="POST" 
-                      action="{{ route('applicant.o-level-education.store') }}" 
+                <form id="oLevelEducationForm"
+                      method="POST"
+                      action="{{ route('applicant.o-level-education.store') }}"
                       enctype="multipart/form-data">
                     @csrf
 
@@ -39,11 +39,11 @@
                             <!-- School Name -->
                             <div class="form-group">
                                 <label>School Name <span class="text-danger">*</span></label>
-                                <input type="text" 
-                                       class="form-control @error('school_name') is-invalid @enderror" 
-                                       name="school_name" 
-                                       placeholder="Enter school name" 
-                                       value="{{ old('school_name', $oLevelEducation->school_name ?? '') }}" 
+                                <input type="text"
+                                       class="form-control @error('school_name') is-invalid @enderror"
+                                       name="school_name"
+                                       placeholder="Enter school name"
+                                       value="{{ old('school_name', $oLevelEducation->school_name ?? '') }}"
                                        required>
                                 @error('school_name')
                                     <span class="text-danger">{{ $message }}</span>
@@ -59,11 +59,11 @@
                                             <i class="fas fa-hashtag"></i>
                                         </div>
                                     </div>
-                                    <input type="text" 
-                                           class="form-control @error('form_four_index_number') is-invalid @enderror" 
-                                           name="form_four_index_number" 
-                                           placeholder="e.g., S1234/0001/2020" 
-                                           value="{{ old('form_four_index_number', $oLevelEducation->form_four_index_number ?? '') }}" 
+                                    <input type="text"
+                                           class="form-control @error('form_four_index_number') is-invalid @enderror"
+                                           name="form_four_index_number"
+                                           placeholder="e.g., S1234/0001/2020"
+                                           value="{{ old('form_four_index_number', $oLevelEducation->form_four_index_number ?? '') }}"
                                            required>
                                 </div>
                                 @error('form_four_index_number')
@@ -110,11 +110,11 @@
                             <!-- Points -->
                             <div class="form-group">
                                 <label>Total Points</label>
-                                <input type="number" 
-                                       class="form-control @error('points') is-invalid @enderror" 
-                                       name="points" 
-                                       placeholder="Enter total points (e.g., 7-33)" 
-                                       min="7" 
+                                <input type="number"
+                                       class="form-control @error('points') is-invalid @enderror"
+                                       name="points"
+                                       placeholder="Enter total points (e.g., 7-33)"
+                                       min="7"
                                        max="33"
                                        value="{{ old('points', $oLevelEducation->points ?? '') }}">
                                 @error('points')
@@ -132,20 +132,20 @@
                                             <i class="fas fa-file-pdf"></i>
                                         </div>
                                     </div>
-                                    <input type="file" 
-                                           class="form-control @error('form_four_certificate_path') is-invalid @enderror" 
-                                           name="form_four_certificate_path" 
+                                    <input type="file"
+                                           class="form-control @error('form_four_certificate_path') is-invalid @enderror"
+                                           name="form_four_certificate_path"
                                            accept=".pdf,.jpg,.jpeg,.png">
                                 </div>
-                                
+
                                 @if(isset($oLevelEducation) && $oLevelEducation->form_four_certificate_path)
                                     <div class="mt-2">
                                         <div class="alert alert-info">
-                                            <i class="fas fa-info-circle"></i> 
+                                            <i class="fas fa-info-circle"></i>
                                             <strong>Current Certificate:</strong> {{ basename($oLevelEducation->form_four_certificate_path) }}
                                             <br>
-                                            <a href="{{ asset('storage/' . $oLevelEducation->form_four_certificate_path) }}" 
-                                               target="_blank" 
+                                            <a href="{{ asset('storage/' . $oLevelEducation->form_four_certificate_path) }}"
+                                               target="_blank"
                                                class="btn btn-sm btn-primary mt-2">
                                                 <i class="fas fa-eye"></i> View Certificate
                                             </a>
@@ -155,7 +155,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                
+
                                 @error('form_four_certificate_path')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -169,16 +169,16 @@
                         <div class="col-12">
                             <hr>
                             <div class="form-group text-center">
-                                <a href="{{ route('applicant.personal_information') }}" class="btn btn-secondary btn-lg px-4" style="background-color: #07dc72; color: #fff;">
+                                <a href="{{ route('applicant.personal_information') }}" class="btn btn-secondary btn-lg px-4" >
                                     <i class="fas fa-arrow-left"></i> Back to Personal Information
                                 </a>
-                                <button type="submit" class="btn btn-primary btn-lg px-5" 
-                                        style="background-color: #07dc72; color: #fff;">
-                                    <i class="fas fa-save"></i> 
+                                <button type="submit" class="btn btn-primary btn-lg px-5"
+                                        >
+                                    <i class="fas fa-save"></i>
                                     {{ isset($oLevelEducation) ? 'Update' : 'Save' }} O-Level Education
                                 </button>
-                                
-                                <a href="{{ route('applicant.a-level-education') }}" class="btn btn-success btn-lg px-5" style="background-color: #07dc72; color: #fff;">
+
+                                <a href="{{ route('applicant.a-level-education') }}" class="btn btn-secondary btn-lg px-5" >
                                     <i class="fas fa-arrow-right"></i> Proceed to A-Level
                                 </a>
                             </div>

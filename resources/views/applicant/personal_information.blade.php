@@ -341,7 +341,7 @@
                                 </button>
 
 
-                                <a href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4" style="background-color: #07dc72; color: #fff;">
+                                <a href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4" >
                                     <i class="fas fa-arrow-right"></i> Proceed to O-Level Education
                                 </a>
 

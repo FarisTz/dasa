@@ -10,7 +10,7 @@ class OLevelEducation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'applicant_id',
+        'user_id',
         'school_name',
         'form_four_index_number',
         'division',

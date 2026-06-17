@@ -8,7 +8,7 @@
                 <h4>{{ isset($aLevelEducation) ? 'Edit' : 'Add' }} A-Level Education Information</h4>
                 @if(isset($aLevelEducation))
                     <div class="card-header-action">
-                        
+
                     </div>
                 @endif
             </div>
@@ -188,7 +188,7 @@
                         <div class="col-12">
                             <hr>
                             <div class="form-group text-center">
-                                <a  href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4" style="background-color: #07dc72; color: #fff;">
+                                <a  href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4" >
                                     <i class="fas fa-arrow-left"></i> Back to O-Level Education
                                 </a>
                                 <button type="submit" class="btn btn-primary btn-lg px-5">
@@ -196,11 +196,11 @@
                                     {{ isset($aLevelEducation) ? 'Update' : 'Save' }} A-Level Education
                                 </button>
 
-                                <a href="#" class="btn btn-secondary btn-lg px-4" style="background-color: #07dc72; color: #fff;">
+                                <a href="{{ route('applicant.motivations.index') }}" class="btn btn-secondary btn-lg px-4" >
                                     <i class="fas fa-arrow-right"></i> Proceed to Motivation Letter
                                 </a>
 
-                                
+
                             </div>
                         </div>
                     </div>

@@ -273,7 +273,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <a href="{{ route('applicant.o-level.edit') }}" class="btn btn-warning">
+                                    <a href="{{ route('applicant.o-level-education') }}" class="btn btn-warning">
                                         <i class="fas fa-edit"></i> Edit O-Level Info
                                     </a>
                                 </div>

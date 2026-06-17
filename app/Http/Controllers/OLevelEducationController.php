@@ -26,8 +26,11 @@ class OLevelEducationController extends Controller
      */
     public function store(Request $request)
     {
+        $id = Auth::id();
+
+
         // Check if user already has a record
-        $oLevelEducation = OLevelEducation::where('user_id', Auth::id())->first();
+        $oLevelEducation = OLevelEducation::where('user_id', $id)->first();
 
         // Validation rules
         $rules = [

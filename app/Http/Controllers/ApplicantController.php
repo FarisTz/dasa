@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Applicant;
+use App\Models\PersonalInfo;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ApplicantController extends Controller
@@ -12,125 +14,88 @@ class ApplicantController extends Controller
 
     public function create()
     {
-        return view('applicant.personal_information');
+        // Check if the authenticated user already has personal information
+        $personalInfo = PersonalInfo::where('user_id', Auth::id())->first();
+        return view('applicant.personal_information', compact('personalInfo'));
     }
 
     public function store(Request $request)
     {
+
+    // Validate the incoming request data
         $request->validate([
-            // Basic Personal Information
-            
-            'gender' => 'required|in:male,female,other',
-            'birthdate' => 'required|date|before:today',
-            'place_of_birth' => 'required|string|max:255',
-            'nationality' => 'required|string|max:255',
-            'marital_status' => 'required|in:single,married,divorced,widowed',
-            'religion' => 'required|in:muslim,christian',
-
-            // Contact Information
-            'address' => 'required|string',
-            'region' => 'required|string|max:255',
-            'district' => 'required|string|max:255',
-            'email' => 'required|email|unique:applicants,email',
-            'phone_number' => 'required|string|max:20',
-
-            // Identification Details
-            'zanzibar_national_id' => 'nullable|string|unique:applicants,zanzibar_national_id',
-            'passport_number' => 'nullable|string|unique:applicants,passport_number',
-
-            // Additional Information & Documents
-            'disability' => 'boolean',
-            'birth_certificate' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-
-            // Next of Kin Information
-            'kin_full_name' => 'required|string|max:255',
-            'kin_relationship' => 'required|in:father,mother,uncle,guardian',
-            'kin_phone_number' => 'required|string|max:20',
-            'kin_religion' => 'required|in:muslim,christian',
-            'kin_address' => 'required|string',
-            'kin_region' => 'required|string|max:255',
-            'kin_district' => 'required|string|max:255',
+            'gender' => 'in:male,female,other',
+            'birthdate' => 'date',
+            'place_of_birth' => 'string|max:255',
+            'nationality' => 'string|max:100',
+            'marital_status' => 'string|max:50',
+            'religion' => 'string|max:100',
+            'address' => 'string',
+            'region' => 'string|max:100',
+            'district' => 'nullable|string|max:100',
+            'phone_number' => 'string|max:20',
+            'id_type' => 'nullable|string|max:50',
+            'id_number' => 'string|max:100',
+            'disability' => 'nullable|string|max:255',
+            'birth_certificate_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'kin_full_name' => 'nullable|string|max:255',
+            'kin_relationship' => 'nullable|string|max:100',
+            'kin_phone_number' => 'nullable|string|max:20',
+            'kin_address' => 'nullable|string',
+            'kin_district' => 'nullable|string|max:100',
         ]);
 
-        $data = $request->all();
-        $data['user_id'] = auth()->id();
-        $data['disability'] = $request->has('disability');
+ $personalInfo = PersonalInfo::where('user_id', Auth::id())->first();
 
-        if ($request->hasFile('birth_certificate')) {
-            $path = $request->file('birth_certificate')->store('birth_certificates', 'public');
-            $data['birth_certificate_path'] = $path;
-        }
+        try {
+            // Handle file upload for birth certificate
+            $birthCertificatePath = null;
+            if ($request->hasFile('birth_certificate_path')) {
+                //Delete old file if exists (for update)
 
-        Applicant::create($data);
+                if ($personalInfo && $personalInfo->birth_certificate_path) {
+                    Storage::disk('public')->delete($personalInfo->birth_certificate_path);
+                }
 
-        return redirect()->route('dashboard')->with('success', 'Personal information saved successfully!');
-    }
-
-    public function edit()
-    {
-        $applicant = Applicant::where('user_id', auth()->id())->first();
-
-        if (!$applicant) {
-            return redirect()->route('applicant.personal-information.create');
-        }
-
-        return view('applicant.personal_information', compact('applicant'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $applicant = Applicant::where('user_id', auth()->id())->findOrFail($id);
-
-        $request->validate([
-            // Basic Personal Information
-            'full_name' => 'required|string|max:255',
-            'gender' => 'required|in:male,female,other',
-            'birthdate' => 'required|date|before:today',
-            'place_of_birth' => 'required|string|max:255',
-            'nationality' => 'required|string|max:255',
-            'marital_status' => 'required|in:single,married,divorced,widowed',
-            'religion' => 'required|in:muslim,christian',
-
-            // Contact Information
-            'address' => 'required|string',
-            'region' => 'required|string|max:255',
-            'district' => 'required|string|max:255',
-            'email' => 'required|email|unique:applicants,email,'.$applicant->id,
-            'phone_number' => 'required|string|max:20',
-
-            // Identification Details
-            'zanzibar_national_id' => 'nullable|string|unique:applicants,zanzibar_national_id,'.$applicant->id,
-            'passport_number' => 'nullable|string|unique:applicants,passport_number,'.$applicant->id,
-
-            // Additional Information & Documents
-            'disability' => 'boolean',
-            'birth_certificate' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-
-            // Next of Kin Information
-            'kin_full_name' => 'required|string|max:255',
-            'kin_relationship' => 'required|in:father,mother,uncle,guardian',
-            'kin_phone_number' => 'required|string|max:20',
-            'kin_religion' => 'required|in:muslim,christian',
-            'kin_address' => 'required|string',
-            'kin_region' => 'required|string|max:255',
-            'kin_district' => 'required|string|max:255',
-        ]);
-
-        $data = $request->all();
-        $data['disability'] = $request->has('disability');
-
-        if ($request->hasFile('birth_certificate')) {
-            // Delete old file if exists
-            if ($applicant->birth_certificate_path) {
-                Storage::disk('public')->delete($applicant->birth_certificate_path);
+                $file = $request->file('birth_certificate_path');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $birthCertificatePath = $file->storeAs('birth_certificates', $filename, 'public');
             }
 
-            $path = $request->file('birth_certificate')->store('birth_certificates', 'public');
-            $data['birth_certificate_path'] = $path;
+            // Create new PersonalInfo record
+           $data = $request->all();
+              $data['user_id'] = Auth::id();
+            $data['birth_certificate_path'] = $birthCertificatePath;
+
+
+
+            if (!$personalInfo) {
+                $personalInfo = PersonalInfo::create($data);
+                return redirect()->back()
+                    ->with('success', 'Personal information saved successfully!');
+                }
+            else {
+                $personalInfo->update($data);
+                return redirect()->back()
+                    ->with('success', 'Personal information updated successfully!');
+            }
+
+            // Check if data was saved successfully
+            if ($personalInfo) {
+
+            } else {
+                return redirect()->back()
+                    ->with('error', 'Failed to save personal information.')
+                    ->withInput();
+            }
+
+        } catch (\Exception $e) {
+            // Handle any exceptions
+            return redirect()->back()
+                ->with('error', 'An error occurred: ' . $e->getMessage())
+                ->withInput();
         }
 
-        $applicant->update($data);
+}
 
-        return redirect()->route('dashboard')->with('success', 'Personal information updated successfully!');
-    }
 }

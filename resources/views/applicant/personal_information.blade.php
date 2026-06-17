@@ -6,13 +6,46 @@
         <!-- Personal Information Card -->
         <div class="card">
             <div class="card-header">
-                <h4>Personal Information</h4>
+                <h4>{{ isset($personalInfo) ? 'Edit' : 'Add' }} Personal Information</h4>
             </div>
             <div class="card-body">
-                <form id="personalInfoForm" method="POST"  enctype="multipart/form-data">
+
+                      <!-- Display Success/Error Messages -->
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle"></i> {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
+                <form id="personalInfoForm" method="POST" action="{{ route('applicant.personal-information.store') }}" enctype="multipart/form-data">
                     @csrf
-                    @if(isset($personalInfo))
-                        @method('PUT')
+                    
+
+                    <!-- Display General Error Messages -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Please fix the following errors:</strong>
+                            <ul class="mb-0 mt-2">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                     @endif
 
                     <!-- Two Column Layout with Flex -->
@@ -42,7 +75,7 @@
                             <!-- Birthdate -->
                             <div class="form-group">
                                 <label>Birthdate <span class="text-danger">*</span></label>
-                                <input type="date" class="form-control @error('birthdate') is-invalid @enderror" name="birthdate" value="{{ old('birthdate', isset($personalInfo) ? $personalInfo->birthdate->format('Y-m-d') : '') }}" required>
+                                <input type="date" class="form-control @error('birthdate') is-invalid @enderror" name="birthdate" value="{{ old('birthdate', isset($personalInfo) && $personalInfo->birthdate ? $personalInfo->birthdate->format('Y-m-d') : '') }}" required>
                                 @error('birthdate')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -73,6 +106,8 @@
                                     <option value="">Select Marital Status</option>
                                     <option value="single" {{ old('marital_status', $personalInfo->marital_status ?? '') == 'single' ? 'selected' : '' }}>Single</option>
                                     <option value="married" {{ old('marital_status', $personalInfo->marital_status ?? '') == 'married' ? 'selected' : '' }}>Married</option>
+                                    <option value="divorced" {{ old('marital_status', $personalInfo->marital_status ?? '') == 'divorced' ? 'selected' : '' }}>Divorced</option>
+                                    <option value="widowed" {{ old('marital_status', $personalInfo->marital_status ?? '') == 'widowed' ? 'selected' : '' }}>Widowed</option>
                                 </select>
                                 @error('marital_status')
                                     <span class="text-danger">{{ $message }}</span>
@@ -86,6 +121,9 @@
                                     <option value="">Select Religion</option>
                                     <option value="muslim" {{ old('religion', $personalInfo->religion ?? '') == 'muslim' ? 'selected' : '' }}>Muslim</option>
                                     <option value="christian" {{ old('religion', $personalInfo->religion ?? '') == 'christian' ? 'selected' : '' }}>Christian</option>
+                                    <option value="hindu" {{ old('religion', $personalInfo->religion ?? '') == 'hindu' ? 'selected' : '' }}>Hindu</option>
+                                    <option value="buddhist" {{ old('religion', $personalInfo->religion ?? '') == 'buddhist' ? 'selected' : '' }}>Buddhist</option>
+                                    <option value="other" {{ old('religion', $personalInfo->religion ?? '') == 'other' ? 'selected' : '' }}>Other</option>
                                 </select>
                                 @error('religion')
                                     <span class="text-danger">{{ $message }}</span>
@@ -158,6 +196,8 @@
                                     <option value="National" {{ old('id_type', $personalInfo->id_type ?? '') == 'National' ? 'selected' : '' }}>National ID</option>
                                     <option value="zanID" {{ old('id_type', $personalInfo->id_type ?? '') == 'zanID' ? 'selected' : '' }}>ZanID</option>
                                     <option value="Passport" {{ old('id_type', $personalInfo->id_type ?? '') == 'Passport' ? 'selected' : '' }}>Passport</option>
+                                    <option value="Voter" {{ old('id_type', $personalInfo->id_type ?? '') == 'Voter' ? 'selected' : '' }}>Voter ID</option>
+                                    <option value="Driving" {{ old('id_type', $personalInfo->id_type ?? '') == 'Driving' ? 'selected' : '' }}>Driving License</option>
                                 </select>
                                 @error('id_type')
                                     <span class="text-danger">{{ $message }}</span>
@@ -179,7 +219,10 @@
                                 <select class="form-control @error('disability') is-invalid @enderror" name="disability">
                                     <option value="">Select Disability Status</option>
                                     <option value="none" {{ old('disability', $personalInfo->disability ?? '') == 'none' ? 'selected' : '' }}>None</option>
-                                    <option value="physical" {{ old('disability', $personalInfo->disability ?? '') == 'physical' ? 'selected' : '' }}>Yes</option>
+                                    <option value="physical" {{ old('disability', $personalInfo->disability ?? '') == 'physical' ? 'selected' : '' }}>Physical Disability</option>
+                                    <option value="visual" {{ old('disability', $personalInfo->disability ?? '') == 'visual' ? 'selected' : '' }}>Visual Impairment</option>
+                                    <option value="hearing" {{ old('disability', $personalInfo->disability ?? '') == 'hearing' ? 'selected' : '' }}>Hearing Impairment</option>
+                                    <option value="other" {{ old('disability', $personalInfo->disability ?? '') == 'other' ? 'selected' : '' }}>Other</option>
                                 </select>
                                 @error('disability')
                                     <span class="text-danger">{{ $message }}</span>
@@ -187,7 +230,7 @@
                             </div>
 
                             <!-- Birth Certificate -->
-                            <div class="form-group">
+<div class="form-group">
                                 <label>Birth Certificate</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -197,14 +240,28 @@
                                     </div>
                                     <input type="file" class="form-control @error('birth_certificate_path') is-invalid @enderror" name="birth_certificate_path" accept=".pdf,.jpg,.jpeg,.png">
                                 </div>
-                                @if(isset($personalInfo) && $personalInfo->birth_certificate_path)
-                                    <small class="text-success">Current file: {{ basename($personalInfo->birth_certificate_path) }}</small>
+
+
+@if(isset($personalInfo) && $personalInfo->birth_certificate_path)
+                                    <div class="mt-2">
+                                        <div class="alert alert-info">
+                                            <i class="fas fa-info-circle"></i>
+                                            <strong>Current Certificate:</strong> {{ basename($personalInfo->birth_certificate_path) }}
+                                            <br>
+                                            <a href="{{ Storage::url($personalInfo->birth_certificate_path) }}"
+                                               target="_blank"
+                                               class="btn btn-sm btn-primary mt-2">
+                                                <i class="fas fa-eye"></i> View Certificate
+                                            </a>
+                                            <small class="text-muted d-block mt-1">
+                                                <i class="fas fa-info-circle"></i> Upload a new file to replace the current one
+                                            </small>
+                                        </div>
+                                    </div>
                                 @endif
-                                <small class="text-muted d-block">Upload birth certificate (PDF, JPG, JPEG, PNG) - Max 2MB</small>
-                                @error('birth_certificate_path')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+
+
+
 
                             <!-- Next of Kin Group -->
                             <div class="form-group">
@@ -230,6 +287,9 @@
                                     <option value="mother" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'mother' ? 'selected' : '' }}>Mother</option>
                                     <option value="uncle" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'uncle' ? 'selected' : '' }}>Uncle</option>
                                     <option value="guardian" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'guardian' ? 'selected' : '' }}>Guardian</option>
+                                    <option value="spouse" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'spouse' ? 'selected' : '' }}>Spouse</option>
+                                    <option value="sibling" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'sibling' ? 'selected' : '' }}>Sibling</option>
+                                    <option value="other" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'other' ? 'selected' : '' }}>Other</option>
                                 </select>
                                 @error('kin_relationship')
                                     <span class="text-danger">{{ $message }}</span>

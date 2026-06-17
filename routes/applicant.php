@@ -9,10 +9,7 @@ use App\Http\Controllers\ALevelEducationController;
 Route::middleware(['auth'])->group(function () {
     // Personal Information Routes
     Route::get('/personal-information', [ApplicantController::class, 'create'])->name('applicant.personal_information');
-    Route::get('/personal-information/create', [ApplicantController::class, 'create'])->name('applicant.personal-information.create');
     Route::post('/personal-information', [ApplicantController::class, 'store'])->name('applicant.personal-information.store');
-    Route::get('/personal-information/edit', [ApplicantController::class, 'edit'])->name('applicant.personal-information.edit');
-    Route::put('/personal-information/{id}', [ApplicantController::class, 'update'])->name('applicant.personal-information.update');
 
     // O-Level Education Routes
     Route::get('/applicant/o-level-education', [OLevelEducationController::class, 'index'])->name('applicant.o-level-education');

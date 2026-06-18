@@ -109,6 +109,7 @@ class AdminScholarshipController extends Controller
                 'academic_year' => $request->academic_year,
                 'status' => $request->status,
             ]);
+            
 
             return redirect()->route('admin.scholarships.index')
                 ->with('success', 'Scholarship created successfully!');

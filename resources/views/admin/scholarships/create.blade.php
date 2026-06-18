@@ -17,7 +17,7 @@
                 <h4><i class="fas fa-award"></i> Add New Scholarship</h4>
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ route('admin.scholarships.store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.scholarships.store') }}" >
                     @csrf
 
                     <div class="row">
@@ -165,7 +165,7 @@
                         </div>
                     </div>
 
-                  
+
 
                     <!-- Action Buttons -->
                     <div class="row">

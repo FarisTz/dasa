@@ -94,7 +94,7 @@ class AdminScholarshipController extends Controller
             'eligibility_criteria' => 'required|string',
             'deadline' => 'required|date|after:today',
             'academic_year' => 'required|string|max:20',
-            'status' => 'required|in:draft,open,closed',
+            'status' => 'required',
         ]);
 
 

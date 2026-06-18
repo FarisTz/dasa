@@ -94,7 +94,7 @@
 
         <!-- Tabs -->
         <div class="card">
-           
+
             <div class="card-body">
                 <ul class="nav nav-tabs" id="applicationTabs" role="tablist">
                     <li class="nav-item">

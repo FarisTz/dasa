@@ -142,6 +142,109 @@ class ApplicantController extends Controller
     /**
      * Submit the complete application.
      */
+    // public function submit(Request $request)
+    // {
+    //     $user = Auth::user();
+
+    //     // Check if all sections are completed
+    //     $personalInfo = PersonalInfo::where('user_id', $user->id)->first();
+    //     $oLevel = OLevelEducation::where('user_id', $user->id)->first();
+    //     $aLevel = ALevelEducation::where('user_id', $user->id)->first();
+    //     $motivation = Motivation::where('user_id', $user->id)->first();
+
+    //     if (!$personalInfo || !$oLevel || !$aLevel || !$motivation) {
+    //         return redirect()->back()->with('error', 'Please complete all sections before submitting your application.');
+    //     }
+
+    //     try {
+    //         // Update user status to submitted
+    //        $application = Application::create([
+    //             'user_id' => $user->id,
+    //             'application_status' => 'submitted',
+    //             'submitted_at' => now()
+    //         ]);
+
+    //         // You can also store submission status in a separate table if needed
+    //         // Application::create([
+    //         //     'user_id' => $user->id,
+    //         //     'submitted_at' => now(),
+    //         //     'status' => 'pending'
+    //         // ]);
+
+    //         return redirect()->route('applicant.dashboard')
+    //             ->with('success', 'Your application has been submitted successfully!');
+    //     } catch (\Exception $e) {
+    //         return redirect()->back()
+    //             ->with('error', 'Failed to submit application: ' . $e->getMessage());
+    //     }
+    // }
+
+     /**
+     * Select a scholarship for application.
+     */
+    public function selectScholarship(Request $request)
+    {
+        $request->validate([
+            'scholarship_id' => 'required|exists:scholarships,id'
+        ]);
+
+
+
+        $scholarship = Scholarship::find($request->scholarship_id);
+
+        // Check if scholarship is open
+        if ($scholarship->status != 'open') {
+            return redirect()->back()
+                ->with('error', 'This scholarship is not currently open for applications.')
+                ->withInput();
+        }
+
+        // Check if deadline has passed
+        if (now()->gt($scholarship->deadline)) {
+            return redirect()->back()
+                ->with('error', 'The application deadline for this scholarship has passed.')
+                ->withInput();
+        }
+
+        $user = Auth::user();
+
+        try {
+            // Check if user already has an application
+            $application = Application::where('user_id', $user->id)
+                ->whereIn('status', ['pending', 'submitted', 'under_review'])
+                ->first();
+
+            if ($application) {
+                // Update existing application
+                $application->scholarship_id = $scholarship->id;
+                $application->save();
+            } else {
+                // Create new application
+                $application = Application::create([
+                    'user_id' => $user->id,
+                    'scholarship_id' => $scholarship->id,
+                    'status' => 'pending',
+                    'submitted_at' => null
+                ]);
+            }
+
+            // Store in session
+            session(['selected_scholarship_id' => $scholarship->id]);
+
+            return redirect()->route('applicant.application.review')
+                ->with('success', 'You have selected: ' . $scholarship->title)
+                ->with('scholarship_selected', true);
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Failed to select scholarship: ' . $e->getMessage())
+                ->withInput();
+        }
+    }
+
+    /**
+     * Submit the complete application.
+     */
     public function submit(Request $request)
     {
         $user = Auth::user();
@@ -156,40 +259,44 @@ class ApplicantController extends Controller
             return redirect()->back()->with('error', 'Please complete all sections before submitting your application.');
         }
 
+        // Get application
+        $application = Application::where('user_id', $user->id)
+            ->where('status', 'pending')
+            ->first();
+
+        if (!$application) {
+            return redirect()->back()->with('error', 'No application found. Please select a scholarship first.');
+        }
+
+        // Check if scholarship is still open
+        $scholarship = $application->scholarship;
+        if (!$scholarship || $scholarship->status != 'open' || now()->gt($scholarship->deadline)) {
+            return redirect()->back()->with('error', 'The selected scholarship is no longer accepting applications.');
+        }
+
         try {
-            // Update user status to submitted
-           $application = Application::create([
-                'user_id' => $user->id,
+            // Update application
+            $application->status = 'submitted';
+            $application->submitted_at = now();
+            $application->save();
+
+            // Update user status
+            $user->update([
                 'application_status' => 'submitted',
                 'submitted_at' => now()
             ]);
 
-            // You can also store submission status in a separate table if needed
-            // Application::create([
-            //     'user_id' => $user->id,
-            //     'submitted_at' => now(),
-            //     'status' => 'pending'
-            // ]);
+            // Clear session
+            session()->forget('selected_scholarship_id');
 
-            return redirect()->route('applicant.dashboard')
-                ->with('success', 'Your application has been submitted successfully!');
+            return redirect()->route('applicant.my-application')
+                ->with('success', 'Your application for ' . $scholarship->title . ' has been submitted successfully!');
+
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('error', 'Failed to submit application: ' . $e->getMessage());
         }
     }
-
-    /**
-     * Dashboard after submission.
-     */
-    public function dashboard()
-    {
-        $user = Auth::user();
-        return view('applicant.dashboard', compact('user'));
-    }
-
-
-
 
     /**
      * Display the user's application.
@@ -206,9 +313,6 @@ class ApplicantController extends Controller
 
         return view('applicant.my-application', compact('application'));
     }
-
-
-
 
 
 }

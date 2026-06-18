@@ -25,10 +25,14 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('applicant/review', [ApplicantController::class, 'review'])->name('applicant.application.review');
-    Route::post('applicant/submit', [ApplicantController::class, 'submit'])->name('applicant.application.submit');
+    // Route::post('applicant/submit', [ApplicantController::class, 'submit'])->name('applicant.application.submit');
 
 
-
+ Route::post('/select-scholarship', [ApplicantController::class, 'selectScholarship'])->name('applicant.application.select-scholarship');
+    Route::post('/submit', [ApplicantController::class, 'submit'])->name('applicant.application.submit');
+    Route::get('/edit', [ApplicantController::class, 'edit'])->name('applicant.application.edit');
+    Route::put('/update', [ApplicantController::class, 'update'])->name('applicant.application.update');
+    Route::post('/withdraw', [ApplicantController::class, 'withdraw'])->name('applicant.application.withdraw');
      Route::get('applicant/my-application', [ApplicantController::class, 'myApplication'])->name('applicant.my-application');
 
 

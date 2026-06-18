@@ -202,7 +202,7 @@
                                     <option value="">Select ID Type</option>
                                     <option value="National" {{ old('id_type', $personalInfo->id_type ?? '') == 'National' ? 'selected' : '' }}>National ID</option>
                                     <option value="zanID" {{ old('id_type', $personalInfo->id_type ?? '') == 'zanID' ? 'selected' : '' }}>ZanID</option>
-                                    <option value="passport" {{ old('id_type', $personalInfo->id_type ?? '') == 'passport' ? 'selected' : '' }}>Passport</option>
+                                    <option value="Passport" {{ old('id_type', $personalInfo->id_type ?? '') == 'Passport' ? 'selected' : '' }}>Passport</option>
                                 </select>
                                 @error('id_type')
                                     <span class="text-danger">{{ $message }}</span>
@@ -289,7 +289,7 @@
                                     <option value="mother" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'mother' ? 'selected' : '' }}>Mother</option>
                                     <option value="uncle" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'uncle' ? 'selected' : '' }}>Uncle</option>
                                     <option value="guardian" {{ old('kin_relationship', $personalInfo->kin_relationship ?? '') == 'guardian' ? 'selected' : '' }}>Guardian</option>
-                                    
+
                                 </select>
                                 @error('kin_relationship')
                                     <span class="text-danger">{{ $message }}</span>

@@ -135,7 +135,7 @@
                                     </table>
                                 </div>
                                 <div class="mt-3">
-                                    <a href="{{ route('scholarships.show', $application->scholarship_id) }}" class="btn btn-primary btn-sm">
+                                    <a href="" class="btn btn-primary btn-sm">
                                         <i class="fas fa-eye"></i> View Scholarship
                                     </a>
                                 </div>

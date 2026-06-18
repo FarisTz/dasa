@@ -12,26 +12,36 @@
             </li>
             <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                  data-feather="briefcase"></i><span>Apply for scholarship</span></a>
+                  data-feather="briefcase"></i><span>Applications</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="#">Personal Information</a></li>
-                <li><a class="nav-link" href="#">O-Level Education</a></li>
-                <li><a class="nav-link" href="#">A-Level Education</a></li>
-                <li><a class="nav-link" href="#">Motivation Letter</a></li>
-                <li><a class="nav-link" href="#">Review & Submit</a></li>
-
+                <li><a class="nav-link" href="#">All Applications</a></li>
+                <li><a class="nav-link" href="#">Total Approved</a></li>
+                <li><a class="nav-link" href="#">Approved Full</a></li>
+                <li><a class="nav-link" href="#">Approved Partial</a></li>
+                <li><a class="nav-link" href="#">Rejected</a></li>
               </ul>
             </li>
-
-
-            <li><a class="nav-link" href="blank.html"><i data-feather="file"></i><span>My Applications</span></a></li>
-            <li><a class="nav-link" href="blank.html"><i data-feather="file"></i><span>Profile</span></a></li>
-            <li><a class="nav-link" href="blank.html"><i data-feather="file"></i><span>Logout</span></a></li>
-
-
-
-
-
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                  data-feather="briefcase"></i><span>Students</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="#">All Students</a></li>
+                <li><a class="nav-link" href="#">Confirmed Students</a></li>
+                <li><a class="nav-link" href="#">Not Confirmed Students</a></li>
+                <li><a class="nav-link" href="#">Canceled Students</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                  data-feather="briefcase"></i><span>Reports & Analytics</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="#">Total Applications</a></li>
+                <li><a class="nav-link" href="#">Application Status</a></li>
+              </ul>
+            </li>
+            <li><a class="nav-link" href="{{ route('profile.edit') }}"><i data-feather="file"></i><span>Profile</span></a></li>
+            <li><a class="nav-link" href="{{ route('logout') }}"><i data-feather="file"></i><span>Logout</span></a></li>
           </ul>
         </aside>
       </div>
+

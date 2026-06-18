@@ -137,6 +137,69 @@
      @include('admin.partials.footer')
     </div>
   </div>
+  <!-- Fix Sidebar Dropdown - Add this before closing body -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // ===== 1. Fix dropdown toggles =====
+        var dropdownToggles = document.querySelectorAll('.menu-toggle');
+        
+        dropdownToggles.forEach(function(toggle) {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                var parentLi = this.closest('.dropdown');
+                var dropdownMenu = parentLi.querySelector('.dropdown-menu');
+                
+                // Toggle the dropdown
+                if (parentLi.classList.contains('active')) {
+                    parentLi.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                } else {
+                    // Close other dropdowns
+                    document.querySelectorAll('.dropdown').forEach(function(dropdown) {
+                        if (dropdown !== parentLi) {
+                            dropdown.classList.remove('active');
+                            var menu = dropdown.querySelector('.dropdown-menu');
+                            if (menu) menu.style.display = 'none';
+                        }
+                    });
+                    
+                    parentLi.classList.add('active');
+                    dropdownMenu.style.display = 'block';
+                }
+            });
+        });
+        
+        // ===== 2. Keep dropdown open when submenu is active =====
+        var activeSubmenu = document.querySelector('.dropdown-menu .active');
+        if (activeSubmenu) {
+            var parentDropdown = activeSubmenu.closest('.dropdown');
+            if (parentDropdown) {
+                parentDropdown.classList.add('active');
+                var dropdownMenu = parentDropdown.querySelector('.dropdown-menu');
+                if (dropdownMenu) {
+                    dropdownMenu.style.display = 'block';
+                }
+            }
+        }
+        
+        // ===== 3. Fix: When clicking on submenu items, keep parent open =====
+        document.querySelectorAll('.dropdown-menu .nav-link').forEach(function(link) {
+            link.addEventListener('click', function() {
+                var parentDropdown = this.closest('.dropdown');
+                if (parentDropdown) {
+                    // Keep the dropdown open after navigation
+                    setTimeout(function() {
+                        parentDropdown.classList.add('active');
+                        var menu = parentDropdown.querySelector('.dropdown-menu');
+                        if (menu) menu.style.display = 'block';
+                    }, 50);
+                }
+            });
+        });
+    });
+</script>
 <!--End of Tawk.to Script-->
   <!-- General JS Scripts -->
   <script src="{{asset('assets/js/app.min.js')}}"></script>

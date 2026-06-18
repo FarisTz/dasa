@@ -19,7 +19,6 @@
                 </p>
             </div>
         </div>
-
         <!-- Application Milestones -->
         <div class="card">
             <div class="card-header">

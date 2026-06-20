@@ -5,7 +5,7 @@
     <div class="section-header">
         <h1>Application Details</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="{{ route('admin.applications.index') }}">Applications</a></div>
             <div class="breadcrumb-item">Application #{{ str_pad($application->id, 6, '0', STR_PAD_LEFT) }}</div>
         </div>

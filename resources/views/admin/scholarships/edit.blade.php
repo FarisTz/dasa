@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <section class="section">
     <div class="section-header">
@@ -383,7 +382,7 @@
     </div>
 </div>
 @endif
-
+@endsection
 @push('styles')
 <style>
     .form-group .input-group-text {

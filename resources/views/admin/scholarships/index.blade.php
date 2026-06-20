@@ -11,6 +11,72 @@
     </div>
 
     <div class="section-body">
+
+          <!-- Statistics Cards -->
+        <div class="row mt-4">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-primary">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Total Scholarships</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ $totalScholarships ?? 0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-success">
+                        <i class="fas fa-door-open"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Open Scholarships</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ $openScholarships ?? 0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-warning">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Draft</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ $draftScholarships ?? 0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-danger">
+                        <i class="fas fa-door-closed"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Closed</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ $closedScholarships ?? 0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <i class="fas fa-check-circle"></i> {{ session('success') }}
@@ -366,69 +432,7 @@
             </div>
         </div>
 
-        <!-- Statistics Cards -->
-        <div class="row mt-4">
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-primary">
-                        <i class="fas fa-award"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Total Scholarships</h4>
-                        </div>
-                        <div class="card-body">
-                            {{ $totalScholarships ?? 0 }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-success">
-                        <i class="fas fa-door-open"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Open Scholarships</h4>
-                        </div>
-                        <div class="card-body">
-                            {{ $openScholarships ?? 0 }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-warning">
-                        <i class="fas fa-edit"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Draft</h4>
-                        </div>
-                        <div class="card-body">
-                            {{ $draftScholarships ?? 0 }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-danger">
-                        <i class="fas fa-door-closed"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Closed</h4>
-                        </div>
-                        <div class="card-body">
-                            {{ $closedScholarships ?? 0 }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 </section>
 @endsection

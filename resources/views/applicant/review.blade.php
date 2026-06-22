@@ -39,6 +39,10 @@
         border-width: 2px;
         box-shadow: 0 0 20px rgba(40, 167, 69, 0.15);
     }
+    .application-status-badge {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
 </style>
 <section class="section">
     <div class="section-header">
@@ -66,6 +70,53 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+            </div>
+        @endif
+
+        <!-- Check if user already has a submitted application -->
+        @php
+            $hasSubmittedApplication = $existingApplication && in_array($existingApplication->status, ['submitted', 'under_review', 'approved_full', 'approved_partial', 'rejected']);
+            $hasPendingApplication = $existingApplication && $existingApplication->status == 'pending';
+        @endphp
+
+        @if($hasSubmittedApplication)
+            <!-- Already Submitted Alert -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="alert alert-warning text-center">
+                        <i class="fas fa-info-circle fa-3x mb-3"></i>
+                        <h4>You already have a submitted application!</h4>
+                        <p>
+                            <strong>Application #{{ str_pad($existingApplication->id, 6, '0', STR_PAD_LEFT) }}</strong>
+                            <br>
+                            <span class="badge badge-{{ $existingApplication->status == 'submitted' ? 'primary' :
+                                ($existingApplication->status == 'under_review' ? 'warning' :
+                                ($existingApplication->status == 'approved_full' ? 'success' :
+                                ($existingApplication->status == 'approved_partial' ? 'info' : 'danger'))) }} application-status-badge mt-2">
+                                <i class="fas fa-{{ $existingApplication->status == 'submitted' ? 'clock' :
+                                    ($existingApplication->status == 'under_review' ? 'search' :
+                                    ($existingApplication->status == 'approved_full' || $existingApplication->status == 'approved_partial' ? 'check-circle' : 'times-circle')) }}"></i>
+                                {{ ucfirst(str_replace('_', ' ', $existingApplication->status)) }}
+                            </span>
+                        </p>
+                        <p>You cannot submit another application while you have a pending/submitted application.</p>
+                        <div class="mt-3">
+                            <a href="{{ route('applicant.my-application') }}" class="btn btn-primary">
+                                <i class="fas fa-eye"></i> View My Application
+                            </a>
+                            @if($existingApplication->status == 'submitted' || $existingApplication->status == 'pending')
+                                <a href="{{ route('applicant.application.edit') }}" class="btn btn-warning">
+                                    <i class="fas fa-edit"></i> Edit Application
+                                </a>
+                            @endif
+                            @if($existingApplication->status == 'pending')
+                                <a href="{{ route('applicant.application.review') }}" class="btn btn-info">
+                                    <i class="fas fa-pen"></i> Continue Editing
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
             </div>
         @endif
 
@@ -505,7 +556,16 @@
                                 You can only apply for scholarships that are currently open and accepting applications.
                             </div>
 
-                            @if($openScholarships && $openScholarships->count() > 0)
+                            @if($hasSubmittedApplication)
+                                <div class="alert alert-warning text-center">
+                                    <i class="fas fa-ban fa-2x"></i>
+                                    <h5 class="mt-2">You already have a submitted application</h5>
+                                    <p>You cannot select a new scholarship while you have an existing application.</p>
+                                    <a href="{{ route('applicant.my-application') }}" class="btn btn-primary">
+                                        <i class="fas fa-eye"></i> View My Application
+                                    </a>
+                                </div>
+                            @elseif($openScholarships && $openScholarships->count() > 0)
                                 <form method="POST" action="{{ route('applicant.application.select-scholarship') }}" id="scholarshipForm">
                                     @csrf
 
@@ -598,7 +658,7 @@
                                 </div>
                             @endif
 
-                            @if($selectedScholarship)
+                            @if($selectedScholarship && !$hasSubmittedApplication)
                                 <div class="alert alert-success mt-3">
                                     <i class="fas fa-check-circle"></i>
                                     <strong>Selected Scholarship:</strong> {{ $selectedScholarship->title }}
@@ -629,7 +689,23 @@
                             $hasOpenScholarships = $openScholarships && $openScholarships->count() > 0;
                         @endphp
 
-                        @if(!$hasOpenScholarships)
+                        @if($hasSubmittedApplication)
+                            <div class="alert alert-warning text-center">
+                                <i class="fas fa-info-circle fa-2x"></i>
+                                <h5>Application Already Submitted</h5>
+                                <p>You have already submitted an application. You cannot submit another one.</p>
+                                <div class="mt-3">
+                                    <a href="{{ route('applicant.my-application') }}" class="btn btn-primary">
+                                        <i class="fas fa-eye"></i> View My Application
+                                    </a>
+                                    @if($existingApplication->status == 'submitted' || $existingApplication->status == 'pending')
+                                        <a href="{{ route('applicant.application.edit') }}" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i> Edit Application
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        @elseif(!$hasOpenScholarships)
                             <div class="alert alert-danger text-center">
                                 <i class="fas fa-exclamation-circle fa-2x"></i>
                                 <h5>No Open Scholarships Available</h5>

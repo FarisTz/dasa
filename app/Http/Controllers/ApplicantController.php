@@ -7,9 +7,11 @@ use App\Models\Motivation;
 use App\Models\OLevelEducation;
 use App\Models\PersonalInfo;
 use App\Models\Scholarship;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ApplicantController extends Controller
 {
@@ -99,46 +101,46 @@ class ApplicantController extends Controller
 
 
 /**
-     * Display the review and submit page.
-     */
-    public function review()
-    {
-       $user = Auth::user();
+ * Display the review page with all sections.
+ */
+public function review()
+{
+    $user = Auth::user();
 
-        // Fetch all application data
-        $personalInfo = PersonalInfo::where('user_id', $user->id)->first();
-        $oLevel = OLevelEducation::where('user_id', $user->id)->first();
-        $aLevel = ALevelEducation::where('user_id', $user->id)->first();
-        $motivation = Motivation::where('user_id', $user->id)->first();
+    // Fetch all application data
+    $personalInfo = PersonalInfo::where('user_id', $user->id)->first();
+    $oLevel = OLevelEducation::where('user_id', $user->id)->first();
+    $aLevel = ALevelEducation::where('user_id', $user->id)->first();
+    $motivation = Motivation::where('user_id', $user->id)->first();
 
-        // Get open scholarships
-        $openScholarships = Scholarship::where('status', 'open')
-            ->where('deadline', '>=', now())
-            ->orderBy('deadline', 'asc')
-            ->get();
+    // Get open scholarships
+    $openScholarships = Scholarship::where('status', 'open')
+        ->where('deadline', '>=', now())
+        ->orderBy('deadline', 'asc')
+        ->get();
 
-        // Get selected scholarship from session or database
-        $selectedScholarship = null;
-        $application = Application::where('user_id', $user->id)
-            ->where('status', 'pending')
-            ->first();
+    // Get existing application
+    $existingApplication = Application::where('user_id', $user->id)->first();
 
-        if ($application) {
-            $selectedScholarship = $application->scholarship;
-        } elseif (session('selected_scholarship_id')) {
-            $selectedScholarship = Scholarship::find(session('selected_scholarship_id'));
-        }
+    // Get selected scholarship from session or database
+    $selectedScholarship = null;
 
-        return view('applicant.review', compact(
-            'personalInfo',
-            'oLevel',
-            'aLevel',
-            'motivation',
-            'openScholarships',
-            'selectedScholarship'
-        ));
+    if ($existingApplication) {
+        $selectedScholarship = $existingApplication->scholarship;
+    } elseif (session('selected_scholarship_id')) {
+        $selectedScholarship = Scholarship::find(session('selected_scholarship_id'));
     }
 
+    return view('applicant.review', compact(
+        'personalInfo',
+        'oLevel',
+        'aLevel',
+        'motivation',
+        'openScholarships',
+        'selectedScholarship',
+        'existingApplication'
+    ));
+}
     /**
      * Submit the complete application.
      */
@@ -314,5 +316,129 @@ class ApplicantController extends Controller
         return view('applicant.my-application', compact('application'));
     }
 
+
+
+    /**
+     * Download acceptance letter.
+     */
+    public function downloadAcceptance()
+    {
+        $user = Auth::user();
+        $application = Application::with(['scholarship', 'user'])
+            ->where('user_id', $user->id)
+            ->whereIn('status', ['approved_full', 'approved_partial'])
+            ->first();
+
+        if (!$application) {
+            return redirect()->back()
+                ->with('error', 'No acceptance letter available for your application.');
+        }
+
+        // Generate PDF acceptance letter
+        $pdf = Pdf::loadView('applicant.acceptance-letter', compact('application', 'user'));
+
+        // Download the PDF
+        return $pdf->download('acceptance-letter-' . $application->id . '.pdf');
+    }
+
+
+    /**
+     * Show the acknowledgement letter form.
+     */
+    public function acknowledgementShow()
+    {
+        $user = Auth::user();
+
+        // Get the approved application
+        $application = Application::where('user_id', $user->id)
+            ->whereIn('status', ['approved_full', 'approved_partial'])
+            ->first();
+
+        if (!$application) {
+            return redirect()->route('applicant.dashboard')
+                ->with('error', 'You do not have an approved application.');
+        }
+
+        return view('applicant.acknowledgement.index', compact('application'));
+    }
+
+
+
+   public function downloadAcknowledgementLetter()
+    {
+        $user = Auth::user();
+
+        // Get the approved application
+        $application = Application::where('user_id', $user->id)
+            ->whereIn('status', ['approved_full', 'approved_partial'])
+            ->first();
+
+        if (!$application) {
+            return redirect()->route('applicant.dashboard')
+                ->with('error', 'You do not have an approved application.');
+        }
+
+        // Check if the acknowledgement letter has been submitted
+        // if (!$application->isAcknowledgementSubmitted()) {
+        //     return redirect()->route('applicant.acknowledgement-letter')
+        //         ->with('error', 'You have not submitted your acknowledgement letter yet.');
+        // }
+
+        // Check if the file exists
+        if (!Storage::disk('public')->exists('documents/acknowledgements/acknowledgement.pdf')) {
+            return redirect()->route('applicant.acknowledgement-letter')
+                ->with('error', 'Acknowledgement letter file not found.');
+        }
+
+        // Download the acknowledgement letter
+        return Storage::disk('public')->download('documents/acknowledgements/acknowledgement.pdf');
+    }
+
+
+    /**
+     * Upload and submit the signed acknowledgement letter.
+     */
+    public function submitAcknowledgementLetter(Request $request)
+    {
+        $user = Auth::user();
+
+        $application = Application::where('user_id', $user->id)
+            ->whereIn('status', ['approved_full', 'approved_partial'])
+            ->first();
+
+        if (!$application) {
+            return redirect()->back()
+                ->with('error', 'You do not have an approved application.');
+        }
+
+        if (!$application->canSubmitAcknowledgement()) {
+            return redirect()->back()
+                ->with('error', 'You have already submitted an acknowledgement letter.');
+        }
+
+        $request->validate([
+            'acknowledgement_letter' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:5120',
+        ]);
+
+        try {
+            // Store the uploaded file
+            $file = $request->file('acknowledgement_letter');
+            $filename = time() . '_' . Str::slug($user->name) . '_acknowledgement.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('documents/acknowledgements/uploads', $filename, 'public');
+
+            // Update application
+            $application->acknowledgement_letter_path = $path;
+            $application->acknowledgement_letter_submitted_at = now();
+            $application->acknowledgement_status = 'submitted';
+            $application->save();
+
+            return redirect()->route('applicant.acknowledgement-letter')
+                ->with('success', 'Acknowledgement letter submitted successfully!');
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Failed to submit acknowledgement letter: ' . $e->getMessage());
+        }
+    }
 
 }

@@ -320,4 +320,37 @@ class AdminApplicationController extends Controller
 
 
 
+    /**
+ * Update acknowledgement letter status.
+ */
+public function updateAcknowledgement(Request $request, $id)
+{
+    $application = Application::findOrFail($id);
+
+    $validator = Validator::make($request->all(), [
+        'acknowledgement_status' => 'required|in:pending,submitted,approved,rejected',
+        'acknowledgement_admin_notes' => 'nullable|string',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+    }
+
+    try {
+        $application->acknowledgement_status = $request->acknowledgement_status;
+        $application->acknowledgement_admin_notes = $request->acknowledgement_admin_notes;
+        $application->save();
+
+        return redirect()->route('admin.applications.show', $id)
+            ->with('success', 'Acknowledgement letter status updated successfully!');
+
+    } catch (\Exception $e) {
+        return redirect()->back()
+            ->with('error', 'Failed to update acknowledgement status: ' . $e->getMessage());
+    }
+}
+
+
 }

@@ -36,5 +36,12 @@ Route::middleware(['auth'])->group(function () {
      Route::get('applicant/my-application', [ApplicantController::class, 'myApplication'])->name('applicant.my-application');
 
 
+    // Acceptance Letter
+    Route::get('/download-acceptance', [ApplicantController::class, 'downloadAcceptance'])->name('applicant.acceptance.download');
+
+    // Acknowledgement Letter
+    Route::get('/acknowledgement-letter', [ApplicantController::class, 'acknowledgementShow'])->name('applicant.acknowledgement-letter');
+    Route::post('/acknowledgement-letter', [ApplicantController::class, 'submitAcknowledgementLetter'])->name('applicant.acknowledgement-letter.submit');
+    Route::get('/download-acknowledgement-letter', [ApplicantController::class, 'downloadAcknowledgementLetter'])->name('applicant.acknowledgement-letter.download');
 
 });

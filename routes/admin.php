@@ -56,4 +56,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/scholarships/{id}/toggle-status', [AdminScholarshipController::class, 'toggleStatus'])->name('scholarships.toggle-status');
     Route::post('/scholarships/bulk-action', [AdminScholarshipController::class, 'bulkAction'])->name('scholarships.bulk-action');
     Route::get('/scholarships/export', [AdminScholarshipController::class, 'export'])->name('scholarships.export');
+
+
+
+    Route::put('/applications/{id}/acknowledgement', [AdminApplicationController::class, 'updateAcknowledgement'])->name('applications.acknowledgement.update');
 });

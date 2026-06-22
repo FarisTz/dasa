@@ -352,9 +352,7 @@
                                 </a>
                             @endif
 
-                            <button onclick="window.print()" class="btn btn-secondary btn-lg px-5">
-                                <i class="fas fa-print"></i> Print Application
-                            </button>
+                            
                         </div>
                     </div>
                 </div>

@@ -107,7 +107,7 @@
         </div>
 
 
-        
+
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <i class="fas fa-check-circle"></i> {{ session('success') }}
@@ -397,12 +397,7 @@
                                                title="View Application">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="{{ route('admin.applications.edit', $application->id) }}"
-                                               class="btn btn-sm btn-warning"
-                                               data-toggle="tooltip"
-                                               title="Edit Application">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
+                                            
                                             @if($application->status != 'approved_full' && $application->status != 'approved_partial' && $application->status != 'rejected')
                                                 <a href="{{ route('admin.applications.review', $application->id) }}"
                                                    class="btn btn-sm btn-primary"

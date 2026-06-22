@@ -44,6 +44,7 @@
 
 
             <li class="{{ request()->routeIs('applicant.my-application') ? 'active' : '' }}"><a class="nav-link" href="{{ route('applicant.my-application') }}"><i data-feather="file"></i><span>My Applications</span></a></li>
+            <li class="{{ request()->routeIs('applicant.acknowledgement-letter') ? 'active' : '' }}"><a class="nav-link" href="{{ route('applicant.acknowledgement-letter') }}"><i data-feather="check-circle"></i><span>Acknowledgement Letter</span></a></li>
             <li class="{{ request()->routeIs('profile.edit') ? 'active' : '' }}"><a class="nav-link" href="{{ route('profile.edit') }}"><i data-feather="user"></i><span>Profile</span></a></li>
             <li><a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i data-feather="log-out"></i><span>Logout</span></a></li>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

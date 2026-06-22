@@ -190,7 +190,7 @@
                             <hr>
                             <div class="form-group text-center">
                                 <button type="submit" class="btn btn-primary btn-lg px-5">
-                                    <i class="fas fa-save"></i> Create User
+                                    <i class="fas fa-save"></i> Update User
                                 </button>
                                 <a href="{{ route('admin.users.index') }}" class="btn btn-secondary btn-lg px-4">
                                     <i class="fas fa-times"></i> Cancel

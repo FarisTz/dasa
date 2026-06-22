@@ -50,9 +50,9 @@
                             ($application->status == 'approved_partial' ? 'check-circle' : 'times-circle')))) }}"></i>
                         {{ ucfirst(str_replace('_', ' ', $application->status)) }}
                     </span>
-                    <a href="{{ route('admin.applications.edit', $application->id) }}" class="btn btn-warning ml-2">
+                    {{-- <a href="{{ route('admin.applications.edit', $application->id) }}" class="btn btn-warning ml-2">
                         <i class="fas fa-edit"></i> Edit
-                    </a>
+                    </a> --}}
                     <a href="{{ route('admin.applications.index') }}" class="btn btn-secondary ml-2">
                         <i class="fas fa-arrow-left"></i> Back
                     </a>
@@ -622,6 +622,95 @@
             </div>
         </div>
 
+        <!-- Acknowledgement Letter Section -->
+<div class="card">
+    <div class="card-header">
+        <h4><i class="fas fa-file-signature text-primary"></i> Acknowledgement Letter</h4>
+    </div>
+    <div class="card-body">
+        @if($application->acknowledgement_letter_path)
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th width="40%">Status</th>
+                                    <td>
+                                        <span class="badge badge-{{ $application->acknowledgement_status_color }}">
+                                            <i class="fas fa-{{ $application->acknowledgement_status_icon }}"></i>
+                                            {{ ucfirst($application->acknowledgement_status) }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Submitted Date</th>
+                                    <td>
+                                        @if($application->acknowledgement_letter_submitted_at)
+                                            <i class="fas fa-calendar-alt"></i>
+                                            {{ $application->acknowledgement_letter_submitted_at->format('F d, Y H:i A') }}
+                                            <br>
+                                            <small class="text-muted">{{ $application->acknowledgement_letter_submitted_at->diffForHumans() }}</small>
+                                        @else
+                                            <span class="text-muted">Not submitted</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Download Letter</th>
+                                    <td>
+                                        <a href="{{ asset('storage/' . $application->acknowledgement_letter_path) }}" target="_blank" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-file-pdf"></i> View Letter
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    @if($application->acknowledgement_status == 'submitted' || $application->acknowledgement_status == 'pending')
+                        <form action="{{ route('admin.applications.acknowledgement.update', $application->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="form-group">
+                                <label>Update Status</label>
+                                <select class="form-control" name="acknowledgement_status">
+                                    <option value="approved" {{ $application->acknowledgement_status == 'approved' ? 'selected' : '' }}>Approve</option>
+                                    <option value="rejected" {{ $application->acknowledgement_status == 'rejected' ? 'selected' : '' }}>Reject</option>
+                                    <option value="submitted" {{ $application->acknowledgement_status == 'submitted' ? 'selected' : '' }}>Keep as Submitted</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Admin Notes</label>
+                                <textarea class="form-control" name="acknowledgement_admin_notes" rows="3" placeholder="Add feedback for the applicant...">{{ $application->acknowledgement_admin_notes }}</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Acknowledgement
+                            </button>
+                        </form>
+                    @else
+                        <div class="alert alert-info">
+                            <i class="fas fa-check-circle"></i>
+                            This acknowledgement letter has been <strong>{{ ucfirst($application->acknowledgement_status) }}</strong>.
+                            @if($application->acknowledgement_admin_notes)
+                                <br>
+                                <strong>Feedback:</strong>
+                                <p class="mt-2 mb-0">{{ $application->acknowledgement_admin_notes }}</p>
+                            @endif
+                        </div>
+                    @endif
+                </div>
+            </div>
+        @else
+            <div class="alert alert-warning text-center">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>No acknowledgement letter has been submitted yet.</p>
+            </div>
+        @endif
+    </div>
+</div>
+
         <!-- Application Timeline -->
         <div class="card">
             <div class="card-header">
@@ -738,12 +827,12 @@
                                     </button>
                                 </form>
                             @endif
-                            <a href="{{ route('admin.applications.edit', $application->id) }}" class="btn btn-warning btn-lg px-4 mr-2">
+                            {{-- <a href="{{ route('admin.applications.edit', $application->id) }}" class="btn btn-warning btn-lg px-4 mr-2">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
                             <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.print()">
                                 <i class="fas fa-print"></i> Print
-                            </button>
+                            </button> --}}
                         </div>
                     </div>
                 </div>

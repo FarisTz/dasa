@@ -25,6 +25,10 @@ return new class extends Migration
                   ->default('pending');
             $table->text('admin_notes')->nullable();
             $table->timestamp('submitted_at')->nullable();
+            $table->string('acknowledgement_letter_path', 500)->nullable();
+            $table->timestamp('acknowledgement_letter_submitted_at')->nullable();
+            $table->enum('acknowledgement_status', ['pending', 'submitted', 'approved', 'rejected'])->default('pending');
+            $table->text('acknowledgement_admin_notes')->nullable();
             $table->timestamps();
         });
     }

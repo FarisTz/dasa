@@ -64,6 +64,25 @@
         </ul>
       </li>
 
+
+
+      <!-- Acknowledgements -->
+      <li class="dropdown {{ request()->routeIs('admin.acknowledgement.index', 'admin.acknowledgement.create') ? 'active' : '' }}">
+        <a href="#" class="menu-toggle nav-link has-dropdown">
+          <i data-feather="briefcase"></i><span>Acknowledgements</span>
+        </a>
+        <ul class="dropdown-menu" style="{{ request()->routeIs('admin.acknowledgement.index', 'admin.acknowledgement.create') ? 'display: block;' : '' }}">
+          <li class="{{ request()->routeIs('admin.acknowledgement.index') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.acknowledgement.index') }}">Manage Acknowledgements</a>
+          </li>
+          <li class="{{ request()->routeIs('admin.acknowledgement.create') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.acknowledgement.template') }}">Add Acknowledgement</a>
+          </li>
+        </ul>
+      </li>
+
+
+
       <!-- Students -->
       <li class="dropdown">
         <a href="#" class="menu-toggle nav-link has-dropdown">

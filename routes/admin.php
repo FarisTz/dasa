@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAcknowledgementController;
 use App\Http\Controllers\Admin\AdminApplicationController;
 use App\Http\Controllers\Admin\AdminScholarshipController;
 use App\Http\Controllers\Admin\AdminUserController;
@@ -60,4 +61,22 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 
     Route::put('/applications/{id}/acknowledgement', [AdminApplicationController::class, 'updateAcknowledgement'])->name('applications.acknowledgement.update');
+
+
+
+    // Acknowledgement Management
+    Route::get('/acknowledgement', [AdminAcknowledgementController::class, 'index'])->name('acknowledgement.index');
+    Route::get('/acknowledgement/template', [AdminAcknowledgementController::class, 'template'])->name('acknowledgement.template');
+    Route::post('/acknowledgement/template/upload', [AdminAcknowledgementController::class, 'uploadTemplate'])->name('acknowledgement.upload-template');
+    Route::delete('/acknowledgement/template/delete', [AdminAcknowledgementController::class, 'deleteTemplate'])->name('acknowledgement.delete-template');
+    Route::get('/acknowledgement/template/download', [AdminAcknowledgementController::class, 'downloadTemplate'])->name('acknowledgement.download-template');
+
+    // Individual Actions
+    Route::put('/acknowledgement/{id}/user-type', [AdminAcknowledgementController::class, 'updateUserType'])->name('acknowledgement.update-user-type');
+    Route::get('/acknowledgement/{id}/view-letter', [AdminAcknowledgementController::class, 'viewLetter'])->name('acknowledgement.view-letter');
+
+    // Bulk Actions
+    Route::post('/acknowledgement/bulk-update-type', [AdminAcknowledgementController::class, 'bulkUpdateUserType'])->name('acknowledgement.bulk-update-type');
+    Route::post('/acknowledgement/bulk-approve', [AdminAcknowledgementController::class, 'bulkApprove'])->name('acknowledgement.bulk-approve');
+    Route::post('/acknowledgement/bulk-reject', [AdminAcknowledgementController::class, 'bulkReject'])->name('acknowledgement.bulk-reject');
 });

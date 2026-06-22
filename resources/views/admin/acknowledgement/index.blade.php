@@ -94,7 +94,7 @@
         </div>
 
         <!-- Actions -->
-        <div class="card">
+        <div class="card mt-4">
             <div class="card-header">
                 <h4><i class="fas fa-tools"></i> Actions</h4>
             </div>

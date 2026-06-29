@@ -604,17 +604,7 @@
                         <label>Update Admin Notes</label>
                         <textarea class="form-control" name="admin_notes" rows="4" placeholder="Add notes about this application...">{{ old('admin_notes', $application->admin_notes) }}</textarea>
                     </div>
-                    <div class="form-group">
-                        <label>Update Status</label>
-                        <select class="form-control" name="status">
-                            <option value="pending" {{ $application->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                            <option value="submitted" {{ $application->status == 'submitted' ? 'selected' : '' }}>Submitted</option>
-                            <option value="under_review" {{ $application->status == 'under_review' ? 'selected' : '' }}>Under Review</option>
-                            <option value="approved_full" {{ $application->status == 'approved_full' ? 'selected' : '' }}>Approved Full</option>
-                            <option value="approved_partial" {{ $application->status == 'approved_partial' ? 'selected' : '' }}>Approved Partial</option>
-                            <option value="rejected" {{ $application->status == 'rejected' ? 'selected' : '' }}>Rejected</option>
-                        </select>
-                    </div>
+                    
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i> Update Notes & Status
                     </button>

@@ -661,25 +661,12 @@
                 </div>
                 <div class="col-md-6">
                     @if($application->acknowledgement_status == 'submitted' || $application->acknowledgement_status == 'pending')
-                        <form action="{{ route('admin.applications.acknowledgement.update', $application->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="form-group">
-                                <label>Update Status</label>
-                                <select class="form-control" name="acknowledgement_status">
-                                    <option value="approved" {{ $application->acknowledgement_status == 'approved' ? 'selected' : '' }}>Approve</option>
-                                    <option value="rejected" {{ $application->acknowledgement_status == 'rejected' ? 'selected' : '' }}>Reject</option>
-                                    <option value="submitted" {{ $application->acknowledgement_status == 'submitted' ? 'selected' : '' }}>Keep as Submitted</option>
-                                </select>
-                            </div>
+
                             <div class="form-group">
                                 <label>Admin Notes</label>
                                 <textarea class="form-control" name="acknowledgement_admin_notes" rows="3" placeholder="Add feedback for the applicant...">{{ $application->acknowledgement_admin_notes }}</textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Update Acknowledgement
-                            </button>
-                        </form>
+
                     @else
                         <div class="alert alert-info">
                             <i class="fas fa-check-circle"></i>

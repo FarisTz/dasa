@@ -25,7 +25,7 @@ class AuthRedirectController extends Controller
      /**
      * Display the admin dashboard.
      */
-    public function index()
+    public function index(Request $request)
     {
         // Get database driver
         $driver = DB::connection()->getDriverName();
@@ -136,6 +136,8 @@ class AuthRedirectController extends Controller
         }
         $completionRate = $totalUsers > 0 ? round(($completedUsers / $totalUsers) * 100) : 0;
 
+$user = $request->user();
+    if($user->role === 'admin') {
         return view('admin.index', compact(
             'totalUsers',
             'totalApplications',
@@ -172,6 +174,44 @@ class AuthRedirectController extends Controller
             'completionRate',
             'completedUsers'
         ));
+        } elseif ($user->role === 'coordinator') {
+            return view('coordinator.index', compact(
+                'totalUsers',
+                'totalApplications',
+                'totalScholarships',
+                'totalPersonalInfo',
+                'totalOLevel',
+                'totalALevel',
+                'totalMotivations',
+                'pendingApplications',
+                'submittedApplications',
+                'underReviewApplications',
+                'approvedFullApplications',
+                'approvedPartialApplications',
+                'rejectedApplications',
+                'openScholarships',
+                'draftScholarships',
+                'closedScholarships',
+                'adminUsers',
+                'applicantUsers',
+                'coordinatorUsers',
+                'beneficiaryUsers',
+                'activeUsers',
+                'inactiveUsers',
+                'suspendedUsers',
+                'recentApplications',
+                'recentUsers',
+                'recentScholarships',
+                'monthlyStats',
+                'monthlyStatusStats',
+                'topScholarships',
+                'completionStats',
+                'dailyStats',
+                'currentTime',
+                'completionRate',
+                'completedUsers'
+            ));
+        }
     }
 
     /**
@@ -405,11 +445,13 @@ class AuthRedirectController extends Controller
 
 
 
-            return $this->index();
+            return $this->index($request);
         } elseif ($user->role === 'beneficiary') {
             return view('beneficiary.index');
         } elseif ($user->role === 'coordinator') {
-            return view('coordinator.index');
+
+         return $this->index($request);
+
         } else {
             return view('applicant.index');
         }

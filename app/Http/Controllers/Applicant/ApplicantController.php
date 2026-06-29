@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Applicant;
 use App\Models\ALevelEducation;
 use App\Models\Application;
 use App\Models\Motivation;

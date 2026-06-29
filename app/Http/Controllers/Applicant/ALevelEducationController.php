@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Applicant;
 
 use App\Models\ALevelEducation;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class ALevelEducationController extends Controller
     {
         // Check if user already has A-Level education record
         $aLevelEducation = ALevelEducation::where('user_id', Auth::id())->first();
-        
+
         // If record exists, pass it to the view for editing
         return view('applicant.a_level_education', compact('aLevelEducation'));
     }
@@ -58,7 +58,7 @@ class ALevelEducationController extends Controller
             if ($aLevelEducation && $aLevelEducation->form_six_certificate_path) {
                 Storage::disk('public')->delete($aLevelEducation->form_six_certificate_path);
             }
-            
+
             $path = $request->file('form_six_certificate_path')->store('a_level_certificates', 'public');
             $data['form_six_certificate_path'] = $path;
         }

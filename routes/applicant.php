@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\ALevelEducationController;
-use App\Http\Controllers\ApplicantController;
-use App\Http\Controllers\MotivationController;
-use App\Http\Controllers\OLevelEducationController;
+use App\Http\Controllers\Applicant\ALevelEducationController;
+use App\Http\Controllers\Applicant\ApplicantController;
+use App\Http\Controllers\Applicant\MotivationController;
+use App\Http\Controllers\Applicant\OLevelEducationController;
 use Illuminate\Support\Facades\Route;
 
 // Applicant routes

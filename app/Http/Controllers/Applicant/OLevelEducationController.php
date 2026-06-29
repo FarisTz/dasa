@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Applicant;
 
 use App\Models\OLevelEducation;
 use Illuminate\Http\Request;

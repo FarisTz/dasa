@@ -167,7 +167,7 @@
                                     <i class="fas fa-filter"></i> Filter
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 280px;">
-                                    <form method="GET" action="{{ route('admin.applications.index') }}" id="filterForm">
+                                    <form method="GET" action="{{ route('coordinator.applications.index') }}" id="filterForm">
                                         <div class="form-group">
                                             <label>Status</label>
                                             <select class="form-control" name="status" onchange="this.form.submit()">
@@ -203,7 +203,7 @@
                                             </div>
                                         </div>
                                         @if(request('status') || request('scholarship') || request('date_from') || request('date_to'))
-                                            <a href="{{ route('admin.applications.index') }}" class="btn btn-secondary btn-sm btn-block">
+                                            <a href="{{ route('coordinator.applications.index') }}" class="btn btn-secondary btn-sm btn-block">
                                                 <i class="fas fa-undo"></i> Reset Filters
                                             </a>
                                         @endif
@@ -211,32 +211,7 @@
                                 </div>
                             </div>
 
-                            <!-- Bulk Actions -->
-                            <div class="dropdown">
-                                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                                    <i class="fas fa-tasks"></i> Bulk Actions
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 200px;">
-                                    <form method="POST" action="{{ route('admin.applications.bulk-action') }}" id="bulkActionForm">
-                                        @csrf
-                                        <input type="hidden" name="action" id="bulkActionType">
-                                        <div class="form-group">
-                                            <label>Select Action</label>
-                                            <select class="form-control" id="bulkActionSelect">
-                                                <option value="">Choose action...</option>
-                                                <option value="under_review">Mark as Under Review</option>
-                                                <option value="approved_full">Approve Full</option>
-                                                <option value="approved_partial">Approve Partial</option>
-                                                <option value="rejected">Reject</option>
-                                                <option value="delete">Delete</option>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-sm btn-block" onclick="return confirmBulkAction()">
-                                            Apply to Selected
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -391,13 +366,13 @@
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="{{ route('admin.applications.show', $application->id) }}"
+                                            <a href="{{ route('coordinator.applications.show', $application->id) }}"
                                                class="btn btn-sm btn-info"
                                                data-toggle="tooltip"
                                                title="View Application">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            
+
                                             @if($application->status != 'approved_full' && $application->status != 'approved_partial' && $application->status != 'rejected')
                                                 <a href="{{ route('admin.applications.review', $application->id) }}"
                                                    class="btn btn-sm btn-primary"
@@ -406,45 +381,10 @@
                                                     <i class="fas fa-check-circle"></i>
                                                 </a>
                                             @endif
-                                            <button type="button"
-                                                    class="btn btn-sm btn-danger"
-                                                    data-toggle="modal"
-                                                    data-target="#deleteModal{{ $application->id }}"
-                                                    data-toggle="tooltip"
-                                                    title="Delete Application">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+
                                         </div>
 
-                                        <!-- Delete Modal -->
-                                        <div class="modal fade" id="deleteModal{{ $application->id }}" tabindex="-1" role="dialog">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Confirm Delete</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Are you sure you want to delete this application?</p>
-                                                        <p><strong>Applicant:</strong> {{ $application->user->name }}</p>
-                                                        <p><strong>Scholarship:</strong> {{ $application->scholarship->title ?? 'N/A' }}</p>
-                                                        <p class="text-danger"><small>This action cannot be undone.</small></p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                        <form action="{{ route('admin.applications.destroy', $application->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">
-                                                                <i class="fas fa-trash"></i> Delete
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </td>
                                 </tr>
                             @empty
@@ -459,7 +399,7 @@
                                                 @if(request('search') || request('status') || request('scholarship') || request('date_from') || request('date_to'))
                                                     No applications match your search criteria.
                                                     <br>
-                                                    <a href="{{ route('admin.applications.index') }}" class="btn btn-primary mt-2">
+                                                    <a href="{{ route('coordinator.applications.index') }}" class="btn btn-primary mt-2">
                                                         <i class="fas fa-undo"></i> Clear Filters
                                                     </a>
                                                 @else

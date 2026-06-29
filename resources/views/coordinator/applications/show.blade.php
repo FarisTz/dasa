@@ -53,7 +53,7 @@
                     {{-- <a href="{{ route('admin.applications.edit', $application->id) }}" class="btn btn-warning ml-2">
                         <i class="fas fa-edit"></i> Edit
                     </a> --}}
-                    <a href="{{ route('admin.applications.index') }}" class="btn btn-secondary ml-2">
+                    <a href="{{ route('coordinator.applications.index') }}" class="btn btn-secondary ml-2">
                         <i class="fas fa-arrow-left"></i> Back
                     </a>
                 </div>

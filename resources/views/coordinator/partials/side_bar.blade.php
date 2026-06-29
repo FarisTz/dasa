@@ -14,11 +14,11 @@
               <a href="#" class="menu-toggle nav-link has-dropdown"><i
                   data-feather="briefcase"></i><span>Applications</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="#">All Applications</a></li>
-                <li><a class="nav-link" href="#">Total Approved</a></li>
-                <li><a class="nav-link" href="#">Approved Full</a></li>
-                <li><a class="nav-link" href="#">Approved Partial</a></li>
-                <li><a class="nav-link" href="#">Rejected</a></li>
+                <li><a class="nav-link" href="{{ route('coordinator.applications.index') }}">All Applications</a></li>
+
+                <li><a class="nav-link" href="{{ route('coordinator.applications.index', ['status' => 'approved_full']) }}">Approved Full</a></li>
+                <li><a class="nav-link" href="{{ route('coordinator.applications.index', ['status' => 'approved_partial']) }}">Approved Partial</a></li>
+                <li><a class="nav-link" href="{{ route('coordinator.applications.index', ['status' => 'rejected']) }}">Rejected</a></li>
               </ul>
             </li>
             <li class="dropdown">

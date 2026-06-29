@@ -55,8 +55,11 @@
           <li class="{{ request()->routeIs('admin.applications.index') && !request()->has('status') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('admin.applications.index') }}">All Applications</a>
           </li>
-          <li class="{{ request()->routeIs('admin.applications.index') && request()->get('status') == 'approved' ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('admin.applications.index') }}?status=approved">Approved</a>
+          <li class="{{ request()->routeIs('admin.applications.index') && request()->get('status') == 'approved_full' ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.applications.index') }}?status=approved_full">Approved Full</a>
+          </li>
+          <li class="{{ request()->routeIs('admin.applications.index') && request()->get('status') == 'approved_partial' ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.applications.index') }}?status=approved_partial">Approved Partial</a>
           </li>
           <li class="{{ request()->routeIs('admin.applications.index') && request()->get('status') == 'rejected' ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('admin.applications.index') }}?status=rejected">Rejected</a>

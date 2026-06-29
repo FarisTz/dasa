@@ -5,7 +5,7 @@ use App\Http\Controllers\Coordinator\CoordinatorController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware(['auth', 'admin'])->prefix('coordinator')->name('coordinator.')->group(function () {
+Route::middleware(['auth', 'coordinator'])->prefix('coordinator')->name('coordinator.')->group(function () {
 
 
     Route::get('/dashboard/statistics', [AuthRedirectController::class, 'statistics'])->name('dashboard.statistics');
@@ -13,8 +13,13 @@ Route::middleware(['auth', 'admin'])->prefix('coordinator')->name('coordinator.'
 
 
 
-    Route::get('/scholarships', [CoordinatorController::class, 'index'])->name('scholarships.index');
-    Route::get('/scholarships/{id}', [CoordinatorController::class, 'show'])->name('scholarships.show');
+    Route::get('/scholarships', [CoordinatorController::class, 'scholarships'])->name('scholarships.index');
+    Route::get('/scholarships/{id}', [CoordinatorController::class, 'showScholarship'])->name('scholarships.show');
+
+
+
+     Route::get('/applications', [CoordinatorController::class, 'applications'])->name('applications.index');
+       Route::get('/applications/{id}', [CoordinatorController::class, 'showApplication'])->name('applications.show');
 
 
 });

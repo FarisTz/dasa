@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <section class="section">
     <div class="section-header">
         <h1>Application Details</h1>
@@ -604,7 +605,7 @@
                         <label>Update Admin Notes</label>
                         <textarea class="form-control" name="admin_notes" rows="4" placeholder="Add notes about this application...">{{ old('admin_notes', $application->admin_notes) }}</textarea>
                     </div>
-                    
+
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i> Update Notes & Status
                     </button>
@@ -830,6 +831,7 @@
         </div>
     </div>
 </section>
+
 @endsection
 
 @push('styles')
@@ -944,6 +946,7 @@
     }
 </style>
 @endpush
+
 
 @push('scripts')
 <script>

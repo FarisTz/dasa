@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <section class="section">
     <div class="section-header">
         <h1>Application Management</h1>
@@ -446,6 +447,9 @@
 
     </div>
 </section>
+
+
+
 @endsection
 
 @push('styles')
@@ -519,6 +523,7 @@
 </style>
 @endpush
 
+<<<<<<< HEAD
 @push('scripts')
 <script>
     $(document).ready(function() {

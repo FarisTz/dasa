@@ -18,8 +18,8 @@ Route::middleware(['auth', 'coordinator'])->prefix('coordinator')->name('coordin
 
 
 
-     Route::get('/applications', [CoordinatorController::class, 'applications'])->name('applications.index');
-       Route::get('/applications/{id}', [CoordinatorController::class, 'showApplication'])->name('applications.show');
+    Route::get('/applications', [CoordinatorController::class, 'applications'])->name('applications.index');
+    Route::get('/applications/{id}', [CoordinatorController::class, 'showApplication'])->name('applications.show');
 
 
 });

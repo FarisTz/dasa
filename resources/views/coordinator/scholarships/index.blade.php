@@ -99,9 +99,7 @@
             <div class="card-header">
                 <h4>All Scholarships</h4>
                 <div class="card-header-action">
-                    <a href="{{ route('admin.scholarships.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Add New Scholarship
-                    </a>
+
                     <a href="{{ route('admin.scholarships.export') }}" class="btn btn-success">
                         <i class="fas fa-file-export"></i> Export
                     </a>
@@ -111,7 +109,7 @@
                 <!-- Search and Filter Section -->
                 <div class="row mb-4">
                     <div class="col-md-8">
-                        <form method="GET" action="{{ route('admin.scholarships.index') }}" id="searchForm">
+                        <form method="GET" action="{{ route('coordinator.scholarships.index') }}" id="searchForm">
                             <div class="input-group">
                                 <input type="text"
                                        class="form-control"
@@ -123,7 +121,7 @@
                                         <i class="fas fa-search"></i> Search
                                     </button>
                                     @if(request('search') || request('status') || request('academic_year'))
-                                        <a href="{{ route('admin.scholarships.index') }}" class="btn btn-secondary">
+                                        <a href="{{ route('coordinator.scholarships.index') }}" class="btn btn-secondary">
                                             <i class="fas fa-times"></i> Clear
                                         </a>
                                     @endif
@@ -138,7 +136,7 @@
                                     <i class="fas fa-filter"></i> Filter
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 250px;">
-                                    <form method="GET" action="{{ route('admin.scholarships.index') }}" id="filterForm">
+                                    <form method="GET" action="{{ route('coordinator.scholarships.index') }}" id="filterForm">
                                         <div class="form-group">
                                             <label>Status</label>
                                             <select class="form-control" name="status" onchange="this.form.submit()">
@@ -310,66 +308,18 @@
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="{{ route('admin.scholarships.show', $scholarship->id) }}"
+                                            <a href="{{ route('coordinator.scholarships.show', $scholarship->id) }}"
                                                class="btn btn-sm btn-info"
                                                data-toggle="tooltip"
                                                title="View Scholarship">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="{{ route('admin.scholarships.edit', $scholarship->id) }}"
-                                               class="btn btn-sm btn-warning"
-                                               data-toggle="tooltip"
-                                               title="Edit Scholarship">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            @if($scholarship->status != 'closed')
-                                                <a href="{{ route('admin.scholarships.toggle-status', $scholarship->id) }}"
-                                                   class="btn btn-sm btn-{{ $scholarship->status == 'draft' ? 'success' : 'danger' }}"
-                                                   data-toggle="tooltip"
-                                                   title="{{ $scholarship->status == 'draft' ? 'Open' : 'Close' }} Scholarship"
-                                                   onclick="return confirm('Are you sure you want to {{ $scholarship->status == 'draft' ? 'open' : 'close' }} this scholarship?')">
-                                                    <i class="fas fa-{{ $scholarship->status == 'draft' ? 'door-open' : 'door-closed' }}"></i>
-                                                </a>
-                                            @endif
-                                            <button type="button"
-                                                    class="btn btn-sm btn-danger"
-                                                    data-toggle="modal"
-                                                    data-target="#deleteModal{{ $scholarship->id }}"
-                                                    data-toggle="tooltip"
-                                                    title="Delete Scholarship">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+
+
                                         </div>
 
                                         <!-- Delete Modal -->
-                                        <div class="modal fade" id="deleteModal{{ $scholarship->id }}" tabindex="-1" role="dialog">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Confirm Delete</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Are you sure you want to delete this scholarship?</p>
-                                                        <p><strong>Title:</strong> {{ $scholarship->title }}</p>
-                                                        <p><strong>Academic Year:</strong> {{ $scholarship->academic_year }}</p>
-                                                        <p class="text-danger"><small>This action cannot be undone. All associated applications will also be deleted.</small></p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                        <form action="{{ route('admin.scholarships.destroy', $scholarship->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">
-                                                                <i class="fas fa-trash"></i> Delete
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </td>
                                 </tr>
                             @empty

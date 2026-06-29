@@ -47,10 +47,8 @@
                             <i class="fas fa-exclamation-circle"></i> Deadline Passed
                         </span>
                     @endif
-                    <a href="{{ route('admin.scholarships.edit', $scholarship->id) }}" class="btn btn-warning ml-2">
-                        <i class="fas fa-edit"></i> Edit
-                    </a>
-                    <a href="{{ route('admin.scholarships.index') }}" class="btn btn-secondary ml-2">
+
+                    <a href="{{ route('coordinator.scholarships.index') }}" class="btn btn-secondary ml-2">
                         <i class="fas fa-arrow-left"></i> Back
                     </a>
                 </div>
@@ -211,155 +209,14 @@
             </div>
         </div>
 
-        <!-- Applications Statistics -->
-        <div class="card">
-            <div class="card-header">
-                <h4><i class="fas fa-chart-bar text-primary"></i> Applications Statistics</h4>
-                <div class="card-header-action">
-                    <a href="{{ route('admin.applications.index', ['scholarship' => $scholarship->id]) }}" class="btn btn-primary">
-                        <i class="fas fa-eye"></i> View All Applications
-                    </a>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="card card-statistic-1">
-                            <div class="card-icon bg-primary">
-                                <i class="fas fa-file-alt"></i>
-                            </div>
-                            <div class="card-wrap">
-                                <div class="card-header">
-                                    <h4>Total</h4>
-                                </div>
-                                <div class="card-body">
-                                    {{ $scholarship->applications()->count() }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="card card-statistic-1">
-                            <div class="card-icon bg-secondary">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="card-wrap">
-                                <div class="card-header">
-                                    <h4>Pending</h4>
-                                </div>
-                                <div class="card-body">
-                                    {{ $scholarship->applications()->where('status', 'pending')->count() }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="card card-statistic-1">
-                            <div class="card-icon bg-info">
-                                <i class="fas fa-paper-plane"></i>
-                            </div>
-                            <div class="card-wrap">
-                                <div class="card-header">
-                                    <h4>Submitted</h4>
-                                </div>
-                                <div class="card-body">
-                                    {{ $scholarship->applications()->where('status', 'submitted')->count() }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="card card-statistic-1">
-                            <div class="card-icon bg-warning">
-                                <i class="fas fa-search"></i>
-                            </div>
-                            <div class="card-wrap">
-                                <div class="card-header">
-                                    <h4>Under Review</h4>
-                                </div>
-                                <div class="card-body">
-                                    {{ $scholarship->applications()->where('status', 'under_review')->count() }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="card card-statistic-1">
-                            <div class="card-icon bg-success">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <div class="card-wrap">
-                                <div class="card-header">
-                                    <h4>Approved Full</h4>
-                                </div>
-                                <div class="card-body">
-                                    {{ $scholarship->applications()->where('status', 'approved_full')->count() }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="card card-statistic-1">
-                            <div class="card-icon bg-info">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <div class="card-wrap">
-                                <div class="card-header">
-                                    <h4>Approved Partial</h4>
-                                </div>
-                                <div class="card-body">
-                                    {{ $scholarship->applications()->where('status', 'approved_partial')->count() }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="card card-statistic-1">
-                            <div class="card-icon bg-danger">
-                                <i class="fas fa-times-circle"></i>
-                            </div>
-                            <div class="card-wrap">
-                                <div class="card-header">
-                                    <h4>Rejected</h4>
-                                </div>
-                                <div class="card-body">
-                                    {{ $scholarship->applications()->where('status', 'rejected')->count() }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="card card-statistic-1">
-                            <div class="card-icon bg-primary">
-                                <i class="fas fa-percent"></i>
-                            </div>
-                            <div class="card-wrap">
-                                <div class="card-header">
-                                    <h4>Approval Rate</h4>
-                                </div>
-                                <div class="card-body">
-                                    @php
-                                        $total = $scholarship->applications()->count();
-                                        $approved = $scholarship->applications()->whereIn('status', ['approved_full', 'approved_partial'])->count();
-                                        $rate = $total > 0 ? round(($approved / $total) * 100) : 0;
-                                    @endphp
-                                    {{ $rate }}%
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
 
         <!-- Recent Applications -->
         <div class="card">
             <div class="card-header">
                 <h4><i class="fas fa-list text-primary"></i> Recent Applications</h4>
                 <div class="card-header-action">
-                    <a href="{{ route('admin.applications.index', ['scholarship' => $scholarship->id]) }}" class="btn btn-primary btn-sm">
+                    <a href="{{ route('coordinator.applications.index', ['scholarship' => $scholarship->id]) }}" class="btn btn-primary btn-sm">
                         <i class="fas fa-arrow-right"></i> View All
                     </a>
                 </div>
@@ -445,18 +302,9 @@
                 <div class="row">
                     <div class="col-12 text-center">
                         <div class="btn-group" role="group">
-                            <a href="{{ route('admin.scholarships.edit', $scholarship->id) }}" class="btn btn-warning btn-lg px-4 mr-2">
-                                <i class="fas fa-edit"></i> Edit Scholarship
-                            </a>
-                            @if($scholarship->status != 'closed')
-                                <a href="{{ route('admin.scholarships.toggle-status', $scholarship->id) }}"
-                                   class="btn btn-{{ $scholarship->status == 'draft' ? 'success' : 'danger' }} btn-lg px-4 mr-2"
-                                   onclick="return confirm('Are you sure you want to {{ $scholarship->status == 'draft' ? 'open' : 'close' }} this scholarship?')">
-                                    <i class="fas fa-{{ $scholarship->status == 'draft' ? 'door-open' : 'door-closed' }}"></i>
-                                    {{ $scholarship->status == 'draft' ? 'Open' : 'Close' }} Scholarship
-                                </a>
-                            @endif
-                            <a href="{{ route('admin.applications.index', ['scholarship' => $scholarship->id]) }}" class="btn btn-primary btn-lg px-4 mr-2">
+
+
+                            <a href="{{ route('coordinator.applications.index', ['scholarship' => $scholarship->id]) }}" class="btn btn-primary btn-lg px-4 mr-2">
                                 <i class="fas fa-file-alt"></i> View Applications
                             </a>
                             <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.print()">

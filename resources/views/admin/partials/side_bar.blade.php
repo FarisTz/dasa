@@ -79,7 +79,7 @@
             <a class="nav-link" href="{{ route('admin.acknowledgement.index') }}">Manage Acknowledgements</a>
           </li>
           <li class="{{ request()->routeIs('admin.acknowledgement.create') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('admin.acknowledgement.template') }}">Add Acknowledgement</a>
+            <a class="nav-link" href="{{ route('admin.acknowledgement.template') }}">Upload Acknowledgement</a>
           </li>
         </ul>
       </li>

@@ -79,4 +79,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/acknowledgement/bulk-update-type', [AdminAcknowledgementController::class, 'bulkUpdateUserType'])->name('acknowledgement.bulk-update-type');
     Route::post('/acknowledgement/bulk-approve', [AdminAcknowledgementController::class, 'bulkApprove'])->name('acknowledgement.bulk-approve');
     Route::post('/acknowledgement/bulk-reject', [AdminAcknowledgementController::class, 'bulkReject'])->name('acknowledgement.bulk-reject');
+
+
+    // Installment Management Routes
+    Route::resource('installments', App\Http\Controllers\Admin\InstallmentController::class);
+    Route::get('/installments/{id}/toggle-status', [App\Http\Controllers\Admin\InstallmentController::class, 'toggleStatus'])->name('installments.toggle-status');
+    Route::post('/installments/{id}/assign-student', [App\Http\Controllers\Admin\InstallmentController::class, 'assignStudent'])->name('installments.assign-student');
 });

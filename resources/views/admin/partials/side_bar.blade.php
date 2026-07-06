@@ -99,6 +99,22 @@
         </ul>
       </li>
 
+
+      <!-- Acknowledgements -->
+      <li class="dropdown {{ request()->routeIs('admin.installments.index', 'admin.installments.create') ? 'active' : '' }}">
+        <a href="#" class="menu-toggle nav-link has-dropdown">
+          <i data-feather="briefcase"></i><span>Installments</span>
+        </a>
+        <ul class="dropdown-menu" style="{{ request()->routeIs('admin.installments.index', 'admin.installments.create') ? 'display: block;' : '' }}">
+          <li class="{{ request()->routeIs('admin.installments.index') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.installments.index') }}">All Installments</a>
+          </li>
+          <li class="{{ request()->routeIs('admin.installments.create') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.installments.create') }}">Add Installment</a>
+          </li>
+        </ul>
+      </li>
+
       <!-- Reports & Analytics -->
       <li class="dropdown">
         <a href="#" class="menu-toggle nav-link has-dropdown">

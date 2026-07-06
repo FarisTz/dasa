@@ -5,8 +5,8 @@
     <div class="section-header">
         <h1>Sign Installment</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="{{ route('student.dashboard') }}">Dashboard</a></div>
-            <div class="breadcrumb-item"><a href="{{ route('student.payments.index') }}">Installments</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
+            <div class="breadcrumb-item"><a href="{{ route('beneficiary.payments.index') }}">Installments</a></div>
             <div class="breadcrumb-item">Sign</div>
         </div>
     </div>

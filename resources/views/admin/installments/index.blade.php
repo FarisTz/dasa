@@ -5,7 +5,7 @@
     <div class="section-header">
         <h1>Installment Management</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
             <div class="breadcrumb-item">Installments</div>
         </div>
     </div>

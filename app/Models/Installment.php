@@ -12,14 +12,8 @@ class Installment extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'inst_number',
-        'academic_year',
-        'student_year',
-        'amount',
-        'release_date',
-        'created_by',
-        'is_active',
+    protected $guarded = [
+
     ];
 
     protected $casts = [

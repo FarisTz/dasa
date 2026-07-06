@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminApplicationController;
 use App\Http\Controllers\Admin\AdminScholarshipController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\AuthRedirectController;
+use App\Http\Controllers\Admin\InstallmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -82,7 +83,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 
     // Installment Management Routes
-    Route::resource('installments', App\Http\Controllers\Admin\InstallmentController::class);
-    Route::get('/installments/{id}/toggle-status', [App\Http\Controllers\Admin\InstallmentController::class, 'toggleStatus'])->name('installments.toggle-status');
-    Route::post('/installments/{id}/assign-student', [App\Http\Controllers\Admin\InstallmentController::class, 'assignStudent'])->name('installments.assign-student');
+    Route::resource('installments', InstallmentController::class);
+    Route::get('/installments/{id}/toggle-status', [InstallmentController::class, 'toggleStatus'])->name('installments.toggle-status');
+    Route::post('/installments/{id}/assign-student', [InstallmentController::class, 'assignStudent'])->name('installments.assign-student');
 });

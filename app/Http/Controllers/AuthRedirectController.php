@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\ALevelEducation;
 use App\Models\Application;
+use App\Models\Installment;
 use App\Models\Motivation;
 use App\Models\OLevelEducation;
 use App\Models\PersonalInfo;
 use App\Models\Scholarship;
+use App\Models\StudentPayment;
 use App\Models\User;
-use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AuthRedirectController extends Controller
@@ -447,7 +449,74 @@ $user = $request->user();
 
             return $this->index($request);
         } elseif ($user->role === 'beneficiary') {
-            return view('beneficiary.index');
+
+        $user = Auth::user();
+
+        // Get the user's approved application
+        $application = Application::where('user_id', $user->id)
+            ->whereIn('status', ['approved_full', 'approved_partial'])
+            ->first();
+
+        // Get all student payments for this user
+        $payments = StudentPayment::with(['installment'])
+            ->where('student_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Statistics
+        $totalPayments = $payments->count();
+        $approvedPayments = $payments->where('status', 'approved')->count();
+        $pendingPayments = $payments->where('status', 'pending')->count();
+        $rejectedPayments = $payments->where('status', 'rejected')->count();
+        $confirmedPayments = $payments->where('status', 'confirmed')->count();
+
+        // Amount calculations
+        $totalAmount = $payments->sum('amount');
+        $totalReceived = $payments->where('status', 'approved')->sum('amount');
+
+        // Get total installments (unique)
+        $totalInstallments = $payments->pluck('installment_id')->unique()->count();
+
+        // Get recent payments (last 5)
+        $recentPayments = $payments->take(5);
+
+        // Get pending installments (installments assigned but not yet signed)
+        $assignedInstallmentIds = $payments->pluck('installment_id')->toArray();
+        $pendingInstallments = Installment::where('is_active', true)
+            ->whereNotIn('id', $assignedInstallmentIds)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Pending signatures count
+        $pendingSignatures = $pendingInstallments->count();
+
+        // Scholarship title
+        $scholarshipTitle = $application ? $application->scholarship->title ?? 'N/A' : 'N/A';
+
+        // Notifications (example - can be from a notifications table)
+        $notifications = $this->getNotifications($user);
+
+        return view('beneficiary.index', compact(
+            'user',
+            'application',
+            'payments',
+            'totalPayments',
+            'approvedPayments',
+            'pendingPayments',
+            'rejectedPayments',
+            'confirmedPayments',
+            'totalAmount',
+            'totalReceived',
+            'totalInstallments',
+            'recentPayments',
+            'pendingInstallments',
+            'pendingSignatures',
+            'scholarshipTitle',
+            'notifications'
+        ));
+
+
+
         } elseif ($user->role === 'coordinator') {
 
          return $this->index($request);
@@ -467,4 +536,61 @@ $user = $request->user();
         return redirect('/');
 
     }
+
+
+
+
+
+
+      private function getNotifications($user)
+    {
+        $notifications = [];
+
+        // Check for pending payments
+        $pendingCount = StudentPayment::where('student_id', $user->id)
+            ->where('status', 'pending')
+            ->count();
+
+        if ($pendingCount > 0) {
+            $notifications[] = [
+                'type' => 'warning',
+                'icon' => 'clock',
+                'message' => "You have {$pendingCount} pending payment(s) awaiting admin approval.",
+                'date' => now()->format('M d, Y')
+            ];
+        }
+
+        // Check for approved payments
+        $approvedCount = StudentPayment::where('student_id', $user->id)
+            ->where('status', 'approved')
+            ->where('confirmed_at', '>=', now()->subDays(7))
+            ->count();
+
+        if ($approvedCount > 0) {
+            $notifications[] = [
+                'type' => 'success',
+                'icon' => 'check-circle',
+                'message' => "{$approvedCount} of your payments were approved recently.",
+                'date' => now()->format('M d, Y')
+            ];
+        }
+
+        // Check for pending installments to sign
+        $assignedIds = StudentPayment::where('student_id', $user->id)
+            ->pluck('installment_id')
+            ->toArray();
+
+        $pendingInstallments = Installment::where('is_active', true)
+            ->whereNotIn('id', $assignedIds)
+            ->count();
+
+        if ($pendingInstallments > 0) {
+            $notifications[] = [
+                'type' => 'info',
+                'icon' => 'handshake',
+                'message' => "You have {$pendingInstallments} new installment(s) ready to sign.",
+                'date' => now()->format('M d, Y')
+            ];
+        }
+}
 }

@@ -5,8 +5,8 @@
     <div class="section-header">
         <h1>Payment Details</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="{{ route('student.dashboard') }}">Dashboard</a></div>
-            <div class="breadcrumb-item"><a href="{{ route('student.payments.index') }}">Installments</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
+            <div class="breadcrumb-item"><a href="{{ route('beneficiary.payments.index') }}">Installments</a></div>
             <div class="breadcrumb-item">Details</div>
         </div>
     </div>
@@ -127,7 +127,7 @@
 
                 <div class="row mt-4">
                     <div class="col-12 text-center">
-                        <a href="{{ route('student.payments.index') }}" class="btn btn-secondary btn-lg px-4">
+                        <a href="{{ route('beneficiary.payments.index') }}" class="btn btn-secondary btn-lg px-4">
                             <i class="fas fa-arrow-left"></i> Back to Installments
                         </a>
                     </div>

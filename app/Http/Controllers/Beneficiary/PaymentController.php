@@ -31,7 +31,7 @@ class PaymentController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('student.payments.index', compact('payments', 'activeInstallments'));
+        return view('beneficiary.payments.index', compact('payments', 'activeInstallments'));
     }
 
     /**
@@ -152,6 +152,6 @@ class PaymentController extends Controller
             ->where('student_id', $student->id)
             ->findOrFail($id);
 
-        return view('student.payments.show', compact('payment'));
+        return view('beneficiary.payments.show', compact('payment'));
     }
 }

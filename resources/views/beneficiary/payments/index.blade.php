@@ -5,7 +5,7 @@
     <div class="section-header">
         <h1>My Installments</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="{{ route('student.dashboard') }}">Dashboard</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
             <div class="breadcrumb-item">Installments</div>
         </div>
     </div>
@@ -111,7 +111,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('student.payments.show', $payment->id) }}" class="btn btn-sm btn-info">
+                                            <a href="{{ route('beneficiary.payments.show', $payment->id) }}" class="btn btn-sm btn-info">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </td>

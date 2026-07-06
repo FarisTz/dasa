@@ -37,7 +37,7 @@ class InstallmentController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'inst_number' => 'required|string|max:255|unique:installments',
             'academic_year' => 'required|string|max:20',
             'student_year' => 'required|integer|min:1|max:10',
@@ -46,13 +46,11 @@ class InstallmentController extends Controller
             'is_active' => 'nullable|boolean',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
+
 
         try {
+
+
             $installment = Installment::create([
                 'inst_number' => $request->inst_number,
                 'academic_year' => $request->academic_year,

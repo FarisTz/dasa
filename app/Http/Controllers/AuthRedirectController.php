@@ -593,4 +593,11 @@ $user = $request->user();
             ];
         }
 }
+
+
+
+ public function support()
+    {
+        return view('beneficiary.support');
+    }
 }

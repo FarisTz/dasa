@@ -1,11 +1,11 @@
 <?php
 
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthRedirectController;
-
+use App\Http\Controllers\Beneficiary\BeneficiaryController;
 use App\Http\Controllers\Beneficiary\PaymentController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 
 // Beneficiary Payment Routes
@@ -26,7 +26,6 @@ Route::middleware(['auth', 'beneficiary'])->prefix('beneficiary')->name('benefic
 
 
     // Support
-    Route::get('/support', [App\Http\Controllers\Beneficiary\DashboardController::class, 'support'])->name('support');
 
     // Payments
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
@@ -34,7 +33,22 @@ Route::middleware(['auth', 'beneficiary'])->prefix('beneficiary')->name('benefic
     Route::post('/payments/submit-sign', [PaymentController::class, 'submitSign'])->name('payments.submit-sign');
     Route::get('/payments/{id}/resend-otp', [PaymentController::class, 'resendOTP'])->name('payments.resend-otp');
     Route::get('/payments/{id}/show', [PaymentController::class, 'show'])->name('payments.show');
+
+
+
+
+
+
+     Route::get('/support', [BeneficiaryController::class, 'index'])->name('support');
+    Route::post('/support', [BeneficiaryController::class, 'store'])->name('support.store');
+    Route::get('/support/{id}', [BeneficiaryController::class, 'show'])->name('support.show');
+    Route::post('/support/{id}/reply', [BeneficiaryController::class, 'reply'])->name('support.reply');
+    Route::get('/support/{id}/close', [BeneficiaryController::class, 'close'])->name('support.close');
 });
+
+
+
+
 
 
 

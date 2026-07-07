@@ -6,7 +6,7 @@ use App\Http\Controllers\Beneficiary\BeneficiaryController;
 use App\Http\Controllers\Beneficiary\PaymentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Beneficiary\ResultController;
 
 // Beneficiary Payment Routes
 Route::middleware(['auth', 'beneficiary'])->prefix('beneficiary')->name('beneficiary.')->group(function () {
@@ -44,6 +44,13 @@ Route::middleware(['auth', 'beneficiary'])->prefix('beneficiary')->name('benefic
     Route::get('/support/{id}', [BeneficiaryController::class, 'show'])->name('support.show');
     Route::post('/support/{id}/reply', [BeneficiaryController::class, 'reply'])->name('support.reply');
     Route::get('/support/{id}/close', [BeneficiaryController::class, 'close'])->name('support.close');
+
+
+
+
+
+     Route::resource('results', ResultController::class);
+    Route::get('results/{id}/download', [ResultController::class, 'download'])->name('results.download');
 });
 
 

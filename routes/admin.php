@@ -99,4 +99,19 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/support/{id}/assign', [SupportController::class, 'assign'])->name('support.assign');
     Route::post('/support/{id}/status', [SupportController::class, 'status'])->name('support.status');
     Route::post('/support/bulk-action', [SupportController::class, 'bulkAction'])->name('support.bulk-action');
+
+
+
+
+
+
+
+      Route::get('/results', [App\Http\Controllers\Admin\ResultController::class, 'index'])->name('results.index');
+    Route::get('/results/{id}', [App\Http\Controllers\Admin\ResultController::class, 'show'])->name('results.show');
+    Route::post('/results/{id}/approve', [App\Http\Controllers\Admin\ResultController::class, 'approve'])->name('results.approve');
+    Route::post('/results/{id}/reject', [App\Http\Controllers\Admin\ResultController::class, 'reject'])->name('results.reject');
+    Route::post('/results/{id}/suspend', [App\Http\Controllers\Admin\ResultController::class, 'suspend'])->name('results.suspend');
+    Route::post('/results/{id}/lift-suspension', [App\Http\Controllers\Admin\ResultController::class, 'liftSuspension'])->name('results.lift-suspension');
+    Route::post('/results/bulk-action', [App\Http\Controllers\Admin\ResultController::class, 'bulkAction'])->name('results.bulk-action');
+    Route::get('/results/{id}/download', [App\Http\Controllers\Admin\ResultController::class, 'download'])->name('results.download');
 });

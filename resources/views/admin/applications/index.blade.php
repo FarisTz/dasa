@@ -144,7 +144,7 @@
                                 <input type="text"
                                        class="form-control"
                                        name="search"
-                                       placeholder="Search by applicant name, email, index number..."
+                                       placeholder="Search by applicant name, email, school..."
                                        value="{{ request('search') }}">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="submit">
@@ -359,7 +359,7 @@
                                             @endphp
                                             <span class="badge badge-{{ $division == 'I' ? 'primary' : ($division == 'II' ? 'secondary' : ($division == 'III' ? 'warning' : ($division == 'IV' ? 'danger' : 'dark'))) }}">
                                                 {{ $division ?? '-' }}
-                                              
+
                                             </span>
                                         @else
                                             <span class="text-muted">-</span>

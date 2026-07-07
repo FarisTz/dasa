@@ -27,6 +27,9 @@ class User extends Authenticatable
         'phone_number',
         'profile_photo_path',
         'email_verified_at',
+         'is_academic_suspended',
+        'academic_suspended_at',
+        'academic_suspension_reason',
     ];
 
     /**
@@ -70,5 +73,70 @@ class User extends Authenticatable
     public function applications(): HasOne
     {
         return $this->hasOne(Application::class);
+    }
+
+
+
+
+     /**
+     * Get the academic results for the user.
+     */
+    public function academicResults()
+    {
+        return $this->hasMany(AcademicResult::class, 'student_id');
+    }
+
+    /**
+     * Get the latest academic result for the user.
+     */
+    public function latestAcademicResult()
+    {
+        return $this->hasOne(AcademicResult::class, 'student_id')->latest();
+    }
+
+    /**
+     * Get approved academic results.
+     */
+    public function approvedAcademicResults()
+    {
+        return $this->academicResults()->where('status', 'approved');
+    }
+
+    /**
+     * Check if user is academically suspended.
+     */
+    public function isAcademicallySuspended(): bool
+    {
+        return $this->is_academic_suspended;
+    }
+
+    /**
+     * Check if user is beneficiary.
+     */
+    public function isBeneficiary(): bool
+    {
+        return $this->role === 'beneficiary';
+    }
+
+    /**
+     * Suspend user academically.
+     */
+    public function suspendAcademically(string $reason = null)
+    {
+        $this->is_academic_suspended = true;
+        $this->academic_suspended_at = now();
+        $this->academic_suspension_reason = $reason;
+        $this->save();
+    }
+
+    /**
+     * Lift academic suspension.
+     */
+    public function liftAcademicSuspension()
+    {
+        $this->is_academic_suspended = false;
+        $this->academic_suspended_at = null;
+        $this->academic_suspension_reason = null;
+        $this->save();
     }
 }

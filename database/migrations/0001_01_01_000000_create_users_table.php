@@ -21,8 +21,12 @@ return new class extends Migration
             $table->string('profile_photo_path', 2048)->nullable();
             $table->enum('status', ['active', 'inactive', 'suspended'])->default('active');
             $table->string('phone_number')->nullable();
+             $table->boolean('is_academic_suspended')->default(false);
+            $table->timestamp('academic_suspended_at')->nullable();
+            $table->text('academic_suspension_reason')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

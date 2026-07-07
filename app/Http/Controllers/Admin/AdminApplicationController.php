@@ -26,8 +26,8 @@ class AdminApplicationController extends Controller
                     $userQuery->where('name', 'like', "%{$search}%")
                               ->orWhere('email', 'like', "%{$search}%");
                 })
-                ->orWhereHas('user.oLevelEducation', function($eduQuery) use ($search) {
-                    $eduQuery->where('form_four_index_number', 'like', "%{$search}%");
+                ->orWhereHas('user.aLevelEducation', function($eduQuery) use ($search) {
+                    $eduQuery->where('school_name', 'like', "%{$search}%");
                 })
                 ->orWhereHas('scholarship', function($scholarQuery) use ($search) {
                     $scholarQuery->where('title', 'like', "%{$search}%");

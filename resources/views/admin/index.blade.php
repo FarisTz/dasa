@@ -282,79 +282,7 @@
         <!-- Completion Stats Row -->
         <div class="row">
             <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4><i class="fas fa-tasks text-primary"></i> Application Completion Status</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3 col-sm-6">
-                                <div class="completion-stat">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span>Personal Info</span>
-                                        <span class="badge badge-{{ $completionStats['personal_info']['percentage'] >= 80 ? 'success' : ($completionStats['personal_info']['percentage'] >= 50 ? 'warning' : 'danger') }}">
-                                            {{ $completionStats['personal_info']['percentage'] }}%
-                                        </span>
-                                    </div>
-                                    <div class="progress mt-2" style="height: 8px;">
-                                        <div class="progress-bar bg-{{ $completionStats['personal_info']['percentage'] >= 80 ? 'success' : ($completionStats['personal_info']['percentage'] >= 50 ? 'warning' : 'danger') }}"
-                                             style="width: {{ $completionStats['personal_info']['percentage'] }}%;">
-                                        </div>
-                                    </div>
-                                    <small class="text-muted">{{ $completionStats['personal_info']['completed'] }} / {{ $completionStats['personal_info']['total'] }} users</small>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <div class="completion-stat">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span>O-Level</span>
-                                        <span class="badge badge-{{ $completionStats['o_level']['percentage'] >= 80 ? 'success' : ($completionStats['o_level']['percentage'] >= 50 ? 'warning' : 'danger') }}">
-                                            {{ $completionStats['o_level']['percentage'] }}%
-                                        </span>
-                                    </div>
-                                    <div class="progress mt-2" style="height: 8px;">
-                                        <div class="progress-bar bg-{{ $completionStats['o_level']['percentage'] >= 80 ? 'success' : ($completionStats['o_level']['percentage'] >= 50 ? 'warning' : 'danger') }}"
-                                             style="width: {{ $completionStats['o_level']['percentage'] }}%;">
-                                        </div>
-                                    </div>
-                                    <small class="text-muted">{{ $completionStats['o_level']['completed'] }} / {{ $completionStats['o_level']['total'] }} users</small>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <div class="completion-stat">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span>A-Level</span>
-                                        <span class="badge badge-{{ $completionStats['a_level']['percentage'] >= 80 ? 'success' : ($completionStats['a_level']['percentage'] >= 50 ? 'warning' : 'danger') }}">
-                                            {{ $completionStats['a_level']['percentage'] }}%
-                                        </span>
-                                    </div>
-                                    <div class="progress mt-2" style="height: 8px;">
-                                        <div class="progress-bar bg-{{ $completionStats['a_level']['percentage'] >= 80 ? 'success' : ($completionStats['a_level']['percentage'] >= 50 ? 'warning' : 'danger') }}"
-                                             style="width: {{ $completionStats['a_level']['percentage'] }}%;">
-                                        </div>
-                                    </div>
-                                    <small class="text-muted">{{ $completionStats['a_level']['completed'] }} / {{ $completionStats['a_level']['total'] }} users</small>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <div class="completion-stat">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span>Motivation</span>
-                                        <span class="badge badge-{{ $completionStats['motivation']['percentage'] >= 80 ? 'success' : ($completionStats['motivation']['percentage'] >= 50 ? 'warning' : 'danger') }}">
-                                            {{ $completionStats['motivation']['percentage'] }}%
-                                        </span>
-                                    </div>
-                                    <div class="progress mt-2" style="height: 8px;">
-                                        <div class="progress-bar bg-{{ $completionStats['motivation']['percentage'] >= 80 ? 'success' : ($completionStats['motivation']['percentage'] >= 50 ? 'warning' : 'danger') }}"
-                                             style="width: {{ $completionStats['motivation']['percentage'] }}%;">
-                                        </div>
-                                    </div>
-                                    <small class="text-muted">{{ $completionStats['motivation']['completed'] }} / {{ $completionStats['motivation']['total'] }} users</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
 
@@ -444,17 +372,17 @@
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12">
-                                <a href="{{ route('admin.users.create') }}" class="btn btn-success btn-lg btn-block mb-2">
+                                <a href="{{ route('admin.users.create') }}" class="btn btn-success btn-lg btn-block mb-2 text-white">
                                     <i class="fas fa-user-plus"></i> Add User
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12">
-                                <a href="{{ route('admin.applications.index') }}" class="btn btn-info btn-lg btn-block mb-2">
+                                <a href="{{ route('admin.applications.index') }}" class="btn btn-info btn-lg btn-block mb-2 text-white">
                                     <i class="fas fa-file-alt"></i> View Applications
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12">
-                                <a href="{{ route('admin.applications.export') }}" class="btn btn-warning btn-lg btn-block mb-2">
+                                <a href="{{ route('admin.applications.export') }}" class="btn btn-warning btn-lg btn-block mb-2 text-white">
                                     <i class="fas fa-file-export"></i> Export Data
                                 </a>
                             </div>

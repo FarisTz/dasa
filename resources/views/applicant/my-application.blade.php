@@ -341,7 +341,7 @@
                             @endif
 
                             @if($application->status == 'approved_full' || $application->status == 'approved_partial')
-                                <a href="{{ route('applicant.acceptance.download') }}" class="btn btn-success btn-lg px-5 mr-2">
+                                <a style="color: #e9ecef" href="{{ route('applicant.acceptance.download') }}" class="btn btn-success btn-lg px-5 mr-2">
                                     <i class="fas fa-file-pdf"></i> Download Acceptance Letter
                                 </a>
                             @endif
@@ -352,7 +352,7 @@
                                 </a>
                             @endif
 
-                            
+
                         </div>
                     </div>
                 </div>

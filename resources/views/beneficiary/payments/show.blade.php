@@ -20,9 +20,30 @@
                         <i class="fas fa-{{ $payment->status_icon }}"></i>
                         {{ ucfirst($payment->status) }}
                     </span>
+
+                    <a href="{{ route('beneficiary.payments.index') }}" class="btn btn-sm btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </a>
                 </div>
             </div>
             <div class="card-body">
+                 @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle"></i> {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
                 <div class="row">
                     <div class="col-md-6">
                         <div class="table-responsive">
@@ -130,6 +151,12 @@
                         <a href="{{ route('beneficiary.payments.index') }}" class="btn btn-secondary btn-lg px-4">
                             <i class="fas fa-arrow-left"></i> Back to Installments
                         </a>
+
+                        @if($payment->status=='pending')
+                                                <a href="{{ route('beneficiary.payments.sign', $payment->installment_id) }}" class="btn btn-lg btn-success text-white">
+                                                    <i  class="fas fa-check-circle"></i> Sign Now
+                                                </a>
+                                            @endif
                     </div>
                 </div>
             </div>

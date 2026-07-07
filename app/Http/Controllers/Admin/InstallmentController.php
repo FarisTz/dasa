@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\InstallmentNotification;
 use App\Models\Installment;
-use App\Models\User;
 use App\Models\StudentPayment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class InstallmentController extends Controller
@@ -82,19 +84,36 @@ class InstallmentController extends Controller
         // Get all beneficiaries
         $students = User::where('role', 'beneficiary')->get();
 
-        foreach ($students as $student) {
-            StudentPayment::updateOrCreate(
-                [
-                    'installment_id' => $installment->id,
+         foreach ($students as $student) {
+            try {
+                // Create student payment
+                $payment = StudentPayment::updateOrCreate(
+                    [
+                        'installment_id' => $installment->id,
+                        'student_id' => $student->id,
+                    ],
+                    [
+                        'amount' => $installment->amount,
+                        'status' => 'pending',
+                        'otp' => StudentPayment::generateOTP(),
+                    ]
+                );
+
+                // Send email notification to student
+                Mail::to($student->email)->send(new InstallmentNotification($installment, $student));
+
+                \Log::info('Installment notification sent to student', [
                     'student_id' => $student->id,
-                ],
-                [
-                    'amount' => $installment->amount,
-                    'status' => 'pending',
-                    'otp' => StudentPayment::generateOTP(),
-                ]
-            );
-        }
+                    'email' => $student->email,
+                    'installment_id' => $installment->id
+                ]);
+
+            } catch (\Exception $e) {
+                \Log::error('Failed to send installment notification to student', [
+                    'student_id' => $student->id,
+                    'error' => $e->getMessage()
+                ]);
+    }}
     }
 
     /**

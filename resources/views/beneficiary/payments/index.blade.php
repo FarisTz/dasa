@@ -114,6 +114,12 @@
                                             <a href="{{ route('beneficiary.payments.show', $payment->id) }}" class="btn btn-sm btn-info">
                                                 <i class="fas fa-eye"></i>
                                             </a>
+
+                                            @if($payment->status=='pending')
+                                                <a href="{{ route('beneficiary.payments.sign', $payment->installment_id) }}" class="btn btn-sm btn-success text-white">
+                                                    <i  class="fas fa-check-circle"></i>
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

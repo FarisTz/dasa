@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Beneficiary;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OTPNotification;
 use App\Models\Installment;
 use App\Models\StudentPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends Controller
@@ -42,16 +44,35 @@ class PaymentController extends Controller
         $student = Auth::user();
 
         // Check if student already has this installment
-        $existingPayment = StudentPayment::where('installment_id', $id)
+        $payment = StudentPayment::where('installment_id', $id)
             ->where('student_id', $student->id)
             ->first();
 
 
 
-        $installment = Installment::where('is_active', true)
+
+         // Send OTP to student email
+        try {
+            Mail::to($student->email)->send(new OTPNotification($payment, $student));
+
+            $installment = Installment::where('is_active', true)
             ->findOrFail($id);
 
-        return view('beneficiary.payments.sign', compact('installment'));
+            return view('beneficiary.payments.sign', compact('installment'));
+        } catch (\Exception $e) {
+            \Log::error('Failed to send OTP email', ['error' => $e->getMessage()]);
+            return redirect()->back()
+                ->with('error', 'Failed to send OTP. Please try again later.');
+        }
+
+
+
+
+
+
+
+
+
     }
 
     /**

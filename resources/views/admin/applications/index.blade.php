@@ -292,8 +292,11 @@
                                         @endif
                                     </a>
                                 </th>
-                                <th>Scholarship</th>
-                                <th>Index Number</th>
+
+                                <th>School Name</th>
+
+                                 <th>Division</th>
+                                 <th>Scholarship</th>
                                 <th>
                                     <a href="{{ route('admin.applications.index', array_merge(request()->query(), ['sort' => 'status', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc'])) }}" class="text-dark">
                                         Status
@@ -314,7 +317,7 @@
                                         @endif
                                     </a>
                                 </th>
-                                <th>Review Duration</th>
+
                                 <th width="200">Actions</th>
                             </tr>
                         </thead>
@@ -330,31 +333,43 @@
                                     <td>{{ $applications->firstItem() + $loop->index }}</td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ $application->user->profile_photo_url ?? asset('images/default-avatar.png') }}"
-                                                 alt="{{ $application->user->name }}"
-                                                 class="rounded-circle mr-2"
-                                                 width="35"
-                                                 height="35">
+
                                             <div>
                                                 <div><strong>{{ $application->user->name }}</strong></div>
                                                 <small class="text-muted">{{ $application->user->email }}</small>
                                             </div>
                                         </div>
                                     </td>
+
+                                    <td>
+                                        @php
+                                            $indexNumber = null;
+                                            if($application->user->aLevelEducation) {
+                                                $indexNumber = $application->user->aLevelEducation->school_name;
+                                            }
+                                        @endphp
+                                        {{ $indexNumber ?? '-' }}
+                                    </td>
+
+
+                                    <td>
+                                        @if($application->submitted_at)
+                                            @php
+                                                $division = $application->user->aLevelEducation->division ?? null;
+                                            @endphp
+                                            <span class="badge badge-{{$division == 'I' ? 'success' : ($division == 'II' ? 'info' : ($division == 'III' ? 'warning' : ($division == 'IV' ? 'danger' : 'secondary')) }}">
+                                                {{ $application->user->aLevelEducation->division ?? 'N/A' }}
+                                            </span>
+                                        @else
+                                            <span class="text-muted">-</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <strong>{{ $application->scholarship->title ?? 'N/A' }}</strong>
                                         <br>
                                         <small class="text-muted">{{ $application->scholarship->academic_year ?? '' }}</small>
                                     </td>
-                                    <td>
-                                        @php
-                                            $indexNumber = null;
-                                            if($application->user->oLevelEducation) {
-                                                $indexNumber = $application->user->oLevelEducation->form_four_index_number;
-                                            }
-                                        @endphp
-                                        {{ $indexNumber ?? '-' }}
-                                    </td>
+
                                     <td>
                                         <span class="badge badge-{{ $application->status == 'submitted' ? 'primary' :
                                             ($application->status == 'pending' ? 'secondary' :
@@ -377,18 +392,7 @@
                                             <span class="text-muted">Not submitted</span>
                                         @endif
                                     </td>
-                                    <td>
-                                        @if($application->submitted_at)
-                                            @php
-                                                $days = $application->submitted_at->diffInDays(now());
-                                            @endphp
-                                            <span class="badge badge-{{ $days > 30 ? 'danger' : ($days > 15 ? 'warning' : 'info') }}">
-                                                {{ $days }} days
-                                            </span>
-                                        @else
-                                            <span class="text-muted">-</span>
-                                        @endif
-                                    </td>
+
                                     <td>
                                         <div class="btn-group" role="group">
                                             <a href="{{ route('admin.applications.show', $application->id) }}"
@@ -397,7 +401,7 @@
                                                title="View Application">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            
+
                                             @if($application->status != 'approved_full' && $application->status != 'approved_partial' && $application->status != 'rejected')
                                                 <a href="{{ route('admin.applications.review', $application->id) }}"
                                                    class="btn btn-sm btn-primary"

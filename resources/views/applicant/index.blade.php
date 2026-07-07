@@ -59,63 +59,51 @@
             </div>
 
             <div class="card-body">
+                @php
+                    $personalInfo = \App\Models\PersonalInfo::where('user_id', Auth::id())->first();
+                    $oLevel = \App\Models\OLevelEducation::where('user_id', Auth::id())->first();
+                    $aLevel = \App\Models\ALevelEducation::where('user_id', Auth::id())->first();
+                    $motivation = \App\Models\Motivation::where('user_id', Auth::id())->first();
+                    $reviewCompleted = $personalInfo && $oLevel && $aLevel && $motivation && $application && $application->scholarship_id;
+                    $submitCompleted = $application && in_array($application->status, ['submitted', 'under_review', 'approved_full', 'approved_partial', 'rejected']);
+                    $stepPosition = 0;
+                    if ($personalInfo) $stepPosition = 1;
+                    if ($oLevel) $stepPosition = 2;
+                    if ($aLevel) $stepPosition = 3;
+                    if ($motivation) $stepPosition = 4;
+                    if ($reviewCompleted) $stepPosition = 5;
+                    if ($submitCompleted) $stepPosition = 6;
+
+                    $milestones = [
+                        ['title' => 'Personal Information', 'icon' => 'user-circle', 'iconColor' => 'text-primary'],
+                        ['title' => 'O-Level Education', 'icon' => 'school', 'iconColor' => 'text-primary'],
+                        ['title' => 'A-Level Education', 'icon' => 'graduation-cap', 'iconColor' => 'text-primary'],
+                        ['title' => 'Motivation Letter', 'icon' => 'file-alt', 'iconColor' => 'text-primary'],
+                        ['title' => 'Review', 'icon' => 'search', 'iconColor' => 'text-warning'],
+                        ['title' => 'Submit', 'icon' => 'paper-plane', 'iconColor' => 'text-success'],
+                    ];
+                @endphp
 
                 <div class="row text-center">
-
-                    <div class="col-md-2 col-6 mb-4">
-                        <div class="p-3 border rounded milestone-card">
-                            <div class="mb-2">
-                                <i class="fas fa-user-circle fa-2x text-primary"></i>
+                    @foreach($milestones as $index => $milestone)
+                        @php
+                            $stepNumber = $index + 1;
+                            $status = $stepNumber <= $stepPosition ? 'completed' : ($stepNumber == $stepPosition + 1 ? 'current' : 'pending');
+                            $isCompleted = $status === 'completed';
+                            $isCurrent = $status === 'current';
+                        @endphp
+                        <div class="col-md-2 col-6 mb-4">
+                            <div class="p-3 border rounded h-100 {{ $isCompleted ? 'border-success bg-success text-white shadow-sm' : ($isCurrent ? 'border-primary bg-primary text-white shadow-sm' : 'border-light bg-light') }}">
+                                <div class="mb-2">
+                                    <i class="fas fa-{{ $milestone['icon'] }} fa-2x {{ $isCompleted || $isCurrent ? 'text-white' : $milestone['iconColor'] }}"></i>
+                                </div>
+                                <h6 class="mb-0">{{ $milestone['title'] }}</h6>
+                                <small class="d-block mt-2 {{ $isCompleted || $isCurrent ? 'text-white-50' : 'text-muted' }}">
+                                    {{ $isCompleted ? 'Completed' : ($isCurrent ? 'In Progress' : 'Pending') }}
+                                </small>
                             </div>
-                            <h6 class="mb-0">Personal Information</h6>
                         </div>
-                    </div>
-
-                    <div class="col-md-2 col-6 mb-4">
-                        <div class="p-3 border rounded">
-                            <div class="mb-2">
-                                <i class="fas fa-school fa-2x text-primary"></i>
-                            </div>
-                            <h6 class="mb-0">O-Level Education</h6>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2 col-6 mb-4">
-                        <div class="p-3 border rounded">
-                            <div class="mb-2">
-                                <i class="fas fa-graduation-cap fa-2x text-primary"></i>
-                            </div>
-                            <h6 class="mb-0">A-Level Education</h6>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2 col-6 mb-4">
-                        <div class="p-3 border rounded">
-                            <div class="mb-2">
-                                <i class="fas fa-file-alt fa-2x text-primary"></i>
-                            </div>
-                            <h6 class="mb-0">Motivation Letter</h6>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2 col-6 mb-4">
-                        <div class="p-3 border rounded">
-                            <div class="mb-2">
-                                <i class="fas fa-search fa-2x text-warning"></i>
-                            </div>
-                            <h6 class="mb-0">Review</h6>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2 col-6 mb-4">
-                        <div class="p-3 border rounded">
-                            <div class="mb-2">
-                                <i class="fas fa-paper-plane fa-2x text-success"></i>
-                            </div>
-                            <h6 class="mb-0">Submit</h6>
-                        </div>
-                    </div>
-
+                    @endforeach
                 </div>
 
             </div>

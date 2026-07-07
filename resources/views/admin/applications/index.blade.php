@@ -357,8 +357,9 @@
                                             @php
                                                 $division = $application->user->aLevelEducation->division ?? null;
                                             @endphp
-                                            <span class="badge badge-{{$division == 'I' ? 'success' : ($division == 'II' ? 'info' : ($division == 'III' ? 'warning' : ($division == 'IV' ? 'danger' : 'secondary')) }}">
-                                                {{ $application->user->aLevelEducation->division ?? 'N/A' }}
+                                            <span class="badge badge-{{ $division == 'I' ? 'primary' : ($division == 'II' ? 'secondary' : ($division == 'III' ? 'warning' : ($division == 'IV' ? 'danger' : 'dark'))) }}">
+                                                {{ $division ?? '-' }}
+                                              
                                             </span>
                                         @else
                                             <span class="text-muted">-</span>

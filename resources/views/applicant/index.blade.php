@@ -4,6 +4,18 @@
 @section('content')
 <section class="section">
     <div class="section-body">
+        @php
+            $application = \App\Models\Application::where('user_id', Auth::id())->first();
+            $isApproved = $application && in_array($application->status, ['approved_full', 'approved_partial']);
+        @endphp
+
+        @if($isApproved)
+            <div class="alert alert-success mb-4">
+                <i class="fas fa-trophy fa-2x mb-2 d-block"></i>
+                <h4 class="mb-2">Congratulations! Your application has been approved.</h4>
+                <p class="mb-0">We are delighted to share this wonderful news with you. Please continue to monitor your application status for the next steps.</p>
+            </div>
+        @endif
 
         <!-- Welcome Card -->
         <div class="card mb-4">

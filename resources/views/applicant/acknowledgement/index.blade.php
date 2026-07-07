@@ -9,7 +9,43 @@
             <div class="breadcrumb-item">Acknowledgement</div>
         </div>
     </div>
-
+<!-- Instructions Card -->
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="fas fa-info-circle text-primary"></i> Important Instructions</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <div class="icon-circle bg-primary text-white mb-3" style="width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">
+                                <i class="fas fa-file-word"></i>
+                            </div>
+                            <h6>1. Download Template</h6>
+                            <p class="text-muted small">Download the acknowledgement letter template.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <div class="icon-circle bg-success text-white mb-3" style="width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">
+                                <i class="fas fa-pen"></i>
+                            </div>
+                            <h6>2. Sign the Letter</h6>
+                            <p class="text-muted small">Print, sign, and scan the letter or sign digitally.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <div class="icon-circle bg-info text-white mb-3" style="width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">
+                                <i class="fas fa-upload"></i>
+                            </div>
+                            <h6>3. Upload Signed Copy</h6>
+                            <p class="text-muted small">Upload the signed document to complete the process.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <div class="section-body">
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -204,43 +240,7 @@
             </div>
         </div>
 
-        <!-- Instructions Card -->
-        <div class="card">
-            <div class="card-header">
-                <h4><i class="fas fa-info-circle text-primary"></i> Important Instructions</h4>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="text-center">
-                            <div class="icon-circle bg-primary text-white mb-3" style="width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">
-                                <i class="fas fa-file-word"></i>
-                            </div>
-                            <h6>1. Download Template</h6>
-                            <p class="text-muted small">Download the acknowledgement letter template.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="text-center">
-                            <div class="icon-circle bg-success text-white mb-3" style="width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">
-                                <i class="fas fa-pen"></i>
-                            </div>
-                            <h6>2. Sign the Letter</h6>
-                            <p class="text-muted small">Print, sign, and scan the letter or sign digitally.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="text-center">
-                            <div class="icon-circle bg-info text-white mb-3" style="width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">
-                                <i class="fas fa-upload"></i>
-                            </div>
-                            <h6>3. Upload Signed Copy</h6>
-                            <p class="text-muted small">Upload the signed document to complete the process.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 </section>
 @endsection

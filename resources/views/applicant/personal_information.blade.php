@@ -36,6 +36,18 @@
                     </div>
                 @endif
 
+                @php
+                    $existingApplication = \App\Models\Application::where('user_id', Auth::id())->first();
+                    $isApproved = $existingApplication && in_array($existingApplication->status, ['approved_full', 'approved_partial']);
+                @endphp
+
+                @if($isApproved)
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle"></i>
+                        Your application has been approved and editing is disabled.
+                    </div>
+                @endif
+
                 <form id="personalInfoForm" method="POST" action="{{ route('applicant.personal-information.store') }}" enctype="multipart/form-data">
                     @csrf
 
@@ -337,10 +349,15 @@
                         <div class="col-12">
                             <hr>
                             <div class="form-group text-center">
+                                @if(!$isApproved)
                                 <button type="submit" class="btn btn-primary btn-lg px-5">
                                     <i class="fas fa-save"></i> {{ isset($personalInfo) ? 'Update' : 'Save' }} Personal Information
                                 </button>
-
+                            @else
+                                <button type="submit" class="btn btn-secondary btn-lg px-5" disabled>
+                                    <i class="fas fa-save"></i> Editing Disabled
+                                </button>
+                            @endif
 
                                 <a href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4" >
                                     <i class="fas fa-arrow-right"></i> Proceed to O-Level Education

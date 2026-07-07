@@ -291,7 +291,7 @@ public function review()
             // Clear session
             session()->forget('selected_scholarship_id');
 
-            return redirect()->route('applicant.my-application')
+            return redirect()->route('dashboard')
                 ->with('success', 'Your application for ' . $scholarship->title . ' has been submitted successfully!');
 
         } catch (\Exception $e) {

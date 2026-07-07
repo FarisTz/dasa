@@ -84,37 +84,47 @@
             <!-- Already Submitted Alert -->
             <div class="card">
                 <div class="card-body">
-                    <div class="alert {{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'alert-success' : 'alert-warning' }} text-center">
-                        <i class="fas fa-{{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'trophy' : 'info-circle' }} fa-3x mb-3"></i>
-                        <h4>
+                    <div class="alert {{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'alert-success' : 'alert-warning' }} text-center" style="{{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%); border: none; color: white;' : '' }}">
+                        <i class="fas fa-{{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'trophy' : 'info-circle' }} fa-3x mb-3" style="{{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'color: white;' : '' }}"></i>
+                        <h4 style="{{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'color: white;' : '' }}">
                             @if(in_array($existingApplication->status, ['approved_full', 'approved_partial']))
-                                Congratulations! Your application has been approved.
+                                🎉 <strong>Congratulations, {{ Auth::user()->name }}!</strong>
                             @else
                                 You already have a submitted application!
                             @endif
                         </h4>
-                        <p>
-                            <strong>Application #{{ str_pad($existingApplication->id, 6, '0', STR_PAD_LEFT) }}</strong>
-                            <br>
-                            <span class="badge badge-{{ $existingApplication->status == 'submitted' ? 'primary' :
-                                ($existingApplication->status == 'under_review' ? 'warning' :
-                                ($existingApplication->status == 'approved_full' ? 'success' :
-                                ($existingApplication->status == 'approved_partial' ? 'info' : 'danger'))) }} application-status-badge mt-2">
-                                <i class="fas fa-{{ $existingApplication->status == 'submitted' ? 'clock' :
-                                    ($existingApplication->status == 'under_review' ? 'search' :
-                                    ($existingApplication->status == 'approved_full' || $existingApplication->status == 'approved_partial' ? 'check-circle' : 'times-circle')) }}"></i>
-                                {{ ucfirst(str_replace('_', ' ', $existingApplication->status)) }}
-                            </span>
-                        </p>
-                        <p>
-                            @if(in_array($existingApplication->status, ['approved_full', 'approved_partial']))
-                                Thank you for applying. Your application is approved and we will share the next steps soon.
-                            @else
+                        @if(in_array($existingApplication->status, ['approved_full', 'approved_partial']))
+                            <p style="color: white;">
+                                Your <strong>{{ $existingApplication->scholarship->title ?? 'Scholarship' }}</strong> application has been approved!
+                            </p>
+                            <p style="color: white;">
+                                This achievement reflects your hard work and dedication. We encourage you to stay focused, work hard, and make the most of this opportunity to achieve your academic goals and inspire others.
+                            </p>
+                            <p style="color: white;">
+                                Please continue monitoring your application status for the next steps.
+                                <br>
+                                <strong>Best wishes for your academic success!</strong>
+                            </p>
+                        @else
+                            <p>
+                                <strong>Application #{{ str_pad($existingApplication->id, 6, '0', STR_PAD_LEFT) }}</strong>
+                                <br>
+                                <span class="badge badge-{{ $existingApplication->status == 'submitted' ? 'primary' :
+                                    ($existingApplication->status == 'under_review' ? 'warning' :
+                                    ($existingApplication->status == 'approved_full' ? 'success' :
+                                    ($existingApplication->status == 'approved_partial' ? 'info' : 'danger'))) }} application-status-badge mt-2">
+                                    <i class="fas fa-{{ $existingApplication->status == 'submitted' ? 'clock' :
+                                        ($existingApplication->status == 'under_review' ? 'search' :
+                                        ($existingApplication->status == 'approved_full' || $existingApplication->status == 'approved_partial' ? 'check-circle' : 'times-circle')) }}"></i>
+                                    {{ ucfirst(str_replace('_', ' ', $existingApplication->status)) }}
+                                </span>
+                            </p>
+                            <p>
                                 You cannot submit another application while you have a pending/submitted application.
-                            @endif
-                        </p>
+                            </p>
+                        @endif
                         <div class="mt-3">
-                            <a href="{{ route('applicant.my-application') }}" class="btn btn-primary">
+                            <a href="{{ route('applicant.my-application') }}" class="btn {{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'btn-light' : 'btn-primary' }}">
                                 <i class="fas fa-eye"></i> View My Application
                             </a>
                             @if($existingApplication->status == 'submitted' || $existingApplication->status == 'pending')
@@ -712,12 +722,24 @@
 
                         @if($hasSubmittedApplication)
                             @if(in_array($existingApplication->status, ['approved_full', 'approved_partial']))
-                            <div class="alert alert-success text-center">
-                                <i class="fas fa-trophy fa-2x"></i>
-                                <h5>Congratulations! Your application has been approved.</h5>
-                                <p>Your application has been successfully approved. We are pleased to share this wonderful news with you.</p>
+                            <div class="alert alert-success text-center" style="background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%); border: none; color: white;">
+                                <i class="fas fa-trophy fa-2x mb-2" style="color: white;"></i>
+                                <h5 style="color: white; font-weight: bold;">
+                                    🎉 Congratulations, {{ Auth::user()->name }}!
+                                </h5>
+                                <p style="color: white;">
+                                    Your <strong>{{ $existingApplication->scholarship->title ?? 'Scholarship' }}</strong> application has been approved!
+                                </p>
+                                <p style="color: white;">
+                                    This achievement reflects your hard work and dedication. We encourage you to stay focused, work hard, and make the most of this opportunity to achieve your academic goals and inspire others.
+                                </p>
+                                <p style="color: white;">
+                                    Please continue monitoring your application status for the next steps.
+                                    <br>
+                                    <strong>Best wishes for your academic success!</strong>
+                                </p>
                                 <div class="mt-3">
-                                    <a href="{{ route('applicant.my-application') }}" class="btn btn-primary">
+                                    <a href="{{ route('applicant.my-application') }}" class="btn btn-light">
                                         <i class="fas fa-eye"></i> View My Application
                                     </a>
                                 </div>

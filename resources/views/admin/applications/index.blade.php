@@ -411,45 +411,15 @@
                                                     <i class="fas fa-check-circle"></i>
                                                 </a>
                                             @endif
-                                            <button type="button"
+                                            <a href="{{ route('admin.applications.destroy', $application->id) }}"
                                                     class="btn btn-sm btn-danger"
-                                                    data-toggle="modal"
-                                                    data-target="#deleteModal{{ $application->id }}"
-                                                    data-toggle="tooltip"
-                                                    title="Delete Application">
+                                                    id="delete"
+                                                    >
                                                 <i class="fas fa-trash"></i>
-                                            </button>
+                                            </a>
                                         </div>
 
-                                        <!-- Delete Modal -->
-                                        <div class="modal fade" id="deleteModal{{ $application->id }}" tabindex="-1" role="dialog">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Confirm Delete</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Are you sure you want to delete this application?</p>
-                                                        <p><strong>Applicant:</strong> {{ $application->user->name }}</p>
-                                                        <p><strong>Scholarship:</strong> {{ $application->scholarship->title ?? 'N/A' }}</p>
-                                                        <p class="text-danger"><small>This action cannot be undone.</small></p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                        <form action="{{ route('admin.applications.destroy', $application->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">
-                                                                <i class="fas fa-trash"></i> Delete
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </td>
                                 </tr>
                             @empty

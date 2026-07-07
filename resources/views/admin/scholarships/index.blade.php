@@ -331,45 +331,15 @@
                                                     <i class="fas fa-{{ $scholarship->status == 'draft' ? 'door-open' : 'door-closed' }}"></i>
                                                 </a>
                                             @endif
-                                            <button type="button"
-                                                    class="btn btn-sm btn-danger"
-                                                    data-toggle="modal"
-                                                    data-target="#deleteModal{{ $scholarship->id }}"
-                                                    data-toggle="tooltip"
-                                                    title="Delete Scholarship">
+                                            <a href="{{ route('admin.scholarships.destroy', $scholarship->id) }}"
+                                                id="delete"
+                                                    class="btn btn-sm btn-danger">
+
                                                 <i class="fas fa-trash"></i>
-                                            </button>
+                                            </a>
                                         </div>
 
-                                        <!-- Delete Modal -->
-                                        <div class="modal fade" id="deleteModal{{ $scholarship->id }}" tabindex="-1" role="dialog">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Confirm Delete</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Are you sure you want to delete this scholarship?</p>
-                                                        <p><strong>Title:</strong> {{ $scholarship->title }}</p>
-                                                        <p><strong>Academic Year:</strong> {{ $scholarship->academic_year }}</p>
-                                                        <p class="text-danger"><small>This action cannot be undone. All associated applications will also be deleted.</small></p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                        <form action="{{ route('admin.scholarships.destroy', $scholarship->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">
-                                                                <i class="fas fa-trash"></i> Delete
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </td>
                                 </tr>
                             @empty

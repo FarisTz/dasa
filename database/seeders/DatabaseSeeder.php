@@ -48,6 +48,70 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'status' => 'active',
             'email_verified_at' => now(),
+        ],
+        [
+            'name' => 'Beneficiary User 1',
+            'email' => 'beneficiary1@eg.com',
+            'role' => 'beneficiary',
+            'password' => bcrypt('12345678'),
+            'status' => 'active',
+            'email_verified_at' => now(),
+        ],
+        [
+            'name' => 'Beneficiary User 2',
+            'email' => 'beneficiary2@eg.com',
+            'role' => 'beneficiary',
+            'password' => bcrypt('12345678'),
+            'status' => 'active',
+            'email_verified_at' => now(),
+        ],
+        [
+            'name' => 'Beneficiary User 3',
+            'email' => 'beneficiary3@eg.com',
+            'role' => 'beneficiary',
+            'password' => bcrypt('12345678'),
+            'status' => 'active',
+            'email_verified_at' => now(),
+        ]
+        ,[
+            'name' => 'Beneficiary User 4',
+            'email' => 'beneficiary4@eg.com',
+            'role' => 'beneficiary',
+            'password' => bcrypt('12345678'),
+            'status' => 'active',
+            'email_verified_at' => now(),
+        ]
+        ,[
+            'name' => 'Beneficiary User 5',
+            'email' => 'beneficiary5@eg.com',
+            'role' => 'beneficiary',
+            'password' => bcrypt('12345678'),
+            'status' => 'active',
+            'email_verified_at' => now(),
+        ]
+        ,[
+            'name' => 'Beneficiary User 6',
+            'email' => 'beneficiary6@eg.com',
+            'role' => 'beneficiary',
+            'password' => bcrypt('12345678'),
+            'status' => 'active',
+            'email_verified_at' => now(),
+        ],
+        [
+            'name' => 'Beneficiary User 7',
+            'email' => 'beneficiary7@eg.com',
+            'role' => 'beneficiary',
+            'password' => bcrypt('12345678'),
+            'status' => 'active',
+            'email_verified_at' => now(),
+        ],
+        [
+            'name' => 'Beneficiary User 8',
+            'email' => 'beneficiary8@eg.com',
+            'role' => 'beneficiary',
+            'password' => bcrypt('12345678'),
+            'status' => 'active',
+            'email_verified_at' => now(),
         ]
     ];
 

@@ -355,7 +355,7 @@ public function review()
             ->first();
 
         if (!$application) {
-            return redirect()->route('applicant.dashboard')
+            return redirect()->route('dashboard')
                 ->with('error', 'You do not have an approved application.');
         }
 
@@ -374,7 +374,7 @@ public function review()
             ->first();
 
         if (!$application) {
-            return redirect()->route('applicant.dashboard')
+            return redirect()->route('dashboard')
                 ->with('error', 'You do not have an approved application.');
         }
 

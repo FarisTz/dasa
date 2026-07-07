@@ -247,11 +247,7 @@
                                     <div class="list-group-item list-group-item-action">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <div class="d-flex align-items-center">
-                                                <img src="{{ $user->profile_photo_url ?? asset('images/default-avatar.png') }}"
-                                                     alt="{{ $user->name }}"
-                                                     class="rounded-circle mr-3"
-                                                     width="40"
-                                                     height="40">
+                                                
                                                 <div>
                                                     <h6 class="mb-0">{{ $user->name }}</h6>
                                                     <small class="text-muted">{{ $user->email }}</small>

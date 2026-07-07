@@ -142,15 +142,15 @@
     document.addEventListener('DOMContentLoaded', function() {
         // ===== 1. Fix dropdown toggles =====
         var dropdownToggles = document.querySelectorAll('.menu-toggle');
-        
+
         dropdownToggles.forEach(function(toggle) {
             toggle.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                
+
                 var parentLi = this.closest('.dropdown');
                 var dropdownMenu = parentLi.querySelector('.dropdown-menu');
-                
+
                 // Toggle the dropdown
                 if (parentLi.classList.contains('active')) {
                     parentLi.classList.remove('active');
@@ -164,13 +164,13 @@
                             if (menu) menu.style.display = 'none';
                         }
                     });
-                    
+
                     parentLi.classList.add('active');
                     dropdownMenu.style.display = 'block';
                 }
             });
         });
-        
+
         // ===== 2. Keep dropdown open when submenu is active =====
         var activeSubmenu = document.querySelector('.dropdown-menu .active');
         if (activeSubmenu) {
@@ -183,7 +183,7 @@
                 }
             }
         }
-        
+
         // ===== 3. Fix: When clicking on submenu items, keep parent open =====
         document.querySelectorAll('.dropdown-menu .nav-link').forEach(function(link) {
             link.addEventListener('click', function() {
@@ -200,6 +200,8 @@
         });
     });
 </script>
+
+
 <!--End of Tawk.to Script-->
   <!-- General JS Scripts -->
   <script src="{{asset('assets/js/app.min.js')}}"></script>
@@ -218,6 +220,43 @@
   <script src="{{asset('assets/js/scripts.js')}}"></script>
   <!-- Custom JS File -->
   <script src="{{asset('assets/js/custom.js')}}"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+
+
+$(function(){
+    $(document).on('click','#delete',function(e){
+        e.preventDefault();
+        var link = $(this).attr("href");
+
+
+                  Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Delete This Data?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      window.location.href = link
+                      Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                      )
+                    }
+                  })
+
+
+    });
+
+  });
+
+</script>
+
    @stack('scripts')
 </body>
 

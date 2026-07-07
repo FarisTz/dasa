@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Applicant;
 
+use App\Http\Controllers\Controller;
+
 use App\Models\OLevelEducation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

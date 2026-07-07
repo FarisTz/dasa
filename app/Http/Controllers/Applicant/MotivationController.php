@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Applicant;
-
+use App\Http\Controllers\Controller;
 use App\Models\Motivation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

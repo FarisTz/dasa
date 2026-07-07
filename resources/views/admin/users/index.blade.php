@@ -229,12 +229,6 @@
                                     <td>{{ $users->firstItem() + $loop->index }}</td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ $user->profile_photo_url ?? asset('images/default-avatar.png') }}"
-                                                 alt="{{ $user->name }}"
-                                                 class="rounded-circle mr-2"
-                                                 width="35"
-                                                 height="35">
-                                            <div>
                                                 <strong>{{ $user->name }}</strong>
                                                 @if($user->id == auth()->id())
                                                     <span class="badge badge-warning ml-1">You</span>

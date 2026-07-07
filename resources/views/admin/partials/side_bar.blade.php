@@ -92,10 +92,10 @@
           <i data-feather="mail"></i><span>Students</span>
         </a>
         <ul class="dropdown-menu">
-          <li><a class="nav-link" href="email-inbox.html">All Students</a></li>
-          <li><a class="nav-link" href="email-compose.html">Confirmed Students</a></li>
-          <li><a class="nav-link" href="email-compose.html">Pending Confirmation</a></li>
-          <li><a class="nav-link" href="email-read.html">Canceled Students</a></li>
+          <li><a class="nav-link" href="#">All Students</a></li>
+          <li><a class="nav-link" href="#">Confirmed Students</a></li>
+          <li><a class="nav-link" href="#">Pending Confirmation</a></li>
+          <li><a class="nav-link" href="#">Canceled Students</a></li>
         </ul>
       </li>
 
@@ -121,9 +121,9 @@
           <i data-feather="shopping-bag"></i><span>Reports & Analytics</span>
         </a>
         <ul class="dropdown-menu">
-          <li><a class="nav-link" href="avatar.html">Application Report</a></li>
-          <li><a class="nav-link" href="card.html">Selection Reports</a></li>
-          <li><a class="nav-link" href="modal.html">Student Reports</a></li>
+          <li><a class="nav-link" href="#">Application Report</a></li>
+          <li><a class="nav-link" href="#">Selection Reports</a></li>
+          <li><a class="nav-link" href="#">Student Reports</a></li>
         </ul>
       </li>
 

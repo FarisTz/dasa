@@ -191,13 +191,7 @@
                                         </td>
                                         <td>{{ $applications->firstItem() + $loop->index }}</td>
                                         <td>
-                                            <div class="d-flex align-items-center">
-                                                <img src="{{ $application->user->profile_photo_url ?? asset('images/default-avatar.png') }}"
-                                                     alt="{{ $application->user->name }}"
-                                                     class="rounded-circle mr-2"
-                                                     width="35"
-                                                     height="35">
-                                                <div>
+                                            
                                                     <div><strong>{{ $application->user->name }}</strong></div>
                                                     <small class="text-muted">{{ $application->user->email }}</small>
                                                 </div>

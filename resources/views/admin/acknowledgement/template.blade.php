@@ -10,7 +10,47 @@
             <div class="breadcrumb-item">Template</div>
         </div>
     </div>
-
+        <!-- Instructions Card -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4><i class="fas fa-info-circle text-primary"></i> Instructions</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <div class="icon-circle bg-primary text-white mb-3" style="width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </div>
+                                    <h6>1. Upload Template</h6>
+                                    <p class="text-muted small">Upload a PDF template for the acknowledgement letter.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <div class="icon-circle bg-success text-white mb-3" style="width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">
+                                        <i class="fas fa-download"></i>
+                                    </div>
+                                    <h6>2. Make Available</h6>
+                                    <p class="text-muted small">The template will be available for applicants to download.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <div class="icon-circle bg-warning text-white mb-3" style="width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">
+                                        <i class="fas fa-sync"></i>
+                                    </div>
+                                    <h6>3. Update Anytime</h6>
+                                    <p class="text-muted small">You can update the template at any time by uploading a new one.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <div class="section-body">
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -144,47 +184,7 @@
             </div>
         </div>
 
-        <!-- Instructions Card -->
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4><i class="fas fa-info-circle text-primary"></i> Instructions</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <div class="icon-circle bg-primary text-white mb-3" style="width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">
-                                        <i class="fas fa-file-pdf"></i>
-                                    </div>
-                                    <h6>1. Upload Template</h6>
-                                    <p class="text-muted small">Upload a PDF template for the acknowledgement letter.</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <div class="icon-circle bg-success text-white mb-3" style="width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">
-                                        <i class="fas fa-download"></i>
-                                    </div>
-                                    <h6>2. Make Available</h6>
-                                    <p class="text-muted small">The template will be available for applicants to download.</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <div class="icon-circle bg-warning text-white mb-3" style="width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">
-                                        <i class="fas fa-sync"></i>
-                                    </div>
-                                    <h6>3. Update Anytime</h6>
-                                    <p class="text-muted small">You can update the template at any time by uploading a new one.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 </section>
 @endsection

@@ -35,6 +35,18 @@
                     </div>
                 @endif
 
+                @php
+                    $existingApplication = \App\Models\Application::where('user_id', Auth::id())->first();
+                    $isApproved = $existingApplication && in_array($existingApplication->status, ['approved_full', 'approved_partial']);
+                @endphp
+
+                @if($isApproved)
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle"></i>
+                        Your application has been approved and editing is disabled.
+                    </div>
+                @endif
+
                 <form id="oLevelEducationForm"
                       method="POST"
                       action="{{ route('applicant.o-level-education.store') }}"
@@ -180,11 +192,17 @@
                                 <a href="{{ route('applicant.personal_information') }}" class="btn btn-secondary btn-lg px-4" >
                                     <i class="fas fa-arrow-left"></i> Back to Personal Information
                                 </a>
-                                <button type="submit" class="btn btn-primary btn-lg px-5"
-                                        >
-                                    <i class="fas fa-save"></i>
-                                    {{ isset($oLevelEducation) ? 'Update' : 'Save' }} O-Level Education
-                                </button>
+                                @if(!$isApproved)
+                                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                                        <i class="fas fa-save"></i>
+                                        {{ isset($oLevelEducation) ? 'Update' : 'Save' }} O-Level Education
+                                    </button>
+                                @else
+                                    <button type="submit" class="btn btn-secondary btn-lg px-5" disabled>
+                                        <i class="fas fa-save"></i>
+                                        Editing Disabled
+                                    </button>
+                                @endif
 
                                 <a href="{{ route('applicant.a-level-education') }}" class="btn btn-secondary btn-lg px-5" >
                                     <i class="fas fa-arrow-right"></i> Proceed to A-Level

@@ -77,15 +77,22 @@
         @php
             $hasSubmittedApplication = $existingApplication && in_array($existingApplication->status, ['submitted', 'under_review', 'approved_full', 'approved_partial', 'rejected']);
             $hasPendingApplication = $existingApplication && $existingApplication->status == 'pending';
+            $isApproved = $existingApplication && in_array($existingApplication->status, ['approved_full', 'approved_partial']);
         @endphp
 
         @if($hasSubmittedApplication)
             <!-- Already Submitted Alert -->
             <div class="card">
                 <div class="card-body">
-                    <div class="alert alert-warning text-center">
-                        <i class="fas fa-info-circle fa-3x mb-3"></i>
-                        <h4>You already have a submitted application!</h4>
+                    <div class="alert {{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'alert-success' : 'alert-warning' }} text-center">
+                        <i class="fas fa-{{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'trophy' : 'info-circle' }} fa-3x mb-3"></i>
+                        <h4>
+                            @if(in_array($existingApplication->status, ['approved_full', 'approved_partial']))
+                                Congratulations! Your application has been approved.
+                            @else
+                                You already have a submitted application!
+                            @endif
+                        </h4>
                         <p>
                             <strong>Application #{{ str_pad($existingApplication->id, 6, '0', STR_PAD_LEFT) }}</strong>
                             <br>
@@ -99,7 +106,13 @@
                                 {{ ucfirst(str_replace('_', ' ', $existingApplication->status)) }}
                             </span>
                         </p>
-                        <p>You cannot submit another application while you have a pending/submitted application.</p>
+                        <p>
+                            @if(in_array($existingApplication->status, ['approved_full', 'approved_partial']))
+                                Thank you for applying. Your application is approved and we will share the next steps soon.
+                            @else
+                                You cannot submit another application while you have a pending/submitted application.
+                            @endif
+                        </p>
                         <div class="mt-3">
                             <a href="{{ route('applicant.my-application') }}" class="btn btn-primary">
                                 <i class="fas fa-eye"></i> View My Application
@@ -308,9 +321,11 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <a href="{{ route('applicant.personal_information') }}" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i> Edit Personal Info
-                                    </a>
+                                    @if(!$isApproved)
+                                        <a href="{{ route('applicant.personal_information') }}" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i> Edit Personal Info
+                                        </a>
+                                    @endif
                                 </div>
                             @else
                                 <div class="alert alert-warning text-center">
@@ -379,9 +394,11 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <a href="{{ route('applicant.o-level-education') }}" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i> Edit O-Level Info
-                                    </a>
+                                    @if(!$isApproved)
+                                        <a href="{{ route('applicant.o-level-education') }}" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i> Edit O-Level Info
+                                        </a>
+                                    @endif
                                 </div>
                             @else
                                 <div class="alert alert-warning text-center">
@@ -454,9 +471,11 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <a href="{{ route('applicant.a-level-education') }}" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i> Edit A-Level Info
-                                    </a>
+                                    @if(!$isApproved)
+                                        <a href="{{ route('applicant.a-level-education') }}" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i> Edit A-Level Info
+                                        </a>
+                                    @endif
                                 </div>
                             @else
                                 <div class="alert alert-warning text-center">
@@ -531,9 +550,11 @@
                                     @endif
                                 </div>
                                 <div class="text-center">
-                                    <a href="{{ route('applicant.motivations.index') }}" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i> Edit Motivation
-                                    </a>
+                                    @if(!$isApproved)
+                                        <a href="{{ route('applicant.motivations.index') }}" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i> Edit Motivation
+                                        </a>
+                                    @endif
                                 </div>
                             @else
                                 <div class="alert alert-warning text-center">
@@ -690,6 +711,18 @@
                         @endphp
 
                         @if($hasSubmittedApplication)
+                            @if(in_array($existingApplication->status, ['approved_full', 'approved_partial']))
+                            <div class="alert alert-success text-center">
+                                <i class="fas fa-trophy fa-2x"></i>
+                                <h5>Congratulations! Your application has been approved.</h5>
+                                <p>Your application has been successfully approved. We are pleased to share this wonderful news with you.</p>
+                                <div class="mt-3">
+                                    <a href="{{ route('applicant.my-application') }}" class="btn btn-primary">
+                                        <i class="fas fa-eye"></i> View My Application
+                                    </a>
+                                </div>
+                            </div>
+                        @else
                             <div class="alert alert-warning text-center">
                                 <i class="fas fa-info-circle fa-2x"></i>
                                 <h5>Application Already Submitted</h5>
@@ -698,13 +731,14 @@
                                     <a href="{{ route('applicant.my-application') }}" class="btn btn-primary">
                                         <i class="fas fa-eye"></i> View My Application
                                     </a>
-                                    @if($existingApplication->status == 'submitted' || $existingApplication->status == 'pending')
+                                    @if(!$isApproved && ($existingApplication->status == 'submitted' || $existingApplication->status == 'pending'))
                                         <a href="{{ route('applicant.application.edit') }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i> Edit Application
                                         </a>
                                     @endif
                                 </div>
                             </div>
+                        @endif
                         @elseif(!$hasOpenScholarships)
                             <div class="alert alert-danger text-center">
                                 <i class="fas fa-exclamation-circle fa-2x"></i>

@@ -25,8 +25,8 @@
 
 
             <li><a class="nav-link" href="blank.html"><i data-feather="file"></i><span>My Applications</span></a></li>
-            <li><a class="nav-link" href="blank.html"><i data-feather="file"></i><span>Profile</span></a></li>
-            <li><a class="nav-link" href="blank.html"><i data-feather="file"></i><span>Logout</span></a></li>
+            <li><a class="nav-link" href="{{ route('profile.edit') }}"><i data-feather="file"></i><span>Profile</span></a></li>
+            <li><a class="nav-link" href="{{ route('logout') }}"><i data-feather="file"></i><span>Logout</span></a></li>
 
 
 

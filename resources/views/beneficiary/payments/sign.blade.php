@@ -19,6 +19,26 @@
                         <h4><i class="fas fa-handshake text-success"></i> Sign Installment</h4>
                     </div>
                     <div class="card-body">
+                        {{-- session messages --}}
+                       <!-- Display Success/Error Messages -->
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle"></i> {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
                         <div class="alert alert-info">
                             <i class="fas fa-info-circle"></i>
                             <strong>Installment Details:</strong>
@@ -40,7 +60,7 @@
                             </ul>
                         </div>
 
-                        <form method="POST" action="{{ route('student.payments.submit-sign') }}">
+                        <form method="POST" action="{{ route('beneficiary.payments.submit-sign') }}">
                             @csrf
                             <input type="hidden" name="installment_id" value="{{ $installment->id }}">
 
@@ -64,7 +84,7 @@
                                 @enderror
                                 <small class="text-muted">
                                     An OTP has been sent to your registered email address.
-                                    <a href="{{ route('student.payments.resend-otp', $installment->id) }}" class="text-primary">
+                                    <a href="{{ route('beneficiary.payments.resend-otp', $installment->id) }}" class="text-primary">
                                         Resend OTP
                                     </a>
                                 </small>
@@ -77,7 +97,7 @@
                                         <button type="submit" class="btn btn-success btn-lg px-5">
                                             <i class="fas fa-check-circle"></i> Confirm & Sign
                                         </button>
-                                        <a href="{{ route('student.payments.index') }}" class="btn btn-secondary btn-lg px-4">
+                                        <a href="{{ route('beneficiary.payments.index') }}" class="btn btn-secondary btn-lg px-4">
                                             <i class="fas fa-times"></i> Cancel
                                         </a>
                                     </div>

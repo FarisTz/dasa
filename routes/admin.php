@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\AuthRedirectController;
 use App\Http\Controllers\Admin\InstallmentController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\SupportController;
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
      Route::get('/dashboard/statistics', [AuthRedirectController::class, 'statistics'])->name('dashboard.statistics');
@@ -77,7 +78,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/acknowledgement/{id}/view-letter', [AdminAcknowledgementController::class, 'viewLetter'])->name('acknowledgement.view-letter');
 
     // Bulk Actions
-    Route::post('/acknowledgement/bulk-update-type', [AdminAcknowledgementController::class, 'bulkUpdateUserType'])->name('acknowledgement.bulk-update-type');
+    Route::put('/acknowledgement/bulk-update-type', [AdminAcknowledgementController::class, 'bulkUpdateUserType'])->name('acknowledgement.bulk-update-type');
     Route::post('/acknowledgement/bulk-approve', [AdminAcknowledgementController::class, 'bulkApprove'])->name('acknowledgement.bulk-approve');
     Route::post('/acknowledgement/bulk-reject', [AdminAcknowledgementController::class, 'bulkReject'])->name('acknowledgement.bulk-reject');
 
@@ -86,4 +87,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('installments', InstallmentController::class);
     Route::get('/installments/{id}/toggle-status', [InstallmentController::class, 'toggleStatus'])->name('installments.toggle-status');
     Route::post('/installments/{id}/assign-student', [InstallmentController::class, 'assignStudent'])->name('installments.assign-student');
+
+
+
+
+
+    //support ticket management routes
+     Route::get('/support', [SupportController::class, 'index'])->name('support.index');
+    Route::get('/support/{id}', [SupportController::class, 'show'])->name('support.show');
+    Route::post('/support/{id}/reply', [SupportController::class, 'reply'])->name('support.reply');
+    Route::post('/support/{id}/assign', [SupportController::class, 'assign'])->name('support.assign');
+    Route::post('/support/{id}/status', [SupportController::class, 'status'])->name('support.status');
+    Route::post('/support/bulk-action', [SupportController::class, 'bulkAction'])->name('support.bulk-action');
 });

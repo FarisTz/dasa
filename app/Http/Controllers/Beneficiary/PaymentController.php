@@ -46,15 +46,12 @@ class PaymentController extends Controller
             ->where('student_id', $student->id)
             ->first();
 
-        if ($existingPayment) {
-            return redirect()->route('student.payments.index')
-                ->with('info', 'You have already signed for this installment.');
-        }
+
 
         $installment = Installment::where('is_active', true)
             ->findOrFail($id);
 
-        return view('student.payments.sign', compact('installment'));
+        return view('beneficiary.payments.sign', compact('installment'));
     }
 
     /**
@@ -98,7 +95,7 @@ class PaymentController extends Controller
             $payment->confirmed_at = now();
             $payment->save();
 
-            return redirect()->route('student.payments.index')
+            return redirect()->route('beneficiary.payments.index')
                 ->with('success', 'Payment signed successfully! Your request is now pending admin approval.');
 
         } catch (\Exception $e) {

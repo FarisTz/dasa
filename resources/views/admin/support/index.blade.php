@@ -5,7 +5,7 @@
     <div class="section-header">
         <h1>Support Tickets</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
             <div class="breadcrumb-item">Support</div>
         </div>
     </div>
@@ -258,7 +258,7 @@
         </div>
     </div>
 </section>
-
+@endsection
 @push('styles')
 <style>
     .card-statistic-1 {

@@ -28,7 +28,7 @@ class SupportReply extends Model
      */
     public function ticket(): BelongsTo
     {
-        return $this->belongsTo(SupportTicket::class);
+        return $this->belongsTo(SupportTicket::class, 'ticket_id');
     }
 
     /**

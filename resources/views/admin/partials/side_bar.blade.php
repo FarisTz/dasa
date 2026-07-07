@@ -127,6 +127,13 @@
         </ul>
       </li>
 
+      <!-- Support Tickets -->
+      <li class="{{ request()->routeIs('admin.support.index') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.support.index') }}">
+          <i data-feather="life-buoy"></i><span>Support Tickets</span>
+        </a>
+      </li>
+
       <!-- Profile -->
       <li class="{{ request()->routeIs('profile.edit') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('profile.edit') }}">

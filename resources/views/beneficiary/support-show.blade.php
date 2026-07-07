@@ -5,7 +5,7 @@
     <div class="section-header">
         <h1>Ticket Details</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="{{ route('beneficiary.dashboard') }}">Dashboard</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="{{ route('beneficiary.support') }}">Support</a></div>
             <div class="breadcrumb-item">Ticket #{{ str_pad($ticket->id, 6, '0', STR_PAD_LEFT) }}</div>
         </div>
@@ -190,7 +190,7 @@
         @endif
     </div>
 </section>
-
+@endsection
 @push('styles')
 <style>
     .badge-lg {

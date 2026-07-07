@@ -106,7 +106,7 @@
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a href="{{ route('admin.acknowledgement.download-template') }}" class="btn btn-success btn-block">
+                        <a href="{{ route('admin.acknowledgement.download-template') }}" class="btn btn-secondary btn-block">
                             <i class="fas fa-download"></i> Download Template
                         </a>
                     </div>

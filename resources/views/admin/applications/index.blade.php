@@ -130,7 +130,7 @@
             <div class="card-header">
                 <h4>All Applications</h4>
                 <div class="card-header-action">
-                    <a href="{{ route('admin.applications.export') }}" class="btn btn-success">
+                    <a href="{{ route('admin.applications.export') }}" class="btn btn-success" style="color: white">
                         <i class="fas fa-file-export"></i> Export
                     </a>
                 </div>

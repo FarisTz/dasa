@@ -7,11 +7,39 @@
         @php
             $application = \App\Models\Application::where('user_id', Auth::id())->first();
             $isApproved = $application && in_array($application->status, ['approved_full', 'approved_partial']);
+            $isSubmitted = $application && in_array($application->status, ['submitted', 'under_review', 'rejected']);
             $scholarshipName = $application && $application->scholarship ? $application->scholarship->title : 'Scholarship';
-            $isSubmitted = $application && in_array($application->status, ['submitted', 'under_review', 'approved_full', 'approved_partial', 'rejected']);
         @endphp
 
-        @if($isSubmitted)
+        @if($isApproved)
+            <div class="card mb-4 border-success shadow-lg">
+                <div class="card-body bg-success text-white rounded" style="background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);">
+                    <div class="d-flex align-items-start flex-column flex-md-row">
+                        <div class="mr-3 mb-3 mb-md-0">
+                            <div class="rounded-circle bg-white text-success d-inline-flex align-items-center justify-content-center" style="width: 56px; height: 56px; font-size: 28px;">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-weight-bold mb-3 text-white" style="font-size: 28px;">
+                                🎉 <strong>Congratulations, {{ Auth::user()->name }}!</strong>
+                            </h3>
+                            <p class="mb-3 text-white" style="font-size: 16px; line-height: 1.6;">
+                                Your <strong>{{ $scholarshipName }}</strong> application has been approved!
+                            </p>
+                            <p class="mb-3 text-white" style="font-size: 14px; line-height: 1.6;">
+                                This achievement reflects your hard work and dedication. We encourage you to stay focused, work hard, and make the most of this opportunity to achieve your academic goals and inspire others.
+                            </p>
+                            <p class="mb-0 text-white" style="font-size: 14px; line-height: 1.6;">
+                                Please continue monitoring your application status for the next steps.
+                                <br>
+                                <strong>Best wishes for your academic success!</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @elseif($isSubmitted)
             <div class="alert alert-success mt-4 mb-4" role="alert" style="border-left: 5px solid #28a745; color: #FFFFFF;">
                 <h5 class="font-weight-bold mb-2"><i class="fas fa-check-circle mr-2"></i>Application Submitted Successfully!</h5>
                 <p class="mb-2" style="color: #FFFFFF;">
@@ -26,43 +54,19 @@
             </div>
         @else
             <!-- Welcome Card -->
-            <div class="card mb-4 {{ $isApproved ? 'border-success shadow-lg' : '' }}">
-                <div class="card-body {{ $isApproved ? 'bg-success text-white rounded' : '' }}" style="{{ $isApproved ? 'background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);' : '' }}">
-                    <div class="d-flex align-items-start {{ $isApproved ? 'flex-column flex-md-row' : '' }}">
-                        @if($isApproved)
-                            <div class="mr-3 mb-3 mb-md-0">
-                                <div class="rounded-circle bg-white text-success d-inline-flex align-items-center justify-content-center" style="width: 56px; height: 56px; font-size: 28px;">
-                                    <i class="fas fa-trophy"></i>
-                                </div>
-                            </div>
-                        @endif
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-start">
                         <div>
-                            @if($isApproved)
-                                <h3 class="font-weight-bold mb-3 text-white" style="font-size: 28px;">
-                                    🎉 <strong>Congratulations, {{ Auth::user()->name }}!</strong>
-                                </h3>
-                                <p class="mb-3 text-white" style="font-size: 16px; line-height: 1.6;">
-                                    Your <strong>{{ $scholarshipName }}</strong> application has been approved!
-                                </p>
-                                <p class="mb-3 text-white" style="font-size: 14px; line-height: 1.6;">
-                                    This achievement reflects your hard work and dedication. We encourage you to stay focused, work hard, and make the most of this opportunity to achieve your academic goals and inspire others.
-                                </p>
-                                <p class="mb-0 text-white" style="font-size: 14px; line-height: 1.6;">
-                                    Please continue monitoring your application status for the next steps.
-                                    <br>
-                                    <strong>Best wishes for your academic success!</strong>
-                                </p>
-                            @else
-                                <h3 class="font-weight-bold mb-2">
-                                    Hello {{ Auth::user()->name }},
-                                    Welcome to KAFAAT Scholarship Application Portal
-                                </h3>
-                                <p class="mb-0 text-muted">
-                                    Complete all required sections of your scholarship application.
-                                    You can save your progress at any time and return later before submission.
-                                    Follow the milestones below to track your application journey.
-                                </p>
-                            @endif
+                            <h3 class="font-weight-bold mb-2">
+                                Hello {{ Auth::user()->name }},
+                                Welcome to KAFAAT Scholarship Application Portal
+                            </h3>
+                            <p class="mb-0 text-muted">
+                                Complete all required sections of your scholarship application.
+                                You can save your progress at any time and return later before submission.
+                                Follow the milestones below to track your application journey.
+                            </p>
                         </div>
                     </div>
                 </div>

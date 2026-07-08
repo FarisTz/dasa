@@ -133,7 +133,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <a href="{{ route('admin.acknowledgement.download-template') }}" class="btn btn-success btn-block">
+                                    <a href="{{ route('admin.acknowledgement.download-template') }}" class="btn btn-success btn-block" style="color: white">
                                         <i class="fas fa-download"></i> Download Template
                                     </a>
                                 </div>
@@ -169,7 +169,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <a href="{{ route('admin.acknowledgement.index') }}" class="btn btn-info btn-block">
+                                <a href="{{ route('admin.acknowledgement.index') }}" class="btn btn-info btn-block" style="color: white; background-color: #268e2e;">
                                     <i class="fas fa-list"></i> View Submissions
                                 </a>
                             </div>

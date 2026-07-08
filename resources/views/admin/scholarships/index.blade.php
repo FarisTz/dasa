@@ -102,7 +102,7 @@
                     <a href="{{ route('admin.scholarships.create') }}" class="btn btn-primary">
                         <i class="fas fa-plus"></i> Add New Scholarship
                     </a>
-                    <a href="{{ route('admin.scholarships.export') }}" class="btn btn-success">
+                    <a href="{{ route('admin.scholarships.export') }}" class="btn btn-success" style="color: white">
                         <i class="fas fa-file-export"></i> Export
                     </a>
                 </div>

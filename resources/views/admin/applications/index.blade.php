@@ -219,8 +219,9 @@
     </button>
     <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 200px;">
         <form method="POST" action="{{ route('admin.applications.bulk-action') }}" id="bulkActionForm">
-            @csrf
-            <input type="hidden" name="action" id="bulkActionType">
+    @csrf
+    <input type="hidden" name="action" id="bulkActionType">
+    <div id="selectedApplicationsContainer"></div>
             <input type="hidden" name="application_ids[]" id="selectedApplications" value="">
             <div class="form-group">
                 <label>Select Action</label>
@@ -590,13 +591,25 @@
         // Tooltips
         $('[data-toggle="tooltip"]').tooltip();
 
-        // Update hidden input with selected application IDs
+        // Update hidden inputs with selected application IDs
         function updateSelectedApplications() {
-            var selectedIds = [];
-            $('.application-checkbox:checked').each(function() {
-                selectedIds.push($(this).val());
+            // Clear existing hidden inputs
+            $('#selectedApplicationsContainer').empty();
+
+            // Get all checked checkboxes
+            var selectedCheckboxes = $('.application-checkbox:checked');
+
+            // Create hidden input for each selected ID
+            selectedCheckboxes.each(function() {
+                var input = $('<input>')
+                    .attr('type', 'hidden')
+                    .attr('name', 'application_ids[]')
+                    .val($(this).val());
+                $('#selectedApplicationsContainer').append(input);
             });
-            $('#selectedApplications').val(selectedIds.join(','));
+
+            // Update the count for display (optional)
+            $('#selectedCount').text(selectedCheckboxes.length);
         }
 
         // Bulk action confirmation
@@ -625,10 +638,13 @@
             // Update the action hidden input
             $('#bulkActionType').val(action);
 
+            // Update selected applications one more time
+            updateSelectedApplications();
+
             return confirm(`Are you sure you want to ${actionLabels[action]} ${selected} application(s)?`);
         };
 
-        // Bulk action form submission - ensure IDs are included
+        // Bulk action form submission
         $('#bulkActionForm').on('submit', function(e) {
             const selected = $('.application-checkbox:checked').length;
             if (selected === 0) {
@@ -637,11 +653,15 @@
                 return false;
             }
 
-            // Update hidden input one more time before submit
+            // Make sure we have the latest selections
             updateSelectedApplications();
 
-            // Log for debugging
-            console.log('Selected IDs:', $('#selectedApplications').val());
+            // Debug: Log what's being submitted
+            var ids = [];
+            $('input[name="application_ids[]"]').each(function() {
+                ids.push($(this).val());
+            });
+            console.log('Submitting IDs:', ids);
             console.log('Action:', $('#bulkActionType').val());
         });
 

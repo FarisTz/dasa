@@ -200,13 +200,24 @@ class AdminApplicationController extends Controller
     {
         $request->validate([
             'action' => 'required|in:under_review,approved_full,approved_partial,rejected,delete',
-            'application_ids' => 'required|array',
-            'application_ids.*' => 'exists:applications,id',
+            'application_ids' => 'required',
+
         ]);
 
         try {
             $applicationIds = $request->application_ids;
+             // If it's a JSON string, decode it
+        if (is_string($applicationIds)) {
+            $applicationIds = json_decode($applicationIds, true);
+        }
 
+        // Ensure it's an array
+        if (!is_array($applicationIds)) {
+            $applicationIds = [$applicationIds];
+        }
+
+        // Filter out empty values
+        $applicationIds = array_filter($applicationIds);
             if (empty($applicationIds)) {
                 return redirect()->back()
                     ->with('error', 'No applications selected.');

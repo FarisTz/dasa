@@ -11,7 +11,7 @@
               <a href="{{ route('dashboard') }}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
             <li class="dropdown active">
-              <a href="{{ route('coordinator.scholarships.index') }}" class="nav-link"><i data-feather="monitor"></i><span>Scholarships</span></a>
+              <a href="{{ route('coordinator.scholarships.index') }}" class="nav-link"><i data-feather="mail"></i><span>Scholarships</span></a>
             </li>
 
             <li class="dropdown">

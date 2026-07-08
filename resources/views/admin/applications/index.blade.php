@@ -212,31 +212,33 @@
                             </div>
 
                             <!-- Bulk Actions -->
-                            <div class="dropdown">
-                                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                                    <i class="fas fa-tasks"></i> Bulk Actions
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 200px;">
-                                    <form method="POST" action="{{ route('admin.applications.bulk-action') }}" id="bulkActionForm">
-                                        @csrf
-                                        <input type="hidden" name="action" id="bulkActionType">
-                                        <div class="form-group">
-                                            <label>Select Action</label>
-                                            <select class="form-control" id="bulkActionSelect">
-                                                <option value="">Choose action...</option>
-                                                <option value="under_review">Mark as Under Review</option>
-                                                <option value="approved_full">Approve Full</option>
-                                                <option value="approved_partial">Approve Partial</option>
-                                                <option value="rejected">Reject</option>
-                                                <option value="delete">Delete</option>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-sm btn-block" onclick="return confirmBulkAction()">
-                                            Apply to Selected
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+                           <!-- In the bulk actions dropdown, change the form to include hidden inputs for selected IDs -->
+<div class="dropdown">
+    <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">
+        <i class="fas fa-tasks"></i> Bulk Actions
+    </button>
+    <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 200px;">
+        <form method="POST" action="{{ route('admin.applications.bulk-action') }}" id="bulkActionForm">
+            @csrf
+            <input type="hidden" name="action" id="bulkActionType">
+            <input type="hidden" name="application_ids[]" id="selectedApplications" value="">
+            <div class="form-group">
+                <label>Select Action</label>
+                <select class="form-control" id="bulkActionSelect">
+                    <option value="">Choose action...</option>
+                    <option value="under_review">Mark as Under Review</option>
+                    <option value="approved_full">Approve Full</option>
+                    <option value="approved_partial">Approve Partial</option>
+                    <option value="rejected">Reject</option>
+                    <option value="delete">Delete</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm btn-block" onclick="return confirmBulkAction()">
+                Apply to Selected
+            </button>
+        </form>
+    </div>
+</div>
                         </div>
                     </div>
                 </div>
@@ -553,13 +555,13 @@
     }
 </style>
 @endpush
-
 @push('scripts')
 <script>
     $(document).ready(function() {
         // Select All checkbox
         $('#selectAll').on('change', function() {
             $('.application-checkbox').prop('checked', this.checked);
+            updateSelectedApplications();
         });
 
         // Update Select All when individual checkboxes change
@@ -569,6 +571,7 @@
             } else {
                 $('#selectAll').prop('checked', false);
             }
+            updateSelectedApplications();
         });
 
         // Auto-submit on filter change
@@ -586,6 +589,15 @@
 
         // Tooltips
         $('[data-toggle="tooltip"]').tooltip();
+
+        // Update hidden input with selected application IDs
+        function updateSelectedApplications() {
+            var selectedIds = [];
+            $('.application-checkbox:checked').each(function() {
+                selectedIds.push($(this).val());
+            });
+            $('#selectedApplications').val(selectedIds.join(','));
+        }
 
         // Bulk action confirmation
         window.confirmBulkAction = function() {
@@ -610,12 +622,27 @@
                 'delete': 'Delete'
             };
 
+            // Update the action hidden input
+            $('#bulkActionType').val(action);
+
             return confirm(`Are you sure you want to ${actionLabels[action]} ${selected} application(s)?`);
         };
 
-        // Bulk action form submission
-        $('#bulkActionSelect').on('change', function() {
-            $('#bulkActionType').val(this.value);
+        // Bulk action form submission - ensure IDs are included
+        $('#bulkActionForm').on('submit', function(e) {
+            const selected = $('.application-checkbox:checked').length;
+            if (selected === 0) {
+                e.preventDefault();
+                alert('Please select at least one application.');
+                return false;
+            }
+
+            // Update hidden input one more time before submit
+            updateSelectedApplications();
+
+            // Log for debugging
+            console.log('Selected IDs:', $('#selectedApplications').val());
+            console.log('Action:', $('#bulkActionType').val());
         });
 
         // Update status via dropdown (quick action)

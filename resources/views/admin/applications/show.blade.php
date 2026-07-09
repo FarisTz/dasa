@@ -817,10 +817,18 @@
                                     <button type="submit" class="btn btn-success btn-lg px-4 mr-2" onclick="return confirm('Approve this application for full scholarship?')">
                                         <i class="fas fa-check-circle"></i> Approve Full
                                     </button>
+                                 </form>
+                                <form method="POST" action="{{ route('admin.applications.update-status') }}" style="display: inline;">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $application->id }}">
                                     <input type="hidden" name="status" value="approved_partial">
                                     <button type="submit" class="btn btn-info btn-lg px-4 mr-2" onclick="return confirm('Approve this application for partial scholarship?')">
                                         <i class="fas fa-check-circle"></i> Approve Partial
                                     </button>
+                                 </form>
+                                <form method="POST" action="{{ route('admin.applications.update-status') }}" style="display: inline;">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $application->id }}">
                                     <input type="hidden" name="status" value="rejected">
                                     <button type="submit" class="btn btn-danger btn-lg px-4 mr-2" onclick="return confirm('Reject this application?')">
                                         <i class="fas fa-times-circle"></i> Reject

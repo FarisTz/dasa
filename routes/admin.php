@@ -41,7 +41,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/applications/bulk-action', [AdminApplicationController::class, 'bulkAction'])->name('applications.bulk-action');
     Route::post('/applications/update-status', [AdminApplicationController::class, 'updateStatus'])->name('applications.update-status');
     Route::get('/applications/review/{id}', [AdminApplicationController::class, 'review'])->name('applications.review');
-    Route::get('/applications/export', [AdminApplicationController::class, 'export'])->name('applications.export');
+    Route::get('/applications_export', [AdminApplicationController::class, 'export'])->name('applications.export');
 
 
 
@@ -58,7 +58,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/scholarships/{id}/delete', [AdminScholarshipController::class, 'destroy'])->name('scholarships.destroy');
     Route::get('/scholarships/{id}/toggle-status', [AdminScholarshipController::class, 'toggleStatus'])->name('scholarships.toggle-status');
     Route::post('/scholarships/bulk-action', [AdminScholarshipController::class, 'bulkAction'])->name('scholarships.bulk-action');
-    Route::get('/scholarships/export', [AdminScholarshipController::class, 'export'])->name('scholarships.export');
+    Route::get('/scholarships/exports', [AdminScholarshipController::class, 'export'])->name('scholarship.export');
 
 
 

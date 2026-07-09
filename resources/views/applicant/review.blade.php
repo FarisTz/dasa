@@ -81,63 +81,133 @@
         @endphp
 
         @if($hasSubmittedApplication)
-            <!-- Already Submitted Alert -->
+            @php
+                $scholarshipName = $existingApplication->scholarship ? $existingApplication->scholarship->title : 'Direct Aid Scholarship';
+                $status = $existingApplication->status;
+            @endphp
             <div class="card">
                 <div class="card-body">
-                    <div class="alert {{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'alert-success' : 'alert-warning' }} text-center" style="{{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%); border: none; color: white;' : '' }}">
-                        <i class="fas fa-{{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'trophy' : 'info-circle' }} fa-3x mb-3" style="{{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'color: white;' : '' }}"></i>
-                        <h4 style="{{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'color: white;' : '' }}">
-                            @if(in_array($existingApplication->status, ['approved_full', 'approved_partial']))
-                                🎉 <strong>Congratulations, {{ Auth::user()->name }}!</strong>
-                            @else
-                                You already have a submitted application!
-                            @endif
-                        </h4>
-                        @if(in_array($existingApplication->status, ['approved_full', 'approved_partial']))
-                            <p style="color: white;">
-                                Your <strong>{{ $existingApplication->scholarship->title ?? 'Scholarship' }}</strong> application has been approved!
-                            </p>
-                            <p style="color: white;">
-                                This achievement reflects your hard work and dedication. We encourage you to stay focused, work hard, and make the most of this opportunity to achieve your academic goals and inspire others.
-                            </p>
-                            <p style="color: white;">
-                                Please continue monitoring your application status for the next steps.
-                                <br>
-                                <strong>Best wishes for your academic success!</strong>
-                            </p>
-                        @else
-                            <p>
-                                <strong>Application #{{ str_pad($existingApplication->id, 6, '0', STR_PAD_LEFT) }}</strong>
-                                <br>
-                                <span class="badge badge-{{ $existingApplication->status == 'submitted' ? 'primary' :
-                                    ($existingApplication->status == 'under_review' ? 'warning' :
-                                    ($existingApplication->status == 'approved_full' ? 'success' :
-                                    ($existingApplication->status == 'approved_partial' ? 'info' : 'danger'))) }} application-status-badge mt-2">
-                                    <i class="fas fa-{{ $existingApplication->status == 'submitted' ? 'clock' :
-                                        ($existingApplication->status == 'under_review' ? 'search' :
-                                        ($existingApplication->status == 'approved_full' || $existingApplication->status == 'approved_partial' ? 'check-circle' : 'times-circle')) }}"></i>
-                                    {{ ucfirst(str_replace('_', ' ', $existingApplication->status)) }}
-                                </span>
-                            </p>
-                            <p>
-                                You cannot submit another application while you have a pending/submitted application.
-                            </p>
-                        @endif
-                        <div class="mt-3">
-                            <a href="{{ route('applicant.my-application') }}" class="btn {{ in_array($existingApplication->status, ['approved_full', 'approved_partial']) ? 'btn-light' : 'btn-primary' }}">
-                                <i class="fas fa-eye"></i> View My Application
+                    @switch($status)
+                        @case('approved_full')
+                            <div class="card mb-0 border-success shadow-lg">
+                                <div class="card-body bg-success text-white rounded" style="background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);">
+                                    <div class="d-flex align-items-start flex-column flex-md-row">
+                                        <div class="mr-3 mb-3 mb-md-0">
+                                            <div class="rounded-circle bg-white text-success d-inline-flex align-items-center justify-content-center" style="width: 56px; height: 56px; font-size: 28px;">
+                                                <i class="fas fa-trophy"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-weight-bold mb-3 text-white">🎉 Application Status: Approved – Full Scholarship</h4>
+                                            <p class="mb-2" style="color: #FFFFFF;">Dear <strong>{{ Auth::user()->name }}</strong>,</p>
+                                            <p class="mb-2" style="color: #FFFFFF;">Congratulations! We are pleased to inform you that your application for the <strong>{{ $scholarshipName }}</strong> has been <strong>approved for a Full Scholarship</strong>.</p>
+                                            <p class="mb-2" style="color: #FFFFFF;">Your scholarship package covers <strong>Full Tuition Fees, Accommodation, and Meals</strong>.</p>
+                                            <p class="mb-0" style="color: #FFFFFF;">This award recognizes your academic potential and dedication. Please continue to monitor your application portal for important updates and the next steps.<br><strong>Best regards,</strong><br><strong>Direct Aid Scholarship Team</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @break
+
+                        @case('approved_partial')
+                            <div class="card mb-0 border-info shadow-lg">
+                                <div class="card-body bg-info text-white rounded" style="background: linear-gradient(135deg, #17a2b8 0%, #117a8b 100%);">
+                                    <div class="d-flex align-items-start flex-column flex-md-row">
+                                        <div class="mr-3 mb-3 mb-md-0">
+                                            <div class="rounded-circle bg-white text-info d-inline-flex align-items-center justify-content-center" style="width: 56px; height: 56px; font-size: 28px;">
+                                                <i class="fas fa-award"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-weight-bold mb-3 text-white">🎉 Application Status: Approved – Partial Scholarship</h4>
+                                            <p class="mb-2" style="color: #FFFFFF;">Dear <strong>{{ Auth::user()->name }}</strong>,</p>
+                                            <p class="mb-2" style="color: #FFFFFF;">Congratulations! We are delighted to inform you that your application for the <strong>{{ $scholarshipName }}</strong> has been <strong>approved for a Partial Scholarship</strong>.</p>
+                                            <p class="mb-2" style="color: #FFFFFF;">Your scholarship package covers <strong>Full Tuition Fees only</strong>.</p>
+                                            <p class="mb-0" style="color: #FFFFFF;">Please note that accommodation, meals, and other personal expenses are the responsibility of the student. Please continue to monitor your application portal for important updates and the next steps.<br><strong>Best regards,</strong><br><strong>Direct Aid Scholarship Team</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @break
+
+                        @case('under_review')
+                            <div class="card mb-0 border-primary shadow-lg">
+                                <div class="card-body bg-primary text-white rounded" style="background: linear-gradient(135deg, #007bff 0%, #0069d9 100%);">
+                                    <div class="d-flex align-items-start flex-column flex-md-row">
+                                        <div class="mr-3 mb-3 mb-md-0">
+                                            <div class="rounded-circle bg-white text-primary d-inline-flex align-items-center justify-content-center" style="width: 56px; height: 56px; font-size: 28px;">
+                                                <i class="fas fa-search"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-weight-bold mb-3 text-white">Application Status: Under Review</h4>
+                                            <p class="mb-2" style="color: #FFFFFF;">Dear <strong>{{ Auth::user()->name }}</strong>,</p>
+                                            <p class="mb-2" style="color: #FFFFFF;">Thank you for submitting your <strong>{{ $scholarshipName }}</strong> application.</p>
+                                            <p class="mb-2" style="color: #FFFFFF;">Your application is currently under review by the Scholarship Committee. Each application is carefully evaluated to ensure a fair and transparent selection process.</p>
+                                            <p class="mb-0" style="color: #FFFFFF;">No further action is required from you at this time. Please continue to monitor your application portal for updates regarding your application status.<br><strong>Best regards,</strong><br><strong>Direct Aid Scholarship Team</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @break
+
+                        @case('rejected')
+                            <div class="card mb-0 border-danger shadow-lg">
+                                <div class="card-body bg-danger text-white rounded" style="background: linear-gradient(135deg, #dc3545 0%, #bd2130 100%);">
+                                    <div class="d-flex align-items-start flex-column flex-md-row">
+                                        <div class="mr-3 mb-3 mb-md-0">
+                                            <div class="rounded-circle bg-white text-danger d-inline-flex align-items-center justify-content-center" style="width: 56px; height: 56px; font-size: 28px;">
+                                                <i class="fas fa-times-circle"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-weight-bold mb-3 text-white">Application Status: Not Selected</h4>
+                                            <p class="mb-2" style="color: #FFFFFF;">Dear <strong>{{ Auth::user()->name }}</strong>,</p>
+                                            <p class="mb-2" style="color: #FFFFFF;">Thank you for applying for the <strong>{{ $scholarshipName }}</strong>.</p>
+                                            <p class="mb-2" style="color: #FFFFFF;">After careful review of all applications, we regret to inform you that your application has <strong>not been selected</strong> for this scholarship cycle.</p>
+                                            <p class="mb-0" style="color: #FFFFFF;">We sincerely appreciate your interest and the effort you invested in your application. We encourage you to continue pursuing your academic goals and to apply again when future scholarship opportunities become available.<br><strong>Best regards,</strong><br><strong>Direct Aid Scholarship Team</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @break
+
+                        @case('submitted')
+                        @case('pending')
+                        @default
+                            <div class="card mb-0 border-success shadow-lg">
+                                <div class="card-body bg-success text-white rounded" style="background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);">
+                                    <div class="d-flex align-items-start flex-column flex-md-row">
+                                        <div class="mr-3 mb-3 mb-md-0">
+                                            <div class="rounded-circle bg-white text-success d-inline-flex align-items-center justify-content-center" style="width: 56px; height: 56px; font-size: 28px;">
+                                                <i class="fas fa-check-circle"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-weight-bold mb-3 text-white">Application Submitted Successfully</h4>
+                                            <p class="mb-2" style="color: #FFFFFF;">Dear <strong>{{ Auth::user()->name }}</strong>,</p>
+                                            <p class="mb-2" style="color: #FFFFFF;">Thank you for submitting your <strong>{{ $scholarshipName }}</strong> application.</p>
+                                            <p class="mb-2" style="color: #FFFFFF;">Your application has been received and is currently under review. Please be patient while our Scholarship Committee evaluates all applications. You will be notified once the review process is complete.</p>
+                                            <p class="mb-0" style="color: #FFFFFF;">Thank you for your interest, and we wish you the very best.<br><strong>Best regards,</strong><br><strong>Direct Aid Scholarship Team</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    @endswitch
+                    <div class="mt-3 text-center">
+                        <a href="{{ route('applicant.my-application') }}" class="btn btn-primary">
+                            <i class="fas fa-eye"></i> View My Application
+                        </a>
+                        @if(in_array($status, ['submitted', 'pending']))
+                            <a href="{{ route('applicant.application.edit') }}" class="btn btn-warning">
+                                <i class="fas fa-edit"></i> Edit Application
                             </a>
-                            @if($existingApplication->status == 'submitted' || $existingApplication->status == 'pending')
-                                <a href="{{ route('applicant.application.edit') }}" class="btn btn-warning">
-                                    <i class="fas fa-edit"></i> Edit Application
-                                </a>
-                            @endif
-                            @if($existingApplication->status == 'pending')
-                                <a href="{{ route('applicant.application.review') }}" class="btn btn-info">
-                                    <i class="fas fa-pen"></i> Continue Editing
-                                </a>
-                            @endif
-                        </div>
+                        @endif
+                        @if($status == 'pending')
+                            <a href="{{ route('applicant.application.review') }}" class="btn btn-info">
+                                <i class="fas fa-pen"></i> Continue Editing
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -11,47 +11,161 @@
             $scholarshipName = $application && $application->scholarship ? $application->scholarship->title : 'Scholarship';
         @endphp
 
-        @if($isApproved)
-            <div class="card mb-4 border-success shadow-lg">
-                <div class="card-body bg-success text-white rounded" style="background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);">
-                    <div class="d-flex align-items-start flex-column flex-md-row">
-                        <div class="mr-3 mb-3 mb-md-0">
-                            <div class="rounded-circle bg-white text-success d-inline-flex align-items-center justify-content-center" style="width: 56px; height: 56px; font-size: 28px;">
-                                <i class="fas fa-trophy"></i>
+        @if($application)
+            @php
+                $scholarshipName = $application->scholarship ? $application->scholarship->title : 'Direct Aid Scholarship';
+                $status = $application->status;
+            @endphp
+            @switch($status)
+                @case('approved_full')
+                    <div class="card mb-4 border-success shadow-lg">
+                        <div class="card-body bg-success text-white rounded" style="background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);">
+                            <div class="d-flex align-items-start flex-column flex-md-row">
+                                <div class="mr-3 mb-3 mb-md-0">
+                                    <div class="rounded-circle bg-white text-success d-inline-flex align-items-center justify-content-center" style="width: 56px; height: 56px; font-size: 28px;">
+                                        <i class="fas fa-trophy"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-weight-bold mb-3 text-white" style="font-size: 28px;">
+                                        🎉 <strong>Application Status: Approved – Full Scholarship</strong>
+                                    </h3>
+                                    <p class="mb-3 text-white" style="font-size: 16px; line-height: 1.6;">
+                                        Dear <strong>{{ Auth::user()->name }}</strong>,
+                                    </p>
+                                    <p class="mb-3 text-white" style="font-size: 16px; line-height: 1.6;">
+                                        Congratulations! We are pleased to inform you that your application for the <strong>{{ $scholarshipName }}</strong> has been <strong>approved for a Full Scholarship</strong>.
+                                    </p>
+                                    <p class="mb-3 text-white" style="font-size: 16px; line-height: 1.6;">
+                                        Your scholarship package covers <strong>Full Tuition Fees, Accommodation, and Meals</strong>.
+                                    </p>
+                                    <p class="mb-3 text-white" style="font-size: 14px; line-height: 1.6;">
+                                        This award recognizes your academic potential and dedication. We encourage you to remain committed to your studies and make the most of this opportunity.
+                                    </p>
+                                    <p class="mb-0 text-white" style="font-size: 14px; line-height: 1.6;">
+                                        Please continue to monitor your application portal for important updates and the next steps.
+                                        <br>
+                                        <strong>Best regards,</strong>
+                                        <br>
+                                        <strong>Direct Aid Scholarship Team</strong>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            <h3 class="font-weight-bold mb-3 text-white" style="font-size: 28px;">
-                                🎉 <strong>Congratulations, {{ Auth::user()->name }}!</strong>
-                            </h3>
-                            <p class="mb-3 text-white" style="font-size: 16px; line-height: 1.6;">
-                                Your <strong>{{ $scholarshipName }}</strong> application has been approved!
-                            </p>
-                            <p class="mb-3 text-white" style="font-size: 14px; line-height: 1.6;">
-                                This achievement reflects your hard work and dedication. We encourage you to stay focused, work hard, and make the most of this opportunity to achieve your academic goals and inspire others.
-                            </p>
-                            <p class="mb-0 text-white" style="font-size: 14px; line-height: 1.6;">
-                                Please continue monitoring your application status for the next steps.
-                                <br>
-                                <strong>Best wishes for your academic success!</strong>
-                            </p>
+                    </div>
+                    @break
+
+                @case('approved_partial')
+                    <div class="card mb-4 border-info shadow-lg">
+                        <div class="card-body bg-info text-white rounded" style="background: linear-gradient(135deg, #17a2b8 0%, #117a8b 100%);">
+                            <div class="d-flex align-items-start flex-column flex-md-row">
+                                <div class="mr-3 mb-3 mb-md-0">
+                                    <div class="rounded-circle bg-white text-info d-inline-flex align-items-center justify-content-center" style="width: 56px; height: 56px; font-size: 28px;">
+                                        <i class="fas fa-award"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-weight-bold mb-3 text-white" style="font-size: 28px;">
+                                        🎉 <strong>Application Status: Approved – Partial Scholarship</strong>
+                                    </h3>
+                                    <p class="mb-3 text-white" style="font-size: 16px; line-height: 1.6;">
+                                        Dear <strong>{{ Auth::user()->name }}</strong>,
+                                    </p>
+                                    <p class="mb-3 text-white" style="font-size: 16px; line-height: 1.6;">
+                                        Congratulations! We are delighted to inform you that your application for the <strong>{{ $scholarshipName }}</strong> has been <strong>approved for a Partial Scholarship</strong>.
+                                    </p>
+                                    <p class="mb-3 text-white" style="font-size: 16px; line-height: 1.6;">
+                                        Your scholarship package covers <strong>Full Tuition Fees only</strong>.
+                                    </p>
+                                    <p class="mb-3 text-white" style="font-size: 14px; line-height: 1.6;">
+                                        Please note that accommodation, meals, and other personal expenses are the responsibility of the student. We encourage you to remain focused on your studies and make the most of this opportunity.
+                                    </p>
+                                    <p class="mb-0 text-white" style="font-size: 14px; line-height: 1.6;">
+                                        Please continue to monitor your application portal for important updates and the next steps.
+                                        <br>
+                                        <strong>Best regards,</strong>
+                                        <br>
+                                        <strong>Direct Aid Scholarship Team</strong>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        @elseif($isSubmitted)
-            <div class="alert alert-success mt-4 mb-4" role="alert" style="border-left: 5px solid #28a745; color: #FFFFFF;">
-                <h5 class="font-weight-bold mb-2"><i class="fas fa-check-circle mr-2"></i>Application Submitted Successfully!</h5>
-                <p class="mb-2" style="color: #FFFFFF;">
-                    Thank you for submitting your <strong>Direct Aid Scholarship</strong> application.
-                </p>
-                <p class="mb-2" style="color: #FFFFFF;">
-                    Your application has been received and is currently under review. Please be patient while our team evaluates all applications. You will be notified once the selection process is complete.
-                </p>
-                <p class="mb-0" style="color: #FFFFFF;">
-                    We wish you the very best and appreciate your interest in the scholarship.
-                </p>
-            </div>
+                    @break
+
+                @case('under_review')
+                    <div class="alert alert-primary mt-4 mb-4" role="alert" style="border-left: 5px solid #007bff; color: #FFFFFF; background: linear-gradient(135deg, #007bff 0%, #0069d9 100%);">
+                        <h5 class="font-weight-bold mb-2"><i class="fas fa-search mr-2"></i>Application Status: Under Review</h5>
+                        <p class="mb-2" style="color: #FFFFFF;">
+                            Dear <strong>{{ Auth::user()->name }}</strong>,
+                        </p>
+                        <p class="mb-2" style="color: #FFFFFF;">
+                            Thank you for submitting your <strong>{{ $scholarshipName }}</strong> application.
+                        </p>
+                        <p class="mb-2" style="color: #FFFFFF;">
+                            Your application is currently under review by the Scholarship Committee. Each application is carefully evaluated to ensure a fair and transparent selection process.
+                        </p>
+                        <p class="mb-0" style="color: #FFFFFF;">
+                            No further action is required from you at this time. Please continue to monitor your application portal for updates regarding your application status.
+                        </p>
+                        <p class="mb-0 mt-3" style="color: #FFFFFF;">
+                            Thank you for your patience, and we wish you the very best.
+                            <br>
+                            <strong>Best regards,</strong>
+                            <br>
+                            <strong>Direct Aid Scholarship Team</strong>
+                        </p>
+                    </div>
+                    @break
+
+                @case('rejected')
+                    <div class="alert alert-danger mt-4 mb-4" role="alert" style="border-left: 5px solid #dc3545; color: #FFFFFF; background: linear-gradient(135deg, #dc3545 0%, #bd2130 100%);">
+                        <h5 class="font-weight-bold mb-2"><i class="fas fa-times-circle mr-2"></i>Application Status: Not Selected</h5>
+                        <p class="mb-2" style="color: #FFFFFF;">
+                            Dear <strong>{{ Auth::user()->name }}</strong>,
+                        </p>
+                        <p class="mb-2" style="color: #FFFFFF;">
+                            Thank you for applying for the <strong>{{ $scholarshipName }}</strong>.
+                        </p>
+                        <p class="mb-2" style="color: #FFFFFF;">
+                            After careful review of all applications, we regret to inform you that your application has <strong>not been selected</strong> for this scholarship cycle.
+                        </p>
+                        <p class="mb-0" style="color: #FFFFFF;">
+                            We sincerely appreciate your interest and the effort you invested in your application. We encourage you to continue pursuing your academic goals and to apply again when future scholarship opportunities become available.
+                        </p>
+                        <p class="mb-0 mt-3" style="color: #FFFFFF;">
+                            We wish you every success in your studies and future endeavors.
+                            <br>
+                            <strong>Best regards,</strong>
+                            <br>
+                            <strong>Direct Aid Scholarship Team</strong>
+                        </p>
+                    </div>
+                    @break
+
+                @case('submitted')
+                @case('pending')
+                @default
+                    <div class="alert alert-success mt-4 mb-4" role="alert" style="border-left: 5px solid #28a745; color: #FFFFFF; background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);">
+                        <h5 class="font-weight-bold mb-2"><i class="fas fa-check-circle mr-2"></i>Application Submitted Successfully!</h5>
+                        <p class="mb-2" style="color: #FFFFFF;">
+                            Dear <strong>{{ Auth::user()->name }}</strong>,
+                        </p>
+                        <p class="mb-2" style="color: #FFFFFF;">
+                            Thank you for submitting your <strong>{{ $scholarshipName }}</strong> application.
+                        </p>
+                        <p class="mb-2" style="color: #FFFFFF;">
+                            Your application has been received and is currently under review. Please be patient while our Scholarship Committee evaluates all applications. You will be notified once the review process is complete.
+                        </p>
+                        <p class="mb-0" style="color: #FFFFFF;">
+                            Thank you for your interest, and we wish you the very best.
+                            <br>
+                            <strong>Best regards,</strong>
+                            <br>
+                            <strong>Direct Aid Scholarship Team</strong>
+                        </p>
+                    </div>
+            @endswitch
         @else
             <!-- Welcome Card -->
             <div class="card mb-4">

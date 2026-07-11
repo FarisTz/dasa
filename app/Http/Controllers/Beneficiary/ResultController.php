@@ -109,11 +109,11 @@ class ResultController extends Controller
                 'student_year' => $request->student_year,
                 'course_name' => $request->course_name,
                 'gpa' => $request->gpa,
-                'cgpa' => $request->cgpa,
+
                 'division' => $request->division,
                 'remarks' => $request->remarks,
                 'result_file_path' => $filePath,
-                'result_file_name' => $file->getClientOriginalName(),
+
                 'status' => 'pending',
             ]);
 
@@ -156,7 +156,7 @@ class ResultController extends Controller
                 ->with('error', 'File not found.');
         }
 
-        return Storage::disk('public')->download($result->result_file_path, $result->result_file_name ?? 'result_file');
+        return Storage::disk('public')->download($result->result_file_path);
     }
 
     /**

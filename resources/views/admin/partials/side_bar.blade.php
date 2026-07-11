@@ -114,6 +114,12 @@
           </li>
         </ul>
       </li>
+      <li class="{{ request()->routeIs('admin.results.index') ? 'active' : '' }}">
+        <a href="{{ route('admin.results.index') }}" class="nav-link">
+          <i data-feather="monitor"></i><span>Academic Results</span>
+        </a>
+      </li>
+      </li>
 
       <!-- Reports & Analytics -->
       <li class="dropdown">

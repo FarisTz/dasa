@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ResultApprovedNotification;
+use App\Mail\ResultRejectedNotification;
 use App\Models\AcademicResult;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\ResultApprovedNotification;
-use App\Mail\ResultRejectedNotification;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Log;
 
 class ResultController extends Controller
 {
@@ -361,7 +363,7 @@ class ResultController extends Controller
                 ->with('success', $message);
 
         } catch (\Exception $e) {
-            \Log::error('Failed to perform bulk action', ['error' => $e->getMessage()]);
+            Log::error('Failed to perform bulk action', ['error' => $e->getMessage()]);
             return redirect()->back()
                 ->with('error', 'Failed to perform action: ' . $e->getMessage());
         }
@@ -380,8 +382,7 @@ class ResultController extends Controller
         }
 
         return Storage::disk('public')->download(
-            $result->result_file_path,
-            $result->result_file_name ?? 'result_file'
+            $result->result_file_path
         );
     }
 }

@@ -6,8 +6,8 @@
             </a>
           </div>
           <ul class="sidebar-menu">
-            <li class="menu-header">Main</li>
-            <li class="dropdown active">
+
+            <li class="dropdown {{ request()->routeIs('dashboard') ? 'active' : '' }}">
               <a href="{{ route('dashboard') }}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
             <li class="dropdown">
@@ -24,8 +24,10 @@
             </li>
 
 
-            <li><a class="nav-link" href="blank.html"><i data-feather="file"></i><span>My Applications</span></a></li>
-            <li><a class="nav-link" href="{{ route('profile.edit') }}"><i data-feather="file"></i><span>Profile</span></a></li>
+            <li class=" {{ request()->routeIs('beneficiary.payments.index') ? 'active' : '' }}" ><a class="dropdown" href="{{ route('beneficiary.payments.index') }}"><i data-feather="file"></i><span>Payments</span></a></li>
+
+            <li class=" {{ request()->routeIs('beneficiary.results.index') ? 'active' : '' }}" ><a class="dropdown" href="{{ route('beneficiary.results.index') }}"><i data-feather="file"></i><span>Academic Results</span></a></li>
+            <li class="{{ request()->routeIs('profile.edit') ? 'active' : '' }}" ><a class="dropdown" href="{{ route('profile.edit') }}"><i data-feather="file"></i><span>Profile</span></a></li>
             <li><a class="nav-link" href="{{ route('logout') }}"><i data-feather="file"></i><span>Logout</span></a></li>
 
 

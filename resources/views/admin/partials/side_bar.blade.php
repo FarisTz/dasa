@@ -127,9 +127,11 @@
           <i data-feather="shopping-bag"></i><span>Reports & Analytics</span>
         </a>
         <ul class="dropdown-menu">
-          <li><a class="nav-link" href="#">Application Report</a></li>
-          <li><a class="nav-link" href="#">Selection Reports</a></li>
-          <li><a class="nav-link" href="#">Student Reports</a></li>
+          <li><a class="nav-link" href="{{ route('admin.reports.index') }}">All Report</a></li>
+          <li><a class="nav-link" href="{{ route('admin.reports.application') }}">Application Reports</a></li>
+          <li><a class="nav-link" href="{{ route('admin.reports.academic') }}">Academic-Perfomance Reports</a></li>
+            <li><a class="nav-link" href="{{ route('admin.reports.financial') }}">Beneficiary-Financial Reports</a></li>
+            <li><a class="nav-link" href="{{ route('admin.reports.utilization') }}">Scholarship-Utilization Reports</a></li>
         </ul>
       </li>
 

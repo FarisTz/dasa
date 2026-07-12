@@ -139,4 +139,22 @@ class User extends Authenticatable
         $this->academic_suspension_reason = null;
         $this->save();
     }
+
+
+  
+    /**
+     * Get the student payments for the user.
+     */
+    public function studentPayments()
+    {
+        return $this->hasMany(StudentPayment::class, 'student_id');
+    }
+
+
+
+
+
+
+
+
 }

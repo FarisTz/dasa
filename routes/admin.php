@@ -58,7 +58,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/scholarships/{id}/delete', [AdminScholarshipController::class, 'destroy'])->name('scholarships.destroy');
     Route::get('/scholarships/{id}/toggle-status', [AdminScholarshipController::class, 'toggleStatus'])->name('scholarships.toggle-status');
     Route::post('/scholarships/bulk-action', [AdminScholarshipController::class, 'bulkAction'])->name('scholarships.bulk-action');
-    Route::get('/scholarships/exports', [AdminScholarshipController::class, 'export'])->name('scholarship.export');
+    Route::get('/scholarships_exports', [AdminScholarshipController::class, 'export'])->name('scholarships.export');
 
 
 
@@ -114,4 +114,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/results/{id}/lift-suspension', [App\Http\Controllers\Admin\ResultController::class, 'liftSuspension'])->name('results.lift-suspension');
     Route::post('/results/bulk-action', [App\Http\Controllers\Admin\ResultController::class, 'bulkAction'])->name('results.bulk-action');
     Route::get('/results/{id}/download', [App\Http\Controllers\Admin\ResultController::class, 'download'])->name('results.download');
+
+
+
+
+    //report management routes
+    Route::get('/reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/application', [App\Http\Controllers\Admin\ReportController::class, 'applicationReport'])->name('reports.application');
+    Route::get('/reports/financial', [App\Http\Controllers\Admin\ReportController::class, 'beneficiaryFinancialReport'])->name('reports.financial');
+    Route::get('/reports/academic', [App\Http\Controllers\Admin\ReportController::class, 'academicPerformanceReport'])->name('reports.academic');
+    Route::get('/reports/utilization', [App\Http\Controllers\Admin\ReportController::class, 'scholarshipUtilizationReport'])->name('reports.utilization');
+    Route::get('/reports/export', [App\Http\Controllers\Admin\ReportController::class, 'exportCSV'])->name('reports.export');
 });

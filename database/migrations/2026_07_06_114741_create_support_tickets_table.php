@@ -45,25 +45,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Create support replies table
-        Schema::create('support_replies', function (Blueprint $table) {
-            $table->id();
 
-            $table->foreignId('ticket_id')
-                ->constrained('support_tickets')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
-            $table->foreignId('user_id')
-                ->constrained('users')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
-            $table->text('message');
-            $table->boolean('is_admin')->default(false);
-
-            $table->timestamps();
-        });
     }
 
     /**
@@ -71,7 +53,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('support_replies');
+     
         Schema::dropIfExists('support_tickets');
     }
 };

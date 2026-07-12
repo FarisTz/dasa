@@ -100,7 +100,7 @@
                 <h4>All Scholarships</h4>
                 <div class="card-header-action">
 
-                    <a href="{{ route('admin.scholarships.export') }}" class="btn btn-success">
+                    <a href="#" class="btn btn-success" style="color: white;" data-toggle="tooltip" title="Export Scholarships">
                         <i class="fas fa-file-export"></i> Export
                     </a>
                 </div>
@@ -158,7 +158,7 @@
                                             </select>
                                         </div>
                                         @if(request('status') || request('academic_year'))
-                                            <a href="{{ route('admin.scholarships.index') }}" class="btn btn-secondary btn-sm btn-block">
+                                            <a href="#" class="btn btn-secondary btn-sm btn-block">
                                                 <i class="fas fa-undo"></i> Reset Filters
                                             </a>
                                         @endif

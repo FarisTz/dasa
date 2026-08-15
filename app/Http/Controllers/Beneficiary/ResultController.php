@@ -72,8 +72,8 @@ class ResultController extends Controller
             'academic_year' => 'required|string|max:20',
             'student_year' => 'required|integer|min:1|max:10',
             'course_name' => 'nullable|string|max:255',
-            'gpa' => 'nullable|numeric|min:0|max:4',
-            'cgpa' => 'nullable|numeric|min:0|max:4',
+            'gpa' => 'nullable|numeric|min:0|max:5',
+            'cgpa' => 'nullable|numeric|min:0|max:5',
             'division' => 'nullable|string|max:20',
             'remarks' => 'nullable|string',
             'result_file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120', // 5MB

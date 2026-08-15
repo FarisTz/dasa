@@ -22,5 +22,14 @@ Route::middleware(['auth', 'coordinator'])->prefix('coordinator')->name('coordin
     Route::get('/applications/{id}', [CoordinatorController::class, 'showApplication'])->name('applications.show');
 
 
+
+
+     //report management routes
+    Route::get('/reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/application', [App\Http\Controllers\Admin\ReportController::class, 'applicationReport'])->name('reports.application');
+    Route::get('/reports/financial', [App\Http\Controllers\Admin\ReportController::class, 'beneficiaryFinancialReport'])->name('reports.financial');
+    Route::get('/reports/academic', [App\Http\Controllers\Admin\ReportController::class, 'academicPerformanceReport'])->name('reports.academic');
+    Route::get('/reports/utilization', [App\Http\Controllers\Admin\ReportController::class, 'scholarshipUtilizationReport'])->name('reports.utilization');
+    Route::get('/reports/export', [App\Http\Controllers\Admin\ReportController::class, 'exportCSV'])->name('reports.export');
 });
 ?>

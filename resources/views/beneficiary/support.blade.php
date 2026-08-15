@@ -35,7 +35,7 @@
                 <h4><i class="fas fa-plus-circle text-primary"></i> Create New Ticket</h4>
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ route('beneficiary.support.store') }}">
+                <form method="POST" action="{{ route('support.store') }}">
                     @csrf
                     <div class="row">
                         <div class="col-lg-8 col-md-12">
@@ -161,11 +161,11 @@
                                         </td>
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <a href="{{ route('beneficiary.support.show', $ticket->id) }}" class="btn btn-sm btn-info">
+                                                <a href="{{ route('support.show', $ticket->id) }}" class="btn btn-sm btn-info">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                                 @if($ticket->isOpen())
-                                                    <a href="{{ route('beneficiary.support.close', $ticket->id) }}"
+                                                    <a href="{{ route('support.close', $ticket->id) }}"
                                                        class="btn btn-sm btn-secondary"
                                                        onclick="return confirm('Are you sure you want to close this ticket?')">
                                                         <i class="fas fa-times"></i>

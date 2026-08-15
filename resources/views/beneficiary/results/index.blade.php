@@ -98,7 +98,7 @@
                                     <th>Academic Year</th>
                                     <th>Student Year</th>
                                     <th>GPA</th>
-                                    <th>CGPA</th>
+
                                     <th>Status</th>
                                     <th>Submitted</th>
                                     <th>Actions</th>
@@ -111,7 +111,7 @@
                                         <td><strong>{{ $result->academic_year }}</strong></td>
                                         <td>Year {{ $result->student_year }}</td>
                                         <td>{{ $result->formatted_gpa }}</td>
-                                        <td>{{ $result->formatted_cgpa }}</td>
+                                       
                                         <td>
                                             <span class="badge badge-{{ $result->status_color }}">
                                                 <i class="fas fa-{{ $result->status_icon }}"></i>

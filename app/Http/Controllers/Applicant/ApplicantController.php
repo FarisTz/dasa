@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Applicant;
+use App\Http\Controllers\Controller;
+use App\Mail\ApplicationSubmittedNotification;
 use App\Models\ALevelEducation;
 use App\Models\Application;
 use App\Models\Motivation;
@@ -10,9 +12,10 @@ use App\Models\Scholarship;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use App\Http\Controllers\Controller;
+
 class ApplicantController extends Controller
 {
 
@@ -247,6 +250,9 @@ public function review()
     /**
      * Submit the complete application.
      */
+    /**
+     * Submit the complete application.
+     */
     public function submit(Request $request)
     {
         $user = Auth::user();
@@ -288,13 +294,23 @@ public function review()
                 'submitted_at' => now()
             ]);
 
+            // Send email notification
+            try {
+                Mail::to($user->email)->send(new ApplicationSubmittedNotification($application, $user));
+                \Log::info('Application submission email sent to: ' . $user->email);
+            } catch (\Exception $e) {
+                \Log::error('Failed to send application submission email: ' . $e->getMessage());
+                // Continue even if email fails
+            }
+
             // Clear session
             session()->forget('selected_scholarship_id');
 
             return redirect()->route('dashboard')
-                ->with('success', 'Your application for ' . $scholarship->title . ' has been submitted successfully!');
+                ->with('success', 'Your application for ' . $scholarship->title . ' has been submitted successfully! A confirmation email has been sent to your inbox.');
 
         } catch (\Exception $e) {
+            \Log::error('Application submission failed: ' . $e->getMessage());
             return redirect()->back()
                 ->with('error', 'Failed to submit application: ' . $e->getMessage());
         }

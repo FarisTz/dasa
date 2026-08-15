@@ -118,7 +118,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 
 
-    //report management routes
+
+
+
+
+
+});
+
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+ //report management routes
     Route::get('/reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
     Route::get('/reports/application', [App\Http\Controllers\Admin\ReportController::class, 'applicationReport'])->name('reports.application');
     Route::get('/reports/financial', [App\Http\Controllers\Admin\ReportController::class, 'beneficiaryFinancialReport'])->name('reports.financial');

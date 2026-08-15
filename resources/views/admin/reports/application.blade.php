@@ -129,7 +129,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <a href="{{ route('admin.reports.export', ['type' => 'application']) }}" class="btn btn-success btn-lg px-5">
+                        <a href="{{ route('admin.reports.export', ['type' => 'application']) }}" class="btn btn-success btn-lg px-5 text-white">
                             <i class="fas fa-file-export"></i> Export Report as CSV
                         </a>
                         <a href="{{ route('admin.reports.index') }}" class="btn btn-secondary btn-lg px-4">

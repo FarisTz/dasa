@@ -39,11 +39,7 @@ Route::middleware(['auth', 'beneficiary'])->prefix('beneficiary')->name('benefic
 
 
 
-     Route::get('/support', [BeneficiaryController::class, 'index'])->name('support');
-    Route::post('/support', [BeneficiaryController::class, 'store'])->name('support.store');
-    Route::get('/support/{id}', [BeneficiaryController::class, 'show'])->name('support.show');
-    Route::post('/support/{id}/reply', [BeneficiaryController::class, 'reply'])->name('support.reply');
-    Route::get('/support/{id}/close', [BeneficiaryController::class, 'close'])->name('support.close');
+   
 
 
 

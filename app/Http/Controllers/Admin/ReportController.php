@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\Application;
 use App\Models\AcademicResult;
-use App\Models\StudentPayment;
-use App\Models\Scholarship;
+use App\Models\Application;
 use App\Models\Installment;
+use App\Models\Scholarship;
+use App\Models\StudentPayment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ReportController extends Controller
 {

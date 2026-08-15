@@ -35,14 +35,20 @@
                 <li><a class="nav-link" href="#">Canceled Students</a></li>
               </ul>
             </li>
-            <li class="dropdown">
-              <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                  data-feather="briefcase"></i><span>Reports & Analytics</span></a>
-              <ul class="dropdown-menu">
-                <li><a class="nav-link" href="#">Total Applications</a></li>
-                <li><a class="nav-link" href="#">Application Status</a></li>
-              </ul>
-            </li>
+            <!-- Reports & Analytics -->
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown">
+          <i data-feather="shopping-bag"></i><span>Reports & Analytics</span>
+        </a>
+        <ul class="dropdown-menu">
+         
+          <li><a class="nav-link" href="{{ route('coordinator.reports.application') }}">Application Reports</a></li>
+          <li><a class="nav-link" href="{{ route('coordinator.reports.academic') }}">Academic-Perfomance Reports</a></li>
+            <li><a class="nav-link" href="{{ route('coordinator.reports.financial') }}">Beneficiary-Financial Reports</a></li>
+            <li><a class="nav-link" href="{{ route('coordinator.reports.utilization') }}">Scholarship-Utilization Reports</a></li>
+        </ul>
+      </li>
+
             <li><a class="nav-link" href="{{ route('profile.edit') }}"><i data-feather="file"></i><span>Profile</span></a></li>
             <li><a class="nav-link" href="{{ route('logout') }}"><i data-feather="file"></i><span>Logout</span></a></li>
           </ul>

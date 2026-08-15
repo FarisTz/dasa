@@ -57,7 +57,7 @@ class BeneficiaryController extends Controller
                 'status' => 'open',
             ]);
 
-            return redirect()->route('beneficiary.support')
+            return redirect()->route('support')
                 ->with('success', 'Support ticket created successfully! We will get back to you soon.');
 
         } catch (\Exception $e) {
@@ -116,7 +116,7 @@ class BeneficiaryController extends Controller
                 $ticket->save();
             }
 
-            return redirect()->route('beneficiary.support.show', $ticket->id)
+            return redirect()->route('.support.show', $ticket->id)
                 ->with('success', 'Reply sent successfully!');
 
         } catch (\Exception $e) {

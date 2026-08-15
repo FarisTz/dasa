@@ -4,6 +4,7 @@ use App\Http\Controllers\Applicant\ALevelEducationController;
 use App\Http\Controllers\Applicant\ApplicantController;
 use App\Http\Controllers\Applicant\MotivationController;
 use App\Http\Controllers\Applicant\OLevelEducationController;
+use App\Http\Controllers\Beneficiary\BeneficiaryController;
 use Illuminate\Support\Facades\Route;
 
 // Applicant routes
@@ -38,6 +39,13 @@ Route::middleware(['auth'])->group(function () {
 
     // Acceptance Letter
     Route::get('/download-acceptance', [ApplicantController::class, 'downloadAcceptance'])->name('applicant.acceptance.download');
+
+
+
+
+
+    
+
 
     // Acknowledgement Letter
     Route::get('/acknowledgement-letter', [ApplicantController::class, 'acknowledgementShow'])->name('applicant.acknowledgement-letter');

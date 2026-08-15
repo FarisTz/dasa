@@ -453,7 +453,7 @@
                         <p class="text-muted">
                             Contact our support team for assistance with your scholarship or payments.
                         </p>
-                        <a href="{{ route('beneficiary.support') }}" class="btn btn-outline-primary">
+                        <a href="{{ route('support') }}" class="btn btn-outline-primary">
                             <i class="fas fa-envelope"></i> Contact Support
                         </a>
                     </div>

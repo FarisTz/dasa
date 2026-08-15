@@ -138,7 +138,7 @@
       <!-- Support Tickets -->
       <li class="{{ request()->routeIs('admin.support.index') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.support.index') }}">
-          <i data-feather="life-buoy"></i><span>Support Tickets</span>
+          <i data-feather="life-buoy"></i><span>Support</span>
         </a>
       </li>
 

@@ -28,6 +28,7 @@
 
             <li class=" {{ request()->routeIs('beneficiary.results.index') ? 'active' : '' }}" ><a class="dropdown" href="{{ route('beneficiary.results.index') }}"><i data-feather="file"></i><span>Academic Results</span></a></li>
             <li class="{{ request()->routeIs('profile.edit') ? 'active' : '' }}" ><a class="dropdown" href="{{ route('profile.edit') }}"><i data-feather="file"></i><span>Profile</span></a></li>
+            <li class="{{ request()->routeIs('support') ? 'active' : '' }}" ><a class="dropdown" href="{{ route('support') }}"><i data-feather="file"></i><span>Support</span></a></li>
             <li><a class="nav-link" href="{{ route('logout') }}"><i data-feather="file"></i><span>Logout</span></a></li>
 
 

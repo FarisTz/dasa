@@ -84,26 +84,13 @@
                                        value="{{ old('gpa') }}"
                                        step="0.01"
                                        min="0"
-                                       max="4">
+                                       max="5">
                                 @error('gpa')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
-                            <div class="form-group">
-                                <label>CGPA (0-4)</label>
-                                <input type="number"
-                                       class="form-control @error('cgpa') is-invalid @enderror"
-                                       name="cgpa"
-                                       placeholder="Enter CGPA"
-                                       value="{{ old('cgpa') }}"
-                                       step="0.01"
-                                       min="0"
-                                       max="4">
-                                @error('cgpa')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+
 
                             <div class="form-group">
                                 <label>Division</label>

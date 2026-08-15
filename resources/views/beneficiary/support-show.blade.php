@@ -6,7 +6,7 @@
         <h1>Ticket Details</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
-            <div class="breadcrumb-item"><a href="{{ route('beneficiary.support') }}">Support</a></div>
+            <div class="breadcrumb-item"><a href="{{ route('support') }}">Support</a></div>
             <div class="breadcrumb-item">Ticket #{{ str_pad($ticket->id, 6, '0', STR_PAD_LEFT) }}</div>
         </div>
     </div>
@@ -45,7 +45,7 @@
                         <i class="fas fa-flag"></i>
                         {{ ucfirst($ticket->priority) }}
                     </span>
-                    <a href="{{ route('beneficiary.support') }}" class="btn btn-secondary ml-2">
+                    <a href="{{ route('support') }}" class="btn btn-secondary ml-2">
                         <i class="fas fa-arrow-left"></i> Back
                     </a>
                 </div>
@@ -163,7 +163,7 @@
                     <h4><i class="fas fa-reply text-primary"></i> Add Reply</h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('beneficiary.support.reply', $ticket->id) }}">
+                    <form method="POST" action="{{ route('support.reply', $ticket->id) }}">
                         @csrf
                         <div class="form-group">
                             <label>Message <span class="text-danger">*</span></label>

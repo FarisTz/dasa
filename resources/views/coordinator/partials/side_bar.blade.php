@@ -7,22 +7,30 @@
           </div>
           <ul class="sidebar-menu">
             <li class="menu-header">Main</li>
-            <li class="dropdown active">
+            <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
               <a href="{{ route('dashboard') }}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
-            <li class="dropdown active">
+            <li class="{{ request()->routeIs('coordinator.scholarships.index', 'coordinator.scholarships.show') ? 'active' : '' }}">
               <a href="{{ route('coordinator.scholarships.index') }}" class="nav-link"><i data-feather="mail"></i><span>Scholarships</span></a>
             </li>
 
-            <li class="dropdown">
+            <li class="dropdown {{ request()->routeIs('coordinator.applications.index', 'coordinator.applications.show') ? 'active' : '' }}">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i
                   data-feather="briefcase"></i><span>Applications</span></a>
-              <ul class="dropdown-menu">
-                <li><a class="nav-link" href="{{ route('coordinator.applications.index') }}">All Applications</a></li>
+              <ul class="dropdown-menu" style="{{ request()->routeIs('coordinator.applications.index', 'coordinator.applications.show') ? 'display: block;' : '' }}">
+                <li class="{{ request()->routeIs('coordinator.applications.index') && !request()->has('status') ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('coordinator.applications.index') }}">All Applications</a>
+                </li>
 
-                <li><a class="nav-link" href="{{ route('coordinator.applications.index', ['status' => 'approved_full']) }}">Approved Full</a></li>
-                <li><a class="nav-link" href="{{ route('coordinator.applications.index', ['status' => 'approved_partial']) }}">Approved Partial</a></li>
-                <li><a class="nav-link" href="{{ route('coordinator.applications.index', ['status' => 'rejected']) }}">Rejected</a></li>
+                <li class="{{ request()->routeIs('coordinator.applications.index') && request()->get('status') == 'approved_full' ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('coordinator.applications.index', ['status' => 'approved_full']) }}">Approved Full</a>
+                </li>
+                <li class="{{ request()->routeIs('coordinator.applications.index') && request()->get('status') == 'approved_partial' ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('coordinator.applications.index', ['status' => 'approved_partial']) }}">Approved Partial</a>
+                </li>
+                <li class="{{ request()->routeIs('coordinator.applications.index') && request()->get('status') == 'rejected' ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('coordinator.applications.index', ['status' => 'rejected']) }}">Rejected</a>
+                </li>
               </ul>
             </li>
             <li class="dropdown">
@@ -35,13 +43,14 @@
                 <li><a class="nav-link" href="#">Canceled Students</a></li>
               </ul>
             </li>
+
             <!-- Reports & Analytics -->
       <li class="dropdown">
         <a href="#" class="menu-toggle nav-link has-dropdown">
           <i data-feather="shopping-bag"></i><span>Reports & Analytics</span>
         </a>
         <ul class="dropdown-menu">
-         
+
           <li><a class="nav-link" href="{{ route('coordinator.reports.application') }}">Application Reports</a></li>
           <li><a class="nav-link" href="{{ route('coordinator.reports.academic') }}">Academic-Perfomance Reports</a></li>
             <li><a class="nav-link" href="{{ route('coordinator.reports.financial') }}">Beneficiary-Financial Reports</a></li>

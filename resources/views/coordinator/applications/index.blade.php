@@ -523,7 +523,6 @@
 </style>
 @endpush
 
-<<<<<<< HEAD
 @push('scripts')
 <script>
     $(document).ready(function() {

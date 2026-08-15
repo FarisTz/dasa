@@ -168,10 +168,15 @@
             @endswitch
         @else
             <!-- Welcome Card -->
+            @php
+                $scholarship = \App\Models\Scholarship::orderByDesc('deadline')->first();
+                $scholarshipDeadline = $scholarship && $scholarship->deadline ? $scholarship->deadline->endOfDay() : null;
+                $isScholarshipOpen = $scholarship && $scholarship->status === 'open' && $scholarshipDeadline && now()->lt($scholarshipDeadline);
+            @endphp
             <div class="card mb-4">
                 <div class="card-body">
-                    <div class="d-flex align-items-start">
-                        <div>
+                    <div class="d-flex align-items-start justify-content-between flex-column flex-lg-row">
+                        <div class="mr-lg-4 mb-3 mb-lg-0">
                             <h3 class="font-weight-bold mb-2">
                                 Hello {{ Auth::user()->name }},
                                 Welcome to KAFAAT Scholarship Application Portal
@@ -182,6 +187,45 @@
                                 Follow the milestones below to track your application journey.
                             </p>
                         </div>
+
+                        @if($scholarship)
+                            <div class="flex-shrink-0 w-100 w-lg-auto" style="max-width: 360px;">
+                                <div class="border rounded p-3 {{ $isScholarshipOpen ? 'bg-light border-primary' : 'bg-danger-light border-danger' }}">
+                                    @if($isScholarshipOpen)
+                                        <div class="text-primary font-weight-bold mb-2">
+                                            <i class="fas fa-hourglass-half mr-2"></i>Application Deadline
+                                        </div>
+                                        <div class="text-dark font-weight-bold mb-1">
+                                            {{ $scholarship->title ?? 'Scholarship' }}
+                                        </div>
+                                        <div id="scholarship-countdown"
+                                             data-deadline="{{ $scholarshipDeadline->format('c') }}"
+                                             class="d-flex flex-wrap gap-2 mt-2">
+                                            <span class="badge badge-light border px-2 py-2">0d</span>
+                                            <span class="badge badge-light border px-2 py-2">0h</span>
+                                            <span class="badge badge-light border px-2 py-2">0m</span>
+                                            <span class="badge badge-light border px-2 py-2">0s</span>
+                                        </div>
+                                        <small class="text-muted d-block mt-2">
+                                            Deadline: {{ $scholarshipDeadline->format('F d, Y') }}
+                                        </small>
+                                    @else
+                                        <div class="text-danger font-weight-bold mb-2">
+                                            <i class="fas fa-times-circle mr-2"></i>Applications Closed
+                                        </div>
+                                        <div class="text-dark font-weight-bold mb-1">
+                                            {{ $scholarship->title ?? 'Scholarship' }}
+                                        </div>
+                                        <small class="text-muted d-block">
+                                            Closed on: {{ $scholarshipDeadline ? $scholarshipDeadline->format('F d, Y') : ($scholarship->deadline ? $scholarship->deadline->format('F d, Y') : 'Not set') }}
+                                        </small>
+                                        <small class="text-danger d-block mt-2">
+                                            This scholarship is no longer accepting applications.
+                                        </small>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -219,23 +263,53 @@
                 @endphp
 
                 <div class="row text-center">
+                    @php
+                        // Map each milestone index to a route name where appropriate
+                        $milestoneRoutes = [
+                            'applicant.personal_information',
+                            'applicant.o-level-education',
+                            'applicant.a-level-education',
+                            'applicant.motivations.index',
+                            'applicant.application.review',
+                            'applicant.application.review', // Submit links to review where submit action exists
+                        ];
+                    @endphp
+
                     @foreach($milestones as $index => $milestone)
                         @php
                             $stepNumber = $index + 1;
                             $status = $stepNumber <= $stepPosition ? 'completed' : ($stepNumber == $stepPosition + 1 ? 'current' : 'pending');
                             $isCompleted = $status === 'completed';
                             $isCurrent = $status === 'current';
+                            $routeName = $milestoneRoutes[$index] ?? null;
+                            // Make every step clickable if it has a route
+                            $clickable = $routeName ? true : false;
                         @endphp
+
                         <div class="col-md-2 col-6 mb-4">
-                            <div class="p-3 border rounded h-100 {{ $isCompleted ? 'border-success bg-success text-white shadow-sm' : ($isCurrent ? 'border-primary bg-primary text-white shadow-sm' : 'border-light bg-light') }}">
-                                <div class="mb-2">
-                                    <i class="fas fa-{{ $milestone['icon'] }} fa-2x {{ $isCompleted || $isCurrent ? 'text-white' : $milestone['iconColor'] }}"></i>
+                            @if($clickable)
+                                <a href="{{ route($routeName) }}" class="text-decoration-none" aria-label="Go to {{ $milestone['title'] }}">
+                                    <div class="p-3 border rounded h-100 {{ $isCompleted ? 'border-success bg-success text-white shadow-sm' : ($isCurrent ? 'border-primary bg-primary text-white shadow-sm' : 'border-light bg-light') }}">
+                                        <div class="mb-2">
+                                            <i class="fas fa-{{ $milestone['icon'] }} fa-2x {{ $isCompleted || $isCurrent ? 'text-white' : $milestone['iconColor'] }}"></i>
+                                        </div>
+                                        <h6 class="mb-0">{{ $milestone['title'] }}</h6>
+                                        <small class="d-block mt-2 {{ $isCompleted || $isCurrent ? 'text-white-50' : 'text-muted' }}">
+                                            {{ $isCompleted ? 'Completed' : ($isCurrent ? 'In Progress' : 'Pending') }}
+                                        </small>
+                                    </div>
+                                </a>
+                            @else
+                                <div class="p-3 border rounded h-100 {{ $isCompleted ? 'border-success bg-success text-white shadow-sm' : ($isCurrent ? 'border-primary bg-primary text-white shadow-sm' : 'border-light bg-light') }}">
+                                    <div class="mb-2">
+                                        <i class="fas fa-{{ $milestone['icon'] }} fa-2x {{ $isCompleted || $isCurrent ? 'text-white' : $milestone['iconColor'] }}"></i>
+                                    </div>
+                                    <h6 class="mb-0">{{ $milestone['title'] }}</h6>
+                                    <small class="d-block mt-2 {{ $isCompleted || $isCurrent ? 'text-white-50' : 'text-muted' }}">
+                                        {{ $isCompleted ? 'Completed' : ($isCurrent ? 'In Progress' : 'Pending') }}
+                                    </small>
                                 </div>
-                                <h6 class="mb-0">{{ $milestone['title'] }}</h6>
-                                <small class="d-block mt-2 {{ $isCompleted || $isCurrent ? 'text-white-50' : 'text-muted' }}">
-                                    {{ $isCompleted ? 'Completed' : ($isCurrent ? 'In Progress' : 'Pending') }}
-                                </small>
-                            </div>
+                            @endif
                         </div>
                     @endforeach
                 </div>
@@ -244,5 +318,42 @@
 
     </div>
 </section>
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const countdownEl = document.getElementById('scholarship-countdown');
+
+        if (!countdownEl) return;
+
+        const deadline = new Date(countdownEl.dataset.deadline).getTime();
+        const badges = countdownEl.querySelectorAll('span.badge');
+
+        function updateCountdown() {
+            const now = Date.now();
+            const distance = deadline - now;
+
+            if (distance <= 0) {
+                countdownEl.innerHTML = '<span class="badge badge-danger px-2 py-2">Expired</span>';
+                return;
+            }
+
+            const totalSeconds = Math.floor(distance / 1000);
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            badges[0].textContent = days + 'd';
+            badges[1].textContent = hours + 'h';
+            badges[2].textContent = minutes + 'm';
+            badges[3].textContent = seconds + 's';
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    });
+</script>
 @endsection
 

@@ -56,7 +56,7 @@
                                             <strong>Student Year:</strong> Year {{ $installment->student_year }}<br>
                                             <strong>Amount:</strong> <span class="text-success font-weight-bold">TSh {{ number_format($installment->amount, 2) }}</span>
                                         </p>
-                                        <a href="{{ route('student.payments.sign', $installment->id) }}" class="btn btn-success btn-block">
+                                        <a href="{{ route('beneficiary.payments.sign', $installment->id) }}" class="btn btn-success btn-block text-white">
                                             <i class="fas fa-pen"></i> Sign Installment
                                         </a>
                                     </div>

@@ -10,19 +10,7 @@
             <li class="dropdown {{ request()->routeIs('dashboard') ? 'active' : '' }}">
               <a href="{{ route('dashboard') }}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
-            <li class="dropdown">
-              <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                  data-feather="briefcase"></i><span>Apply for scholarship</span></a>
-              <ul class="dropdown-menu">
-                <li><a class="nav-link" href="#">Personal Information</a></li>
-                <li><a class="nav-link" href="#">O-Level Education</a></li>
-                <li><a class="nav-link" href="#">A-Level Education</a></li>
-                <li><a class="nav-link" href="#">Motivation Letter</a></li>
-                <li><a class="nav-link" href="#">Review & Submit</a></li>
-
-              </ul>
-            </li>
-
+            
 
             <li class=" {{ request()->routeIs('beneficiary.payments.index') ? 'active' : '' }}" ><a class="dropdown" href="{{ route('beneficiary.payments.index') }}"><i data-feather="file"></i><span>Payments</span></a></li>
 

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ApplicationStatusChangedNotification;
 use App\Models\Application;
 use App\Models\Scholarship;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class AdminApplicationController extends Controller
@@ -130,7 +132,7 @@ class AdminApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $application = Application::findOrFail($id);
+        $application = Application::with(['user', 'scholarship'])->findOrFail($id);
 
         $validator = Validator::make($request->all(), [
             'status' => 'required|in:pending,submitted,under_review,approved_full,approved_partial,rejected',
@@ -144,14 +146,53 @@ class AdminApplicationController extends Controller
         }
 
         try {
-            $application->status = $request->status;
+            $oldStatus = $application->status;
+            $newStatus = $request->status;
+            $user = $application->user;
+
+            // Update application status
+            $application->status = $newStatus;
             $application->admin_notes = $request->admin_notes;
             $application->save();
 
+            // If status is approved_full or approved_partial, make user a beneficiary
+            if (in_array($newStatus, ['approved_full', 'approved_partial'])) {
+                // Update user role to beneficiary
+                // $user->role = 'beneficiary';
+                // $user->save();
+
+                // Log the change
+                \Log::info('User role updated to beneficiary', [
+                    'user_id' => $user->id,
+                    'application_id' => $application->id,
+                    'status' => $newStatus
+                ]);
+            }
+
+            // If status is rejected, check if user was beneficiary and remove role if needed
+            if ($newStatus === 'rejected' && $user->role === 'beneficiary') {
+                // revert to applicant
+
+                $user->role = 'applicant';
+                $user->save();
+            }
+
+            // Send email notification to the applicant
+            try {
+                Mail::to($user->email)->send(
+                    new ApplicationStatusChangedNotification($application, $user, $oldStatus, $newStatus)
+                );
+                \Log::info('Application status change email sent to: ' . $user->email);
+            } catch (\Exception $e) {
+                \Log::error('Failed to send application status change email: ' . $e->getMessage());
+                // Continue even if email fails
+            }
+
             return redirect()->route('admin.applications.index')
-                ->with('success', 'Application updated successfully!');
+                ->with('success', 'Application updated successfully! The applicant has been notified.');
 
         } catch (\Exception $e) {
+            \Log::error('Failed to update application: ' . $e->getMessage());
             return redirect()->back()
                 ->with('error', 'Failed to update application: ' . $e->getMessage())
                 ->withInput();
@@ -207,56 +248,47 @@ class AdminApplicationController extends Controller
 
         ]);
 
-        try {
+         try {
             $applicationIds = $request->application_ids;
-             // If it's a JSON string, decode it
-        if (is_string($applicationIds)) {
-            $applicationIds = json_decode($applicationIds, true);
-        }
+            $newStatus = $request->action;
 
-        // Ensure it's an array
-        if (!is_array($applicationIds)) {
-            $applicationIds = [$applicationIds];
-        }
 
-        // Filter out empty values
-        $applicationIds = array_filter($applicationIds);
-            if (empty($applicationIds)) {
-                return redirect()->back()
-                    ->with('error', 'No applications selected.');
-            }
+            // Get all applications
+            $applications = Application::with(['user', 'scholarship'])
+                ->whereIn('id', $applicationIds)
+                ->get();
 
-            switch ($request->action) {
-                case 'under_review':
-                    Application::whereIn('id', $applicationIds)->update(['status' => 'under_review']);
-                    $message = 'Applications marked as under review!';
-                    break;
-                case 'approved_full':
-                    Application::whereIn('id', $applicationIds)->update(['status' => 'approved_full']);
-                    $message = 'Applications approved (full scholarship)!';
-                    break;
-                case 'approved_partial':
-                    Application::whereIn('id', $applicationIds)->update(['status' => 'approved_partial']);
-                    $message = 'Applications approved (partial scholarship)!';
-                    break;
-                case 'rejected':
-                    Application::whereIn('id', $applicationIds)->update(['status' => 'rejected']);
-                    $message = 'Applications rejected!';
-                    break;
-                case 'delete':
-                    Application::whereIn('id', $applicationIds)->delete();
-                    $message = 'Applications deleted successfully!';
-                    break;
-                default:
-                    return redirect()->back()->with('error', 'Invalid action.');
+            foreach ($applications as $application) {
+                $oldStatus = $application->status;
+                $user = $application->user;
+
+                // Update application
+                $application->status = $newStatus;
+
+                $application->save();
+
+                // Update user role for approved applications
+                if (in_array($newStatus, ['approved_full', 'approved_partial'])) {
+                    // $user->role = 'beneficiary';
+                    // $user->save();
+                }
+
+                // Send email notification
+                try {
+                    Mail::to($user->email)->send(
+                        new ApplicationStatusChangedNotification($application, $user, $oldStatus, $newStatus)
+                    );
+                } catch (\Exception $e) {
+                    \Log::error('Failed to send bulk status update email to: ' . $user->email);
+                }
             }
 
             return redirect()->route('admin.applications.index')
-                ->with('success', $message);
+                ->with('success', count($applications) . ' applications updated successfully!');
 
         } catch (\Exception $e) {
             return redirect()->back()
-                ->with('error', 'Failed to perform bulk action: ' . $e->getMessage());
+                ->with('error', 'Failed to update applications: ' . $e->getMessage());
         }
     }
 
@@ -270,24 +302,58 @@ class AdminApplicationController extends Controller
             'status' => 'required|in:pending,submitted,under_review,approved_full,approved_partial,rejected',
         ]);
 
+       $application = Application::with(['user', 'scholarship'])->findOrFail($request->id);
         try {
-            $application = Application::find($request->id);
-            $application->status = $request->status;
+            $oldStatus = $application->status;
+            $newStatus = $request->status;
+            $user = $application->user;
+
+            // Update application status
+            $application->status = $newStatus;
+            $application->admin_notes = $request->admin_notes;
             $application->save();
 
-            if ($request->ajax()) {
-                return response()->json(['success' => true]);
+            // If status is approved_full or approved_partial, make user a beneficiary
+            if (in_array($newStatus, ['approved_full', 'approved_partial'])) {
+                // Update user role to beneficiary
+                $user->role = 'beneficiary';
+                $user->save();
+
+                // Log the change
+                \Log::info('User role updated to beneficiary', [
+                    'user_id' => $user->id,
+                    'application_id' => $application->id,
+                    'status' => $newStatus
+                ]);
             }
 
-            return redirect()->route('admin.applications.show', $application->id)
-                ->with('success', 'Application status updated successfully!');
+            // If status is rejected, check if user was beneficiary and remove role if needed
+            if ($newStatus === 'rejected' && $user->role === 'beneficiary') {
+                // revert to applicant
+
+                $user->role = 'applicant';
+                $user->save();
+            }
+
+            // Send email notification to the applicant
+            try {
+                Mail::to($user->email)->send(
+                    new ApplicationStatusChangedNotification($application, $user, $oldStatus, $newStatus)
+                );
+                \Log::info('Application status change email sent to: ' . $user->email);
+            } catch (\Exception $e) {
+                \Log::error('Failed to send application status change email: ' . $e->getMessage());
+                // Continue even if email fails
+            }
+
+            return redirect()->route('admin.applications.index')
+                ->with('success', 'Application updated successfully! The applicant has been notified.');
 
         } catch (\Exception $e) {
-            if ($request->ajax()) {
-                return response()->json(['success' => false, 'message' => $e->getMessage()]);
-            }
+            \Log::error('Failed to update application: ' . $e->getMessage());
             return redirect()->back()
-                ->with('error', 'Failed to update status: ' . $e->getMessage());
+                ->with('error', 'Failed to update application: ' . $e->getMessage())
+                ->withInput();
         }
     }
 
@@ -339,7 +405,8 @@ class AdminApplicationController extends Controller
  */
 public function updateAcknowledgement(Request $request, $id)
 {
-    $application = Application::findOrFail($id);
+    $application = Application::with('user')->findOrFail($id);
+    $user = $application->user;
 
     $validator = Validator::make($request->all(), [
         'acknowledgement_status' => 'required|in:pending,submitted,approved,rejected',
@@ -357,6 +424,10 @@ public function updateAcknowledgement(Request $request, $id)
         $application->acknowledgement_admin_notes = $request->acknowledgement_admin_notes;
         $application->save();
 
+        if ($request->acknowledgement_status === 'approved') {
+            $user->role = 'beneficiary';
+            $user->save();
+        }
         return redirect()->route('admin.applications.show', $id)
             ->with('success', 'Acknowledgement letter status updated successfully!');
 

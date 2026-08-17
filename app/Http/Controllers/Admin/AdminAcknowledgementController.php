@@ -88,26 +88,23 @@ class AdminAcknowledgementController extends Controller
      */
     public function updateUserType(Request $request, $id)
     {
-        $application = Application::with('user')->findOrFail($id);
+        $application = Application::with('user')->findOrFail($request->id);
 
         if (!$application->user) {
             return redirect()->back()
                 ->with('error', 'User not found for this application.');
         }
 
-        $validator = Validator::make($request->all(), [
-            'user_type' => 'required|in:beneficiary,applicant,admin,coordinator',
-        ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
+
+
 
         try {
+            $application->acknowledgement_status = 'approved';
+            $application->acknowledgement_admin_notes = 'Approved by admin.';
+            $application->save();
             $user = $application->user;
-            $user->role = $request->user_type;
+            $user->role = 'beneficiary';
             $user->save();
 
             return redirect()->route('admin.acknowledgement.index')

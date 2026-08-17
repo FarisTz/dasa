@@ -4,10 +4,11 @@ use App\Http\Controllers\Admin\AdminAcknowledgementController;
 use App\Http\Controllers\Admin\AdminApplicationController;
 use App\Http\Controllers\Admin\AdminScholarshipController;
 use App\Http\Controllers\Admin\AdminUserController;
-use App\Http\Controllers\AuthRedirectController;
 use App\Http\Controllers\Admin\InstallmentController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SupportController;
+use App\Http\Controllers\AuthRedirectController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
      Route::get('/dashboard/statistics', [AuthRedirectController::class, 'statistics'])->name('dashboard.statistics');
@@ -66,6 +67,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 
 
+
+      // Student Management
+    Route::get('/students', [StudentController::class, 'index'])->name('students.index');
+    Route::get('/students/{id}', [StudentController::class, 'show'])->name('students.show');
+    Route::post('/students/{id}/update-status', [StudentController::class, 'updateStatus'])->name('students.update-status');
+    Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
+    Route::get('/students/export', [StudentController::class, 'export'])->name('students.export');
+
+
     // Acknowledgement Management
     Route::get('/acknowledgement', [AdminAcknowledgementController::class, 'index'])->name('acknowledgement.index');
     Route::get('/acknowledgement/template', [AdminAcknowledgementController::class, 'template'])->name('acknowledgement.template');
@@ -77,6 +87,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::put('/acknowledgement/{id}/user-type', [AdminAcknowledgementController::class, 'updateUserType'])->name('acknowledgement.update-user-type');
     Route::get('/acknowledgement/{id}/view-letter', [AdminAcknowledgementController::class, 'viewLetter'])->name('acknowledgement.view-letter');
 
+
+
+
+
     // Bulk Actions
     Route::put('/acknowledgement/bulk-update-type', [AdminAcknowledgementController::class, 'bulkUpdateUserType'])->name('acknowledgement.bulk-update-type');
     Route::post('/acknowledgement/bulk-approve', [AdminAcknowledgementController::class, 'bulkApprove'])->name('acknowledgement.bulk-approve');
@@ -87,6 +101,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('installments', InstallmentController::class);
     Route::get('/installments/{id}/toggle-status', [InstallmentController::class, 'toggleStatus'])->name('installments.toggle-status');
     Route::post('/installments/{id}/assign-student', [InstallmentController::class, 'assignStudent'])->name('installments.assign-student');
+
+
+
 
 
 

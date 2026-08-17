@@ -137,7 +137,7 @@
                     @csrf
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <select class="form-control" name="user_type" id="bulkUserType" required>
+                            <select class="form-control" name="user_type" id="bulkUserType" >
                                 <option value="">Bulk Update User Type</option>
                                 <option value="beneficiary">Beneficiary</option>
                                 <option value="applicant">Applicant</option>
@@ -191,7 +191,7 @@
                                         </td>
                                         <td>{{ $applications->firstItem() + $loop->index }}</td>
                                         <td>
-                                            
+
                                                     <div><strong>{{ $application->user->name }}</strong></div>
                                                     <small class="text-muted">{{ $application->user->email }}</small>
                                                 </div>
@@ -235,14 +235,15 @@
                                                 <a href="{{ route('admin.applications.show', $application->id) }}" class="btn btn-sm btn-info">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <form method="POST" action="{{ route('admin.acknowledgement.update-user-type', $application->id) }}" style="display: inline;">
+                                                {{-- <form method="POST" action="{{ route('admin.acknowledgement.update-user-type', $application->id) }}" style="display: inline;">
                                                     @csrf
                                                     @method('PUT')
-                                                    <input type="hidden" name="user_type" value="beneficiary">
-                                                    <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Make this user a beneficiary?')">
+                                                    <input type="hidden" name="id" value="{{ $application->id }}">
+
+                                                    <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Are you sure you want to approve this acknowledgement and update the user as beneficiary?')">
                                                         <i class="fas fa-user-check"></i>
                                                     </button>
-                                                </form>
+                                                </form> --}}
                                             </div>
                                         </td>
                                     </tr>

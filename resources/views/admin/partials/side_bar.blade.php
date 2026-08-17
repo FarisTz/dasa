@@ -92,7 +92,7 @@
           <i data-feather="mail"></i><span>Students</span>
         </a>
         <ul class="dropdown-menu">
-          <li><a class="nav-link" href="#">All Students</a></li>
+          <li><a class="nav-link" href="{{ route('admin.students.index') }}">All Students</a></li>
           <li><a class="nav-link" href="#">Confirmed Students</a></li>
           <li><a class="nav-link" href="#">Pending Confirmation</a></li>
           <li><a class="nav-link" href="#">Canceled Students</a></li>

@@ -144,46 +144,7 @@ public function review()
         'existingApplication'
     ));
 }
-    /**
-     * Submit the complete application.
-     */
-    // public function submit(Request $request)
-    // {
-    //     $user = Auth::user();
-
-    //     // Check if all sections are completed
-    //     $personalInfo = PersonalInfo::where('user_id', $user->id)->first();
-    //     $oLevel = OLevelEducation::where('user_id', $user->id)->first();
-    //     $aLevel = ALevelEducation::where('user_id', $user->id)->first();
-    //     $motivation = Motivation::where('user_id', $user->id)->first();
-
-    //     if (!$personalInfo || !$oLevel || !$aLevel || !$motivation) {
-    //         return redirect()->back()->with('error', 'Please complete all sections before submitting your application.');
-    //     }
-
-    //     try {
-    //         // Update user status to submitted
-    //        $application = Application::create([
-    //             'user_id' => $user->id,
-    //             'application_status' => 'submitted',
-    //             'submitted_at' => now()
-    //         ]);
-
-    //         // You can also store submission status in a separate table if needed
-    //         // Application::create([
-    //         //     'user_id' => $user->id,
-    //         //     'submitted_at' => now(),
-    //         //     'status' => 'pending'
-    //         // ]);
-
-    //         return redirect()->route('applicant.dashboard')
-    //             ->with('success', 'Your application has been submitted successfully!');
-    //     } catch (\Exception $e) {
-    //         return redirect()->back()
-    //             ->with('error', 'Failed to submit application: ' . $e->getMessage());
-    //     }
-    // }
-
+    
      /**
      * Select a scholarship for application.
      */

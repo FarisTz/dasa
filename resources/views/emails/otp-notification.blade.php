@@ -99,7 +99,7 @@
         </div>
 
         <p style="text-align: center; margin: 30px 0;">
-            <a href="{{ route('beneficiary.payments.index') }}" class="button">
+            <a href="{{ route('beneficiary.payments.index') }}" style="color: white" class="button">
                 Go to Sign Page
             </a>
         </p>

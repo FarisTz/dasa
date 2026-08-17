@@ -24,12 +24,9 @@
             text-align: center;
             color: white;
         }
-        .header.status-pending { background: linear-gradient(135deg, #6c757d, #495057); }
-        .header.status-submitted { background: linear-gradient(135deg, #4e73df, #224abe); }
-        .header.status-under_review { background: linear-gradient(135deg, #ffc107, #e0a800); }
-        .header.status-approved_full { background: linear-gradient(135deg, #28a745, #1e7e34); }
-        .header.status-approved_partial { background: linear-gradient(135deg, #17a2b8, #0f7a8a); }
-        .header.status-rejected { background: linear-gradient(135deg, #dc3545, #b02a37); }
+
+        .header.status-color { background: linear-gradient(135deg, #28a745, #1e7e34); }
+
 
         .header h1 {
             margin: 0;
@@ -192,8 +189,8 @@
 <body>
     <div class="container">
         <!-- Header with dynamic status color -->
-        <div class="header status-{{ $newStatus }}">
-            <h1>📋 Application Status Update</h1>
+        <div class="header status-color">
+            <h1>Application Status Update</h1>
             <div class="subtitle">Your application status has been changed</div>
             <div class="status-badge">
                 {{ ucfirst(str_replace('_', ' ', $newStatus)) }}
@@ -227,7 +224,7 @@
                         You have been awarded a
                         <strong>{{ $newStatus == 'approved_full' ? 'Full' : 'Partial' }} Scholarship</strong>!
                         <br>
-                        You have been registered as a <strong>Beneficiary</strong>.
+
                     </p>
                 </div>
             @endif
@@ -257,14 +254,14 @@
             <!-- Action Buttons -->
             <div style="text-align: center; margin: 25px 0;">
                 @if(in_array($newStatus, ['approved_full', 'approved_partial']))
-                    <a href="{{ route('applicant.acknowledgement-letter') }}" class="button button-success">
+                    <a href="{{ route('applicant.acknowledgement-letter') }}" style="color: white" class="button button-success t">
                         <i class="fas fa-file-signature"></i> Submit Acknowledgement
                     </a>
                 @endif
-                <a href="{{ route('dashboard') }}" class="button">
+                <a href="{{ route('dashboard') }}" style="color: white" class="button">
                     <i class="fas fa-tachometer-alt"></i> Go to Dashboard
                 </a>
-                <a href="{{ route('applicant.my-application') }}" class="button" style="background: #6c757d;">
+                <a href="{{ route('applicant.my-application') }}" class="button" style="background: #6c757d;color:white">
                     <i class="fas fa-eye"></i> View Application
                 </a>
             </div>

@@ -13,7 +13,7 @@
             padding: 20px;
         }
         .header {
-            background: #4e73df;
+            background:#28a745;
             color: white;
             padding: 20px;
             text-align: center;
@@ -51,7 +51,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>🎓 New Installment Available</h1>
+        <h1>New Installment Available</h1>
     </div>
     <div class="content">
         <p>Dear <strong>{{ $student->name }}</strong>,</p>
@@ -72,7 +72,7 @@
         <p><strong>Action Required:</strong> Please sign for this installment to confirm receipt.</p>
 
         <p style="text-align: center; margin: 30px 0;">
-            <a href="{{ route('beneficiary.payments.index') }}" class="button">
+            <a href="{{ route('beneficiary.payments.index') }}" style="color: white" class="button">
                 Sign Installment Now
             </a>
         </p>

@@ -20,7 +20,7 @@
             overflow: hidden;
         }
         .header {
-            background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+            background: linear-gradient(135deg, #28a745, #1e7e34);
             color: white;
             padding: 30px;
             text-align: center;
@@ -216,7 +216,7 @@
 
             <!-- Next Steps -->
             <div class="next-steps">
-                <h4>📌 Next Steps</h4>
+                <h4>Next Steps</h4>
                 <ul>
                     <li><strong>Review Process:</strong> Your application will be reviewed by our scholarship committee.</li>
                     <li><strong>Timeline:</strong> You will receive an update on your application status within 2-3 weeks.</li>
@@ -227,10 +227,10 @@
 
             <!-- Quick Actions -->
             <div style="text-align: center; margin: 25px 0;">
-                <a href="{{ route('dashboard') }}" class="button">
+                <a href="{{ route('dashboard') }}" style="color: white" class="button">
                     <i class="fas fa-tachometer-alt"></i> Go to Dashboard
                 </a>
-                <a href="{{ route('applicant.my-application') }}" class="button" style="background: #28a745; margin-left: 10px;">
+                <a href="{{ route('applicant.my-application') }}" class="button" style="background: #28a745; margin-left: 10px;color:white">
                     <i class="fas fa-eye"></i> View Application
                 </a>
             </div>

@@ -155,19 +155,6 @@ class AdminApplicationController extends Controller
             $application->admin_notes = $request->admin_notes;
             $application->save();
 
-            // If status is approved_full or approved_partial, make user a beneficiary
-            if (in_array($newStatus, ['approved_full', 'approved_partial'])) {
-                // Update user role to beneficiary
-                // $user->role = 'beneficiary';
-                // $user->save();
-
-                // Log the change
-                \Log::info('User role updated to beneficiary', [
-                    'user_id' => $user->id,
-                    'application_id' => $application->id,
-                    'status' => $newStatus
-                ]);
-            }
 
             // If status is rejected, check if user was beneficiary and remove role if needed
             if ($newStatus === 'rejected' && $user->role === 'beneficiary') {
@@ -267,11 +254,7 @@ class AdminApplicationController extends Controller
 
                 $application->save();
 
-                // Update user role for approved applications
-                if (in_array($newStatus, ['approved_full', 'approved_partial'])) {
-                    // $user->role = 'beneficiary';
-                    // $user->save();
-                }
+
 
                 // Send email notification
                 try {
@@ -313,19 +296,7 @@ class AdminApplicationController extends Controller
             $application->admin_notes = $request->admin_notes;
             $application->save();
 
-            // If status is approved_full or approved_partial, make user a beneficiary
-            if (in_array($newStatus, ['approved_full', 'approved_partial'])) {
-                // Update user role to beneficiary
-                $user->role = 'beneficiary';
-                $user->save();
 
-                // Log the change
-                \Log::info('User role updated to beneficiary', [
-                    'user_id' => $user->id,
-                    'application_id' => $application->id,
-                    'status' => $newStatus
-                ]);
-            }
 
             // If status is rejected, check if user was beneficiary and remove role if needed
             if ($newStatus === 'rejected' && $user->role === 'beneficiary') {

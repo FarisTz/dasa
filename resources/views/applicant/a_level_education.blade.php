@@ -153,7 +153,7 @@
                                 <input type="number"
                                        class="form-control @error('points') is-invalid @enderror"
                                        name="points"
-                                       placeholder="Enter total points (e.g., 3-33)"
+                                       placeholder="Enter total points "
                                        min="3"
                                        max="33"
                                        value="{{ old('points', $aLevelEducation->points ?? '') }}">

@@ -257,7 +257,7 @@
             <!-- Action Buttons -->
             <div style="text-align: center; margin: 25px 0;">
                 @if(in_array($newStatus, ['approved_full', 'approved_partial']))
-                    <a href="{{ route('applicant.acknowledgement.index') }}" class="button button-success">
+                    <a href="{{ route('applicant.acknowledgement-letter') }}" class="button button-success">
                         <i class="fas fa-file-signature"></i> Submit Acknowledgement
                     </a>
                 @endif

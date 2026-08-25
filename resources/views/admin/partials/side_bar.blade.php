@@ -93,9 +93,9 @@
         </a>
         <ul class="dropdown-menu">
           <li><a class="nav-link" href="{{ route('admin.students.index') }}">All Students</a></li>
-          <li><a class="nav-link" href="#">Confirmed Students</a></li>
+          {{-- <li><a class="nav-link" href="#">Confirmed Students</a></li>
           <li><a class="nav-link" href="#">Pending Confirmation</a></li>
-          <li><a class="nav-link" href="#">Canceled Students</a></li>
+          <li><a class="nav-link" href="#">Canceled Students</a></li> --}}
         </ul>
       </li>
 

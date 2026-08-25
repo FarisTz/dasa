@@ -33,7 +33,7 @@
                 </li>
               </ul>
             </li>
-            <li class="dropdown">
+            {{-- <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i
                   data-feather="briefcase"></i><span>Students</span></a>
               <ul class="dropdown-menu">
@@ -42,7 +42,7 @@
                 <li><a class="nav-link" href="#">Not Confirmed Students</a></li>
                 <li><a class="nav-link" href="#">Canceled Students</a></li>
               </ul>
-            </li>
+            </li> --}}
 
             <!-- Reports & Analytics -->
       <li class="dropdown">

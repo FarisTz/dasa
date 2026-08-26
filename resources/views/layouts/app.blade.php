@@ -107,9 +107,12 @@
                 Settings
               </a>
               <div class="dropdown-divider"></div>
-              <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
+              <a href="#" onclick="event.preventDefault(); document.getElementById('app-logout-form').submit();" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
                 Logout
               </a>
+              <form id="app-logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+              </form>
             </div>
           </li>
         </ul>

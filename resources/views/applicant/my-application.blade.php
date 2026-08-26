@@ -519,7 +519,7 @@
                             @endif
 
                             @if($application->status == 'rejected')
-                                <a href="{{ route('applicant.application.contact') }}" class="btn btn-info btn-lg px-5">
+                                <a href="{{ route('beneficiary.support') }}" class="btn btn-info btn-lg px-5">
                                     <i class="fas fa-envelope"></i> Contact Support
                                 </a>
                             @endif

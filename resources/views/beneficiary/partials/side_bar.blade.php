@@ -10,14 +10,17 @@
             <li class="dropdown {{ request()->routeIs('dashboard') ? 'active' : '' }}">
               <a href="{{ route('dashboard') }}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
-            
+
 
             <li class=" {{ request()->routeIs('beneficiary.payments.index') ? 'active' : '' }}" ><a class="dropdown" href="{{ route('beneficiary.payments.index') }}"><i data-feather="file"></i><span>Payments</span></a></li>
 
             <li class=" {{ request()->routeIs('beneficiary.results.index') ? 'active' : '' }}" ><a class="dropdown" href="{{ route('beneficiary.results.index') }}"><i data-feather="file"></i><span>Academic Results</span></a></li>
             <li class="{{ request()->routeIs('profile.edit') ? 'active' : '' }}" ><a class="dropdown" href="{{ route('profile.edit') }}"><i data-feather="file"></i><span>Profile</span></a></li>
-            <li class="{{ request()->routeIs('support') ? 'active' : '' }}" ><a class="dropdown" href="{{ route('support') }}"><i data-feather="file"></i><span>Support</span></a></li>
-            <li><a class="nav-link" href="{{ route('logout') }}"><i data-feather="file"></i><span>Logout</span></a></li>
+            <li class="{{ request()->routeIs('beneficiary.support*') ? 'active' : '' }}" ><a class="dropdown" href="{{ route('beneficiary.support') }}"><i data-feather="file"></i><span>Support</span></a></li>
+            <li><a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i data-feather="file"></i><span>Logout</span></a></li>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+            </form>
 
 
 

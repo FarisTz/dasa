@@ -94,7 +94,12 @@
                             <!-- Birthdate -->
                             <div class="form-group">
                                 <label>Birthdate <span class="text-danger">*</span></label>
-                                <input type="date" class="form-control @error('birthdate') is-invalid @enderror" name="birthdate" value="{{ old('birthdate', isset($personalInfo) && $personalInfo->birthdate ? $personalInfo->birthdate->format('Y-m-d') : '') }}" required>
+                                    <input type="date" class="form-control @error('birthdate') is-invalid @enderror" name="birthdate"
+                                        value="{{ old('birthdate', isset($personalInfo) && $personalInfo->birthdate ? $personalInfo->birthdate->format('Y-m-d') : '') }}"
+                                        max="{{ date('Y-m-d') }}"
+                                        min="{{ date('Y-m-d', strtotime('-120 years')) }}"
+                                        title="Birthdate must be a valid date not in the future"
+                                        required>
                                 @error('birthdate')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -140,9 +145,6 @@
                                     <option value="">Select Religion</option>
                                     <option value="muslim" {{ old('religion', $personalInfo->religion ?? '') == 'muslim' ? 'selected' : '' }}>Muslim</option>
                                     <option value="christian" {{ old('religion', $personalInfo->religion ?? '') == 'christian' ? 'selected' : '' }}>Christian</option>
-                                    <option value="hindu" {{ old('religion', $personalInfo->religion ?? '') == 'hindu' ? 'selected' : '' }}>Hindu</option>
-                                    <option value="buddhist" {{ old('religion', $personalInfo->religion ?? '') == 'buddhist' ? 'selected' : '' }}>Buddhist</option>
-                                    <option value="other" {{ old('religion', $personalInfo->religion ?? '') == 'other' ? 'selected' : '' }}>Other</option>
                                 </select>
                                 @error('religion')
                                     <span class="text-danger">{{ $message }}</span>
@@ -215,6 +217,7 @@
                                     <option value="National" {{ old('id_type', $personalInfo->id_type ?? '') == 'National' ? 'selected' : '' }}>National ID</option>
                                     <option value="zanID" {{ old('id_type', $personalInfo->id_type ?? '') == 'zanID' ? 'selected' : '' }}>ZanID</option>
                                     <option value="Passport" {{ old('id_type', $personalInfo->id_type ?? '') == 'Passport' ? 'selected' : '' }}>Passport</option>
+                                    <option value="Special No" {{ old('id_type', $personalInfo->id_type ?? '') == 'Special No' ? 'selected' : '' }}>Special Number</option>
                                 </select>
                                 @error('id_type')
                                     <span class="text-danger">{{ $message }}</span>

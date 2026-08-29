@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+use App\Models\User;
 
 class ApplicantController extends Controller
 {
@@ -31,9 +33,10 @@ class ApplicantController extends Controller
     {
 
     // Validate the incoming request data
+        $minBirthdate = date('Y-m-d', strtotime('-120 years'));
         $request->validate([
             'gender' => 'in:male,female,other',
-            'birthdate' => 'date',
+            'birthdate' => 'nullable|date|before_or_equal:today|after_or_equal:' . $minBirthdate,
             'place_of_birth' => 'string|max:255',
             'nationality' => 'string|max:100',
             'marital_status' => 'string|max:50',
@@ -144,7 +147,7 @@ public function review()
         'existingApplication'
     ));
 }
-    
+
      /**
      * Select a scholarship for application.
      */
@@ -258,9 +261,9 @@ public function review()
             // Send email notification
             try {
                 Mail::to($user->email)->send(new ApplicationSubmittedNotification($application, $user));
-                \Log::info('Application submission email sent to: ' . $user->email);
+                Log::info('Application submission email sent to: ' . $user->email);
             } catch (\Exception $e) {
-                \Log::error('Failed to send application submission email: ' . $e->getMessage());
+                Log::error('Failed to send application submission email: ' . $e->getMessage());
                 // Continue even if email fails
             }
 
@@ -271,7 +274,7 @@ public function review()
                 ->with('success', 'Your application for ' . $scholarship->title . ' has been submitted successfully! A confirmation email has been sent to your inbox.');
 
         } catch (\Exception $e) {
-            \Log::error('Application submission failed: ' . $e->getMessage());
+            Log::error('Application submission failed: ' . $e->getMessage());
             return redirect()->back()
                 ->with('error', 'Failed to submit application: ' . $e->getMessage());
         }

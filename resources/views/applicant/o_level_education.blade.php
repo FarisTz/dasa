@@ -79,12 +79,15 @@
                                             <i class="fas fa-hashtag"></i>
                                         </div>
                                     </div>
-                                    <input type="text"
-                                           class="form-control @error('form_four_index_number') is-invalid @enderror"
-                                           name="form_four_index_number"
-                                           placeholder="e.g., S1234/0001/2020"
-                                           value="{{ old('form_four_index_number', $oLevelEducation->form_four_index_number ?? '') }}"
-                                           required>
+                                     <input type="text"
+                                         class="form-control @error('form_four_index_number') is-invalid @enderror"
+                                         name="form_four_index_number"
+                                         placeholder="e.g., S3434 or S1234/0001/2020"
+                                         maxlength="15"
+                                         pattern="[A-Za-z]\d{2,6}(/\d{4}/\d{4})?"
+                                         title="Format: S followed by 2–6 digits (e.g., S343) or S1234/0001/2020"
+                                         value="{{ old('form_four_index_number', $oLevelEducation->form_four_index_number ?? '') }}"
+                                         required>
                                 </div>
                                 @error('form_four_index_number')
                                     <span class="text-danger">{{ $message }}</span>
@@ -116,11 +119,9 @@
                                 <label>Division <span class="text-danger">*</span></label>
                                 <select class="form-control @error('division') is-invalid @enderror" name="division" required>
                                     <option value="">Select Division</option>
-                                    <option value="I" {{ old('division', $oLevelEducation->division ?? '') == 'I' ? 'selected' : '' }}>Division I (Excellent)</option>
-                                    <option value="II" {{ old('division', $oLevelEducation->division ?? '') == 'II' ? 'selected' : '' }}>Division II (Very Good)</option>
-                                    <option value="III" {{ old('division', $oLevelEducation->division ?? '') == 'III' ? 'selected' : '' }}>Division III (Good)</option>
-                                    <option value="IV" {{ old('division', $oLevelEducation->division ?? '') == 'IV' ? 'selected' : '' }}>Division IV (Satisfactory)</option>
-                                    <option value="0" {{ old('division', $oLevelEducation->division ?? '') == '0' ? 'selected' : '' }}>Division 0 (Failed)</option>
+                                    <option value="I" {{ old('division', $oLevelEducation->division ?? '') == 'I' ? 'selected' : '' }}>Division I</option>
+                                    <option value="II" {{ old('division', $oLevelEducation->division ?? '') == 'II' ? 'selected' : '' }}>Division II</option>
+                                    <option value="III" {{ old('division', $oLevelEducation->division ?? '') == 'III' ? 'selected' : '' }}>Division III</option>
                                 </select>
                                 @error('division')
                                     <span class="text-danger">{{ $message }}</span>

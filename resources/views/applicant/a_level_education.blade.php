@@ -79,18 +79,21 @@
                             <!-- Form Six Index Number -->
                             <div class="form-group">
                                 <label>Form Six Index Number <span class="text-danger">*</span></label>
-                                <div class="input-group">
+                                    <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <i class="fas fa-hashtag"></i>
                                         </div>
                                     </div>
-                                    <input type="text"
-                                           class="form-control @error('form_six_index_number') is-invalid @enderror"
-                                           name="form_six_index_number"
-                                           placeholder="e.g., S1234/0001/2020"
-                                           value="{{ old('form_six_index_number', $aLevelEducation->form_six_index_number ?? '') }}"
-                                           required>
+                                     <input type="text"
+                                         class="form-control @error('form_six_index_number') is-invalid @enderror"
+                                         name="form_six_index_number"
+                                         placeholder="e.g., S3434 or S1234/0001/2020"
+                                         maxlength="15"
+                                         pattern="[A-Za-z]\d{2,6}(/\d{4}/\d{4})?"
+                                         title="Format: S followed by 2–6 digits (e.g., S343) or S1234/0001/2020"
+                                         value="{{ old('form_six_index_number', $aLevelEducation->form_six_index_number ?? '') }}"
+                                         required>
                                 </div>
                                 @error('form_six_index_number')
                                     <span class="text-danger">{{ $message }}</span>
@@ -139,8 +142,6 @@
                                     <option value="I" {{ old('division', $aLevelEducation->division ?? '') == 'I' ? 'selected' : '' }}>Division I </option>
                                     <option value="II" {{ old('division', $aLevelEducation->division ?? '') == 'II' ? 'selected' : '' }}>Division II </option>
                                     <option value="III" {{ old('division', $aLevelEducation->division ?? '') == 'III' ? 'selected' : '' }}>Division III </option>
-                                    <option value="IV" {{ old('division', $aLevelEducation->division ?? '') == 'IV' ? 'selected' : '' }}>Division IV</option>
-                                    <option value="0" {{ old('division', $aLevelEducation->division ?? '') == '0' ? 'selected' : '' }}>Division 0</option>
                                 </select>
                                 @error('division')
                                     <span class="text-danger">{{ $message }}</span>
@@ -150,17 +151,17 @@
                             <!-- Points -->
                             <div class="form-group">
                                 <label>Total Points</label>
-                                <input type="number"
-                                       class="form-control @error('points') is-invalid @enderror"
-                                       name="points"
-                                       placeholder="Enter total points "
-                                       min="3"
-                                       max="33"
-                                       value="{{ old('points', $aLevelEducation->points ?? '') }}">
+                                    <input type="number"
+                                        class="form-control @error('points') is-invalid @enderror"
+                                        name="points"
+                                        placeholder="Enter total points "
+                                        min="3"
+                                        max="13"
+                                        value="{{ old('points', $aLevelEducation->points ?? '') }}">
                                 @error('points')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                                <small class="text-muted">Range: 3 (best) to 33 (worst)</small>
+                                <small class="text-muted">Range: 3 (best) to 13 (worst)</small>
                             </div>
 
                             <!-- Form Six Certificate -->

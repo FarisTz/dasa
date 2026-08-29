@@ -32,9 +32,9 @@ class ALevelEducationController extends Controller
         // Validation rules
         $rules = [
             'school_name' => 'required|string|max:255',
-            'form_six_index_number' => 'required|string|max:100',
+            'form_six_index_number' => 'required|string|regex:/^[A-Za-z]\d{2,6}(\/\d{4}\/\d{4})?$/|max:100',
             'division' => 'required|in:I,II,III,IV,0',
-            'points' => 'nullable|integer|min:7|max:33',
+            'points' => 'nullable|integer|min:3|max:13',
             'end_of_study_year' => 'required|integer|min:2000|max:' . date('Y'),
             'preferred_university' => 'nullable|string|max:255',
             'form_six_certificate_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
@@ -47,7 +47,11 @@ class ALevelEducationController extends Controller
             $rules['form_six_index_number'] .= '|unique:a_level_education,form_six_index_number,' . $aLevelEducation->id;
         }
 
-        $request->validate($rules);
+        $messages = [
+            'form_six_index_number.regex' => 'Form Six Index Number must start with a letter followed by 2–6 digits (e.g., S343) or use the full format S1234/0001/2020.',
+        ];
+
+        $request->validate($rules, $messages);
 
         $data = $request->all();
         $data['user_id'] = Auth::id();

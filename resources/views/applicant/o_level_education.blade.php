@@ -189,11 +189,11 @@
                         <div class="col-12">
                             <hr>
                             <div class="form-group text-center">
-                                <a href="{{ route('applicant.personal_information') }}" class="btn btn-secondary btn-lg px-4" >
+                                <a href="{{ route('applicant.personal_information') }}" class="btn btn-secondary btn-lg px-4 mb-2 mb-sm-0" >
                                     <i class="fas fa-arrow-left"></i> Back to Personal Information
                                 </a>
                                 @if(!$isApproved)
-                                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5 mb-2 mb-sm-0">
                                         <i class="fas fa-save"></i>
                                         {{ isset($oLevelEducation) ? 'Update' : 'Save' }} O-Level Education
                                     </button>
@@ -204,7 +204,7 @@
                                     </button>
                                 @endif
 
-                                <a href="{{ route('applicant.a-level-education') }}" class="btn btn-secondary btn-lg px-5" >
+                                <a href="{{ route('applicant.a-level-education') }}" class="btn btn-secondary btn-lg px-5 ms-sm-3" >
                                     <i class="fas fa-arrow-right"></i> Proceed to A-Level
                                 </a>
                             </div>

@@ -350,7 +350,7 @@
                             <hr>
                             <div class="form-group text-center">
                                 @if(!$isApproved)
-                                <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <button type="submit" class="btn btn-primary btn-lg px-5 mb-2 mb-sm-0">
                                     <i class="fas fa-save"></i> {{ isset($personalInfo) ? 'Update' : 'Save' }} Personal Information
                                 </button>
                             @else
@@ -359,7 +359,7 @@
                                 </button>
                             @endif
 
-                                <a href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4" >
+                                <a href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4 ms-sm-3" >
                                     <i class="fas fa-arrow-right"></i> Proceed to O-Level Education
                                 </a>
 

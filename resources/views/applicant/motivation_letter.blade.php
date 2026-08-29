@@ -129,19 +129,19 @@
                             <hr>
                             <div class="form-group text-center">
 
-                                <a href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4">
+                                <a href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4 mb-2 mb-sm-0">
                                     <i class="fas fa-arrow-left"></i>Go Back to O-Level Education
                                 </a>
                                 @if(!$isApproved)
-                                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5 mb-2 mb-sm-0">
                                         <i class="fas fa-save"></i> {{ isset($motivation) ? 'Update' : 'Save' }} Motivation
                                     </button>
                                 @else
-                                    <button type="submit" class="btn btn-secondary btn-lg px-5" disabled>
+                                    <button type="submit" class="btn btn-secondary btn-lg px-5 mb-2 mb-sm-0" disabled>
                                         <i class="fas fa-save"></i> Editing Disabled
                                     </button>
                                 @endif
-                                <a href="{{ route('applicant.application.review') }}" class="btn btn-secondary btn-lg px-4">
+                                <a href="{{ route('applicant.application.review') }}" class="btn btn-secondary btn-lg px-4 ms-sm-3">
                                     <i class="fas fa-arrow-right"></i>Proceed to Review
                                 </a>
 

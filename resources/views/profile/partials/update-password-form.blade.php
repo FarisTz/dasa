@@ -15,19 +15,43 @@
 
         <div>
             <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
+            <div class="relative">
+                <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full pr-10" autocomplete="current-password" />
+            </div>
+            <div class="max-w-sm mb-2">
+              <div class="flex items-center mt-2">
+                <input data-hs-toggle-password='{"target":"#update_password_current_password"}' id="hs-toggle-password-current" type="checkbox" class="shrink-0 size-4 bg-transparent border-line-3 rounded-sm shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none">
+                <label for="hs-toggle-password-current" class="ms-2 text-sm text-muted-foreground-1">Show password</label>
+              </div>
+            </div>
             <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
         </div>
 
         <div>
             <x-input-label for="update_password_password" :value="__('New Password')" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+            <div class="relative">
+                <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full pr-10" autocomplete="new-password" />
+            </div>
+            <div class="max-w-sm mb-2">
+              <div class="flex items-center mt-2">
+                <input data-hs-toggle-password='{"target":"#update_password_password"}' id="hs-toggle-password-new" type="checkbox" class="shrink-0 size-4 bg-transparent border-line-3 rounded-sm shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none">
+                <label for="hs-toggle-password-new" class="ms-2 text-sm text-muted-foreground-1">Show password</label>
+              </div>
+            </div>
             <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
         </div>
 
         <div>
             <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+            <div class="relative">
+                <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full pr-10" autocomplete="new-password" />
+            </div>
+            <div class="max-w-sm mb-2">
+              <div class="flex items-center mt-2">
+                <input data-hs-toggle-password='{"target":"#update_password_password_confirmation"}' id="hs-toggle-password-confirm" type="checkbox" class="shrink-0 size-4 bg-transparent border-line-3 rounded-sm shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none">
+                <label for="hs-toggle-password-confirm" class="ms-2 text-sm text-muted-foreground-1">Show password</label>
+              </div>
+            </div>
             <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
         </div>
 
@@ -45,4 +69,42 @@
             @endif
         </div>
     </form>
+                <script>
+                    (function () {
+                        function initToggle(control) {
+                            let cfg = {};
+                            try { cfg = JSON.parse(control.getAttribute('data-hs-toggle-password')); } catch (e) { return; }
+                            const target = cfg && cfg.target ? cfg.target : control.getAttribute('data-target');
+                            if (!target) return;
+                            const input = document.querySelector(target);
+                            if (!input) return;
+
+                            if (control.type === 'checkbox') {
+                                // initialize
+                                if (control.checked) input.type = 'text';
+                                control.classList.toggle('hs-password-active', control.checked);
+                                control.addEventListener('change', function () {
+                                    input.type = control.checked ? 'text' : 'password';
+                                    control.classList.toggle('hs-password-active', control.checked);
+                                    try {
+                                        control.querySelectorAll('.hs-password-active\\:hidden').forEach(el => el.classList.toggle('hidden', control.classList.contains('hs-password-active')));
+                                        control.querySelectorAll('.hs-password-active\\:block').forEach(el => el.classList.toggle('hidden', !control.classList.contains('hs-password-active')));
+                                    } catch (e) {}
+                                });
+                            } else {
+                                control.classList.toggle('hs-password-active', input.type !== 'password');
+                                control.addEventListener('click', function () {
+                                    const active = input.type === 'password';
+                                    input.type = active ? 'text' : 'password';
+                                    control.classList.toggle('hs-password-active', active);
+                                    try {
+                                        control.querySelectorAll('.hs-password-active\\:hidden').forEach(el => el.classList.toggle('hidden', control.classList.contains('hs-password-active')));
+                                        control.querySelectorAll('.hs-password-active\\:block').forEach(el => el.classList.toggle('hidden', !control.classList.contains('hs-password-active')));
+                                    } catch (e) {}
+                                });
+                            }
+                        }
+                        document.querySelectorAll('[data-hs-toggle-password]').forEach(initToggle);
+                    })();
+                </script>
 </section>

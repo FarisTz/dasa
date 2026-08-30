@@ -43,13 +43,16 @@
 
                 @php
                     $existingApplication = \App\Models\Application::where('user_id', Auth::id())->first();
-                    $isApproved = $existingApplication && in_array($existingApplication->status, ['approved_full', 'approved_partial']);
+                    $editingDisabled = $existingApplication && in_array($existingApplication->status, ['approved_full', 'approved_partial', 'rejected']);
+                    $disabledMessage = ($existingApplication && $existingApplication->status == 'rejected')
+                        ? 'Your application has been rejected and editing is disabled.'
+                        : 'Your application has been approved and editing is disabled.';
                 @endphp
 
-                @if($isApproved)
-                    <div class="alert alert-success">
+                @if($editingDisabled)
+                    <div class="alert alert-{{ isset($existingApplication) && $existingApplication->status == 'rejected' ? 'danger' : 'success' }}">
                         <i class="fas fa-check-circle"></i>
-                        Your application has been approved and editing is disabled.
+                        {{ $disabledMessage }}
                     </div>
                 @endif
 
@@ -213,7 +216,7 @@
                                 <a  href="{{ route('applicant.o-level-education') }}" class="btn btn-secondary btn-lg px-4 mb-2 mb-sm-0" >
                                     <i class="fas fa-arrow-left"></i> Back to O-Level Education
                                 </a>
-                                @if(!$isApproved)
+                                @if(!$editingDisabled)
                                     <button type="submit" class="btn btn-primary btn-lg px-5 mb-2 mb-sm-0">
                                         <i class="fas fa-save"></i>
                                         {{ isset($aLevelEducation) ? 'Update' : 'Save' }} A-Level Education

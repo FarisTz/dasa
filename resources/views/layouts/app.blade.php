@@ -41,7 +41,33 @@
 
 
     @php
-         $user = Auth::user();
+       $user = Auth::user();
+      use App\Models\Notification as AppNotification;
+      use App\Models\Log as AppLog;
+      use Illuminate\Support\Str;
+
+       $notifications = [];
+       $unreadCount = 0;
+       $activities = [];
+       $activityCount = 0;
+
+         if ($user) {
+             // Only query notifications if table/column exist
+             if (\Illuminate\Support\Facades\Schema::hasTable('notifications') && \Illuminate\Support\Facades\Schema::hasColumn('notifications', 'user_id')) {
+                 $notifications = AppNotification::where('user_id', $user->id)->orderBy('created_at','desc')->limit(5)->get();
+                 try {
+                     $unreadCount = AppNotification::where('user_id', $user->id)->where('read', 0)->count();
+                 } catch (\Exception $e) {
+                     $unreadCount = 0;
+                 }
+             }
+
+             // Only query activities/logs if table/column exist
+             if (\Illuminate\Support\Facades\Schema::hasTable('logs') && \Illuminate\Support\Facades\Schema::hasColumn('logs', 'user_id')) {
+                 $activities = AppLog::where('user_id', $user->id)->orderBy('created_at','desc')->limit(5)->get();
+                 $activityCount = AppLog::where('user_id', $user->id)->count();
+             }
+         }
     @endphp
 
 
@@ -61,47 +87,49 @@
           </ul>
         </div>
         <ul class="navbar-nav navbar-right">
-          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-              class="nav-link nav-link-lg message-toggle"><i data-feather="bell"></i>
-              <span class="badge headerBadge1">
-                6 </span> </a>
+          <li class="dropdown dropdown-list-toggle">
+            <a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle">
+              <i data-feather="bell"></i>
+              @if($unreadCount > 0)
+                <span class="badge headerBadge1">{{ $unreadCount }}</span>
+              @endif
+            </a>
             <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
               <div class="dropdown-header">
-                Messages
+                Notifications
                 <div class="float-right">
-                  <a href="#">Mark All As Read</a>
+                  <form method="POST" action="{{ route('notifications.readAll') }}">@csrf<button class="btn btn-link btn-sm">Mark All As Read</button></form>
                 </div>
               </div>
               <div class="dropdown-list-content dropdown-list-message">
-                <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar
-											text-white"> <img alt="image" src="assets/img/users/user-1.png" class="rounded-circle">
-                  </span> <span class="dropdown-item-desc"> <span class="message-user">John
-                      Deo</span>
-                    <span class="time messege-text">Please check your mail !!</span>
-                    <span class="time">2 Min Ago</span>
-                  </span>
-                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
-                    <img alt="image" src="assets/img/users/user-2.png" class="rounded-circle">
-                  </span> <span class="dropdown-item-desc"> <span class="message-user">Sarah
-                      Smith</span> <span class="time messege-text">Request for leave
-                      application</span>
-                    <span class="time">5 Min Ago</span>
-                  </span>
-                </a>
+                @forelse($notifications as $note)
+                  <a href="#" class="dropdown-item">
+                    <span class="dropdown-item-desc">
+                      <span class="message-user">{{ $note->title ?? 'Notification' }}</span>
+                      <span class="time messege-text">{{ Str::limit($note->message ?? '', 60) }}</span>
+                      <span class="time">{{ $note->created_at->diffForHumans() }}</span>
+                    </span>
+                  </a>
+                @empty
+                  <div class="p-3 text-center text-muted">No notifications</div>
+                @endforelse
               </div>
               <div class="dropdown-footer text-center">
-                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                <a href="{{ route('notifications.index') }}">View All <i class="fas fa-chevron-right"></i></a>
               </div>
             </div>
           </li>
           <li class="dropdown"><a href="#" data-toggle="dropdown"
-              class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="{{ asset('assets/img/users/user-1.png') }}"
-                class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
+              class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+              @php
+                $avatarUrl = $user && $user->profile_photo_path ? asset('storage/' . $user->profile_photo_path) : asset('assets/img/dasa22.png');
+              @endphp
+              <img alt="image" src="{{ $avatarUrl }}" class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <div class="dropdown-title">Hello {{$user->name }}</div>
               <a href="{{ route('profile.edit') }}" class="dropdown-item has-icon"> <i class="far
 										fa-user"></i> Profile
-              </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
+              </a> <a href="{{ route('activities.index') }}" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
                 Activities
               </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
                 Settings

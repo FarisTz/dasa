@@ -77,7 +77,10 @@
         @php
             $hasSubmittedApplication = $existingApplication && in_array($existingApplication->status, ['submitted', 'under_review', 'approved_full', 'approved_partial', 'rejected']);
             $hasPendingApplication = $existingApplication && $existingApplication->status == 'pending';
-            $isApproved = $existingApplication && in_array($existingApplication->status, ['approved_full', 'approved_partial']);
+            $editingDisabled = $existingApplication && in_array($existingApplication->status, ['approved_full', 'approved_partial', 'rejected']);
+            $disabledMessage = ($existingApplication && $existingApplication->status == 'rejected')
+                ? 'Your application has been rejected and editing is disabled.'
+                : 'Your application has been approved and editing is disabled.';
         @endphp
 
         @if($hasSubmittedApplication)
@@ -194,11 +197,11 @@
                                 </div>
                             </div>
                     @endswitch
-                    <div class="mt-3 text-center">
-                        <a href="{{ route('applicant.my-application') }}" class="btn btn-primary">
-                            <i class="fas fa-eye"></i> View My Application
-                        </a>
-                        @if(in_array($status, ['submitted', 'pending']))
+                        <div class="mt-3 text-center">
+                            <a href="{{ route('applicant.my-application') }}" class="btn btn-primary">
+                                <i class="fas fa-eye"></i> View My Application
+                            </a>
+                        @if(in_array($status, ['submitted', 'pending']) && !$editingDisabled)
                             <a href="{{ route('applicant.application.edit') }}" class="btn btn-warning">
                                 <i class="fas fa-edit"></i> Edit Application
                             </a>
@@ -401,7 +404,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    @if(!$isApproved)
+                                    @if(!$editingDisabled)
                                         <a href="{{ route('applicant.personal_information') }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i> Edit Personal Info
                                         </a>
@@ -474,7 +477,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    @if(!$isApproved)
+                                    @if(!$editingDisabled)
                                         <a href="{{ route('applicant.o-level-education') }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i> Edit O-Level Info
                                         </a>
@@ -551,7 +554,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    @if(!$isApproved)
+                                    @if(!$editingDisabled)
                                         <a href="{{ route('applicant.a-level-education') }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i> Edit A-Level Info
                                         </a>
@@ -630,7 +633,7 @@
                                     @endif
                                 </div>
                                 <div class="text-center">
-                                    @if(!$isApproved)
+                                    @if(!$editingDisabled)
                                         <a href="{{ route('applicant.motivations.index') }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i> Edit Motivation
                                         </a>

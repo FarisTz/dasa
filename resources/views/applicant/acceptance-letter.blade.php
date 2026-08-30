@@ -229,7 +229,7 @@
                 </tr>
                 <tr>
                     <td class="label">Phone Number</td>
-                    <td class="value">{{ $user->phone_number ?? 'Not provided' }}</td>
+                    <td class="value">{{ $applicant->phone_number ?? 'Not provided' }}</td>
                 </tr>
             </table>
 

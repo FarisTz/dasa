@@ -15,6 +15,14 @@ Route::post('/logout', [AuthRedirectController::class,'logout'])->middleware(['a
 
 
 Route::middleware('auth')->group(function () {
+        // Notifications
+        Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
+        Route::post('/notifications/{id}/read', [\App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.read');
+        Route::post('/notifications/read-all', [\App\Http\Controllers\NotificationController::class, 'markAllRead'])->name('notifications.readAll');
+
+        // Activities
+        Route::get('/activities', [\App\Http\Controllers\ActivityController::class, 'index'])->name('activities.index');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

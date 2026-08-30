@@ -40,11 +40,14 @@ Route::middleware(['auth'])->group(function () {
     // Acceptance Letter
     Route::get('/download-acceptance', [ApplicantController::class, 'downloadAcceptance'])->name('applicant.acceptance.download');
 
+    // Backwards-compatible contact route used in some views
+    Route::get('/applicant/contact', [\App\Http\Controllers\Beneficiary\BeneficiaryController::class, 'index'])->name('applicant.application.contact');
 
 
 
 
-    
+
+
 
 
     // Acknowledgement Letter
